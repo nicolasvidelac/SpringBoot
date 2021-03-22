@@ -7,11 +7,11 @@
  * Author:  sromero
  * Created: Mar 17, 2021
  */
-
-INSERT INTO Carrera (id, nombre, codigo) VALUES
-  ('1', 'ingenieria', '1000'),
-  ('2', 'abogacia', '2000'),
-  ('3', 'medicina', '3000');
+--
+--INSERT INTO Carrera (id, nombre, codigo) VALUES
+--  ('1', 'ingenieria', '1000'),
+--  ('2', 'abogacia', '2000'),
+--  ('3', 'medicina', '3000');
 
 --INSERT INTO Alumno (id, legajo, email, carrera_id) VALUES
 --  ('1', 'sof0001', 'santi@gmail.com', '1'),

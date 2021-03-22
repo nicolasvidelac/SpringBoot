@@ -1,24 +1,25 @@
 package com.example.JPAexample.services;
-import com.example.JPAexample.models.Alumno;
-import com.example.JPAexample.repositories.AlumnoRepository;
+
+import com.example.JPAexample.models.Carrera;
+import com.example.JPAexample.repositories.CarreraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AlumnoService {
-
+public class CarreraService {
     @Autowired
-    private AlumnoRepository _alumnoRepository;
+    private CarreraRepository _carreraRepository;
 
-    public Alumno saveAlumno(Alumno newAlumno){
+    public Carrera saveCarrera(Carrera newCarrera){
 
-        Alumno result;
+        Carrera result;
         try {
-            result = _alumnoRepository.saveAndFlush(newAlumno);
+            result = _carreraRepository.saveAndFlush(newCarrera);
             return result;
 
         } catch (Exception e){
@@ -30,16 +31,16 @@ public class AlumnoService {
         }
     }
 
-    public Optional getAlumnoById(Long id){
+    public Optional getCarreraById(Long id){
 
-        Optional<Alumno> result = _alumnoRepository.findById( id);
+        Optional<Carrera> result = _carreraRepository.findById( id);
         return result;
     }
 
-    public List<Alumno> getAllAlumnos(){
+    public List<Carrera> getAllCarreras(){
         try {
 
-            return _alumnoRepository.findAll();
+            return _carreraRepository.findAll();
 
         }catch (Exception e){
 
@@ -51,10 +52,10 @@ public class AlumnoService {
         }
     }
 
-    public boolean deleteAlumno(Long id){
+    public boolean deleteCarrera(Long id){
 
         try {
-            _alumnoRepository.deleteById(id);
+            _carreraRepository.deleteById(id);
             return true;
 
         }catch (Exception e){
@@ -65,5 +66,4 @@ public class AlumnoService {
             );
         }
     }
-
 }
