@@ -37,7 +37,7 @@ public class AlumnoThymeleafController {
         TreeSet result = new TreeSet<Alumno>();
         result.addAll(_alumnoService.getAllAlumnos());
 
-        model.addAttribute("message", "Esta es una lista de Alumnos ordenada");
+        model.addAttribute("message", "Esta es una lista de Alumnos ordenada por edad");
         model.addAttribute("alumnos", result);
         return "sample_list";
     }

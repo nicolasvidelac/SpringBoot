@@ -3,7 +3,7 @@ package com.example.JPAexample.models;
 import javax.persistence.*;
 
 @Entity(name= "Alumno")
-public class Alumno extends Persona implements Comparable<Alumno>{
+public class Alumno extends Persona{
 
     @Id @GeneratedValue @Column(name = "id", updatable = false)
     private Long id;
@@ -64,10 +64,5 @@ public class Alumno extends Persona implements Comparable<Alumno>{
                 ", email='" + email + '\'' +
                 ", carrera=" + carrera +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Alumno o) {
-        return this.id > o.id ? 1 : this.id < o.id ? -1 : 0;
     }
 }

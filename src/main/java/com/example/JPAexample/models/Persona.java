@@ -3,8 +3,8 @@ package com.example.JPAexample.models;
 import javax.persistence.*;
 
 @Entity(name = "Persona")
-@Inheritance
-public class Persona {
+@Inheritance( strategy = InheritanceType.JOINED)
+public class Persona implements Comparable<Persona>{
 
     @Id @GeneratedValue @Column(name = "id", updatable = false)
     private Long id;
@@ -57,4 +57,10 @@ public class Persona {
     }
 
 
+    @Override
+    public int compareTo(Persona o) {
+        {
+            return this.edad > o.edad ? 1 : this.edad < o.edad ? -1 : 0;
+        }
+    }
 }
