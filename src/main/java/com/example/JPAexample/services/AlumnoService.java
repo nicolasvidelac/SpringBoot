@@ -38,7 +38,6 @@ public class AlumnoService {
 
     public List<Alumno> getAllAlumnos(){
         try {
-
             return _alumnoRepository.findAll();
 
         }catch (Exception e){
