@@ -34,6 +34,12 @@
         <li th:each="task : ${carreras}" th:text="${task.nombre}+ ' con codigo ' + ${task.codigo}"></li>
     </ol>
 
+    <ol>
+        <li th:each="task : ${personas}" th:text="${task.nombre}+ ' ' + ${task.apellido} +', edad: ' + ${task.edad}"></li>
+    </ol>
+
+
+
 </main>
 <!-- /.container -->
 
