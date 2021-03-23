@@ -1,8 +1,15 @@
 package com.example.JPAexample.models;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity(name = "Carrera")
 public class Carrera implements Comparable<Carrera> {
 
@@ -17,44 +24,6 @@ public class Carrera implements Comparable<Carrera> {
 
     @OneToMany(mappedBy = "carrera", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Alumno> alumno;
-
-    public Carrera(String nombre, String codigo) {
-        this.nombre = nombre;
-        this.codigo = codigo;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public Carrera() {
-    }
-
-    @Override
-    public String toString() {
-        return "Carrera{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", codigo='" + codigo + '\'' +
-                ", alumno=" + alumno +
-                '}';
-    }
 
     @Override
     public int compareTo(Carrera o) {
