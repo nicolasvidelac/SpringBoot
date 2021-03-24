@@ -20,12 +20,16 @@ public class PersonaServiceImp implements PersonaService {
     @Autowired
     private ModelMapper _modelMapper;
 
-    public PersonaDTO savePersona(Persona newPersona){
-        Persona entity = _personaRepository.saveAndFlush(newPersona);
+    public PersonaDTO savePersona(PersonaDTO newPersona){
+
+        Persona entity = _modelMapper.map(newPersona, Persona.class);
+
+        entity.setId(null); //si es que viene con el id, funciona como un update
+        entity = _personaRepository.saveAndFlush(entity);
         return _modelMapper.map(entity, PersonaDTO.class);
     }
 
-    public PersonaDTO updatePersona(int id, Persona updatedPersona){
+    public PersonaDTO updatePersona(int id, PersonaDTO updatedPersona){
 
         Persona result = _personaRepository.getOne(id);
 

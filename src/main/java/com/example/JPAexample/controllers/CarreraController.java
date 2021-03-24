@@ -30,12 +30,12 @@ public class CarreraController {
     }
 
     @PostMapping
-    public CarreraDTO saveCarrera(@RequestBody Carrera newCarrera){
+    public CarreraDTO saveCarrera(@RequestBody CarreraDTO newCarrera){
         return _carreraService.saveCarrera(newCarrera);
     }
 
     @PutMapping("{id}")
-    public CarreraDTO updateCarrera(@PathVariable int id, @RequestBody Carrera updatedCarrera){
+    public CarreraDTO updateCarrera(@PathVariable int id, @RequestBody CarreraDTO updatedCarrera){
         return _carreraService.updateCarrera(id, updatedCarrera);
 
     }

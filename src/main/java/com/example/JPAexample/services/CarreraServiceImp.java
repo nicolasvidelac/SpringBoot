@@ -20,14 +20,16 @@ public class CarreraServiceImp implements CarreraService {
     @Autowired
     private ModelMapper _modelMapper;
 
-    public CarreraDTO saveCarrera(Carrera newCarrera){
+    public CarreraDTO saveCarrera(CarreraDTO newCarrera){
+        Carrera entity = _modelMapper.map(newCarrera, Carrera.class);
 
-        Carrera entity = _carreraRepository.saveAndFlush(newCarrera);
+        entity.setId(null); //si es que viene con el id, funciona como un update
+        entity = _carreraRepository.saveAndFlush(entity);
         return _modelMapper.map(entity, CarreraDTO.class);
 
     }
 
-    public CarreraDTO updateCarrera(int id, Carrera updateCarrera){
+    public CarreraDTO updateCarrera(int id, CarreraDTO updateCarrera){
 
         Carrera entity = _carreraRepository.getOne(id);
         entity.setNombre(updateCarrera.getNombre());

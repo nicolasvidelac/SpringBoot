@@ -30,12 +30,12 @@ public class PersonaController {
     }
 
     @PostMapping
-    public PersonaDTO savePersona(@RequestBody Persona newPersona){
+    public PersonaDTO savePersona(@RequestBody PersonaDTO newPersona){
         return _personaService.savePersona(newPersona);
     }
 
     @PutMapping("{id}")
-    public PersonaDTO updatePersona(@PathVariable int id, @RequestBody Persona updatedPersona){
+    public PersonaDTO updatePersona(@PathVariable int id, @RequestBody PersonaDTO updatedPersona){
         return _personaService.updatePersona(id, updatedPersona);
     }
 

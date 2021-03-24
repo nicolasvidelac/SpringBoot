@@ -23,7 +23,7 @@ public class AlumnoServiceImp implements AlumnoService {
     private CarreraRepository _carreraRepository;
 
     @Autowired
-    private ModelMapper _modelMapper = new ModelMapper();
+    private ModelMapper _modelMapper;
 
     public AlumnoDTO saveAlumno(AlumnoDTO newAlumno){
 
