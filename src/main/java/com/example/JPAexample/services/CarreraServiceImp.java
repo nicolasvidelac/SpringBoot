@@ -3,6 +3,7 @@ package com.example.JPAexample.services;
 import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.models.DTO.CarreraDTO;
 import com.example.JPAexample.repositories.CarreraRepository;
+import com.example.JPAexample.services.interfaces.CarreraService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CarreraService {
+public class CarreraServiceImp implements CarreraService {
 
     @Autowired
     private CarreraRepository _carreraRepository;

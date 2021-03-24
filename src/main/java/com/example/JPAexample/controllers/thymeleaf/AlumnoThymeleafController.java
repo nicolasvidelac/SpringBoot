@@ -1,9 +1,7 @@
 package com.example.JPAexample.controllers.thymeleaf;
 
-
-import com.example.JPAexample.models.Alumno;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
-import com.example.JPAexample.services.AlumnoService;
+import com.example.JPAexample.services.interfaces.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,8 +1,7 @@
 package com.example.JPAexample.controllers.thymeleaf;
 
 import com.example.JPAexample.models.DTO.PersonaDTO;
-import com.example.JPAexample.models.Persona;
-import com.example.JPAexample.services.PersonaService;
+import com.example.JPAexample.services.interfaces.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

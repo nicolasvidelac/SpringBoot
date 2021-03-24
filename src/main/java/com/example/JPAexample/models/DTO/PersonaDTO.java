@@ -1,6 +1,5 @@
 package com.example.JPAexample.models.DTO;
 
-import com.example.JPAexample.models.Persona;
 import lombok.Getter;
 import lombok.Setter;
 

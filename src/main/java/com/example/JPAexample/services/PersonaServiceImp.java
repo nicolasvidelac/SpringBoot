@@ -3,18 +3,16 @@ package com.example.JPAexample.services;
 import com.example.JPAexample.models.DTO.PersonaDTO;
 import com.example.JPAexample.models.Persona;
 import com.example.JPAexample.repositories.PersonaRepository;
+import com.example.JPAexample.services.interfaces.PersonaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class PersonaService {
+public class PersonaServiceImp implements PersonaService {
 
     @Autowired
     private PersonaRepository _personaRepository;

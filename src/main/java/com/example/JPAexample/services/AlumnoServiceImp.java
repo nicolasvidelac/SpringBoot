@@ -1,20 +1,20 @@
 package com.example.JPAexample.services;
+
 import com.example.JPAexample.models.Alumno;
 import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
 import com.example.JPAexample.repositories.AlumnoRepository;
 import com.example.JPAexample.repositories.CarreraRepository;
+import com.example.JPAexample.services.interfaces.AlumnoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AlumnoService {
+public class AlumnoServiceImp implements AlumnoService {
 
     @Autowired
     private AlumnoRepository _alumnoRepository;
@@ -96,19 +96,8 @@ public class AlumnoService {
             return result;
     }
 
-    public boolean deleteAlumno(int id){
-
-        try {
-            _alumnoRepository.deleteById(id);
-            return true;
-
-        }catch (Exception e){
-            System.out.println(e);
-
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "objeto no encontrado"
-            );
-        }
+    public boolean deleteAlumno(int id) {
+        _alumnoRepository.deleteById(id);
+        return true;
     }
-
 }
