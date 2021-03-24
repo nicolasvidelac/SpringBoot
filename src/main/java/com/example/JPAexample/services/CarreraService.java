@@ -31,7 +31,27 @@ public class CarreraService {
         }
     }
 
-    public Optional getCarreraById(Long id){
+    public Carrera updateCarrera(Carrera updateCarrera){
+
+
+        try {
+            Carrera entity = _carreraRepository.getOne(updateCarrera.getId());
+            entity.setNombre(updateCarrera.getNombre());
+            entity.setCodigo(updateCarrera.getCodigo());
+
+            return _carreraRepository.saveAndFlush(entity);
+
+        } catch (Exception e){
+            System.out.println(e);
+
+            throw new ResponseStatusException(
+                    HttpStatus.UNPROCESSABLE_ENTITY, "formato no valido"
+            );
+        }
+    }
+
+
+    public Optional getCarreraById(int id){
 
         Optional<Carrera> result = _carreraRepository.findById( id);
         return result;
@@ -52,7 +72,7 @@ public class CarreraService {
         }
     }
 
-    public boolean deleteCarrera(Long id){
+    public boolean deleteCarrera(int id){
 
         try {
             _carreraRepository.deleteById(id);

@@ -42,7 +42,7 @@ public class CarreraThymeleafController {
     }
 
     @GetMapping(value = "/{id}",  produces = "application/json")
-    public String getCarrera(@PathVariable long id, Model model){
+    public String getCarrera(@PathVariable int id, Model model){
         model.addAttribute("carreras", _carreraService.getCarreraById(id));
         return "sample_list";
     }

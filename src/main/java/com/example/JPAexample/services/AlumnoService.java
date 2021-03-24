@@ -1,10 +1,15 @@
 package com.example.JPAexample.services;
 import com.example.JPAexample.models.Alumno;
+import com.example.JPAexample.models.Carrera;
+import com.example.JPAexample.models.DTO.AlumnoDTO;
 import com.example.JPAexample.repositories.AlumnoRepository;
+import com.example.JPAexample.repositories.CarreraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,12 +19,23 @@ public class AlumnoService {
     @Autowired
     private AlumnoRepository _alumnoRepository;
 
-    public Alumno saveAlumno(Alumno newAlumno){
+    @Autowired
+    private CarreraRepository _carreraRepository;
 
-        Alumno result;
+    public Alumno saveAlumno(AlumnoDTO newAlumno){
+
+        Alumno alumno = new Alumno();
+
+        alumno.setNombre(newAlumno.getNombre());
+        alumno.setApellido(newAlumno.getApellido());
+        alumno.setEdad(newAlumno.getEdad());
+        alumno.setEmail(newAlumno.getEmail());
+        alumno.setLegajo(newAlumno.getLegajo());
+
         try {
-            result = _alumnoRepository.saveAndFlush(newAlumno);
-            return result;
+            Carrera carrera = _carreraRepository.getOne(2);
+            alumno.setCarrera(carrera);
+            return _alumnoRepository.saveAndFlush(alumno);
 
         } catch (Exception e){
             System.out.println(e);
@@ -30,7 +46,30 @@ public class AlumnoService {
         }
     }
 
-    public Optional getAlumnoById(Long id){
+    public Alumno updateAlumno(Alumno updatedAlumno){
+
+        try {
+
+            Alumno alumno = _alumnoRepository.getOne(updatedAlumno.getId());
+
+            alumno.setNombre(updatedAlumno.getNombre());
+            alumno.setApellido(updatedAlumno.getApellido());
+            alumno.setEdad(updatedAlumno.getEdad());
+            alumno.setEmail(updatedAlumno.getEmail());
+            alumno.setLegajo(updatedAlumno.getLegajo());
+
+            return _alumnoRepository.saveAndFlush(alumno);
+
+        } catch (Exception e){
+            System.out.println(e);
+
+            throw new ResponseStatusException(
+                    HttpStatus.UNPROCESSABLE_ENTITY, "formato no valido"
+            );
+        }
+    }
+
+    public Optional<Alumno> getAlumnoById(Integer id){
 
         Optional<Alumno> result = _alumnoRepository.findById( id);
         return result;
@@ -50,7 +89,7 @@ public class AlumnoService {
         }
     }
 
-    public boolean deleteAlumno(Long id){
+    public boolean deleteAlumno(int id){
 
         try {
             _alumnoRepository.deleteById(id);

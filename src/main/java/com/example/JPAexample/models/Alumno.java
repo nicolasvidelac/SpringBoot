@@ -3,6 +3,7 @@ package com.example.JPAexample.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -10,10 +11,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Entity(name= "Alumno")
-public class Alumno extends Persona{
+public class Alumno extends Persona implements Serializable {
 
     @Id @GeneratedValue @Column(name = "id", updatable = false)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String legajo;
