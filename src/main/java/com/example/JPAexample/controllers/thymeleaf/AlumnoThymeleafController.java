@@ -2,6 +2,7 @@ package com.example.JPAexample.controllers.thymeleaf;
 
 
 import com.example.JPAexample.models.Alumno;
+import com.example.JPAexample.models.DTO.AlumnoDTO;
 import com.example.JPAexample.services.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,10 +35,10 @@ public class AlumnoThymeleafController {
 
     @GetMapping("/sorted")
     public String sortAlumnos(Model model){
-        TreeSet result = new TreeSet<Alumno>();
+        TreeSet result = new TreeSet<AlumnoDTO>();
         result.addAll(_alumnoService.getAllAlumnos());
 
-        model.addAttribute("message", "Esta es una lista de Alumnos ordenada por edad");
+        model.addAttribute("message", "Esta es una lista de Alumnos ordenada por carrera");
         model.addAttribute("alumnos", result);
         return "sample_list";
     }

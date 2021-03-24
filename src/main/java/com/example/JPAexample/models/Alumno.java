@@ -3,15 +3,14 @@ package com.example.JPAexample.models;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Entity(name= "Alumno")
-public class Alumno extends Persona implements Serializable {
+@Getter
+@Setter
+public class Alumno extends Persona {
 
     @Id @GeneratedValue @Column(name = "id", updatable = false)
     private Integer id;

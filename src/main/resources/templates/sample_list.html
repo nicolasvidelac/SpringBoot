@@ -27,7 +27,7 @@
     </div>
 
     <ol>
-        <li th:each="task : ${alumnos}" th:text="${task.nombre}+ ' ' + ${task.apellido} + ' con id ' + ${task.id} + ' anotado en la carrera: '+ ${task.carrera.nombre}"></li>
+        <li th:each="task : ${alumnos}" th:text="${task.nombre}+ ' ' + ${task.apellido} + ' con id ' + ${task.id} + ' anotado en la carrera: '+ ${task.carrera_nombre}"></li>
     </ol>
 
     <ol>

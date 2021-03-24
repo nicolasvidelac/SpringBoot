@@ -4,6 +4,7 @@ import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
 import com.example.JPAexample.repositories.AlumnoRepository;
 import com.example.JPAexample.repositories.CarreraRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AlumnoService {
@@ -22,71 +22,78 @@ public class AlumnoService {
     @Autowired
     private CarreraRepository _carreraRepository;
 
-    public Alumno saveAlumno(AlumnoDTO newAlumno){
+    @Autowired
+    private ModelMapper _modelMapper = new ModelMapper();
 
-        Alumno alumno = new Alumno();
+    public AlumnoDTO saveAlumno(AlumnoDTO newAlumno){
 
-        alumno.setNombre(newAlumno.getNombre());
-        alumno.setApellido(newAlumno.getApellido());
-        alumno.setEdad(newAlumno.getEdad());
-        alumno.setEmail(newAlumno.getEmail());
-        alumno.setLegajo(newAlumno.getLegajo());
+        Alumno alumno = _modelMapper.map(newAlumno, Alumno.class);
 
-        try {
-            Carrera carrera = _carreraRepository.getOne(2);
-            alumno.setCarrera(carrera);
-            return _alumnoRepository.saveAndFlush(alumno);
+        Carrera carrera = _carreraRepository.getOne(newAlumno.getCarrera_id());
+        alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo()));
 
-        } catch (Exception e){
-            System.out.println(e);
+        alumno = _alumnoRepository.saveAndFlush(alumno);
 
-            throw new ResponseStatusException(
-                    HttpStatus.UNPROCESSABLE_ENTITY, "formato no valido"
-            );
-        }
+        AlumnoDTO alumnoDTO = _modelMapper.map(alumno, AlumnoDTO.class);
+
+        alumnoDTO.setCarrera_nombre(alumno.getCarrera().getNombre());
+        alumnoDTO.setCarrera_codigo(alumno.getCarrera().getCodigo());
+        alumnoDTO.setCarrera_id(alumno.getCarrera().getId());
+        return alumnoDTO;
     }
 
-    public Alumno updateAlumno(Alumno updatedAlumno){
+    public AlumnoDTO updateAlumno(int id, AlumnoDTO updatedAlumno){
 
-        try {
+        Alumno alumno = _alumnoRepository.getOne(id);
 
-            Alumno alumno = _alumnoRepository.getOne(updatedAlumno.getId());
+        alumno.setNombre(updatedAlumno.getNombre());
+        alumno.setApellido(updatedAlumno.getApellido());
+        alumno.setEdad(updatedAlumno.getEdad());
+        alumno.setEmail(updatedAlumno.getEmail());
+        alumno.setLegajo(updatedAlumno.getLegajo());
 
-            alumno.setNombre(updatedAlumno.getNombre());
-            alumno.setApellido(updatedAlumno.getApellido());
-            alumno.setEdad(updatedAlumno.getEdad());
-            alumno.setEmail(updatedAlumno.getEmail());
-            alumno.setLegajo(updatedAlumno.getLegajo());
-
-            return _alumnoRepository.saveAndFlush(alumno);
-
-        } catch (Exception e){
-            System.out.println(e);
-
-            throw new ResponseStatusException(
-                    HttpStatus.UNPROCESSABLE_ENTITY, "formato no valido"
-            );
+        if (updatedAlumno.getCarrera_id() != alumno.getCarrera().getId()){
+            Carrera carrera = _carreraRepository.getOne(updatedAlumno.getCarrera_id());
+            alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo()));
         }
+
+        alumno = _alumnoRepository.saveAndFlush(alumno);
+
+        AlumnoDTO alumnoDTO = _modelMapper.map(alumno, AlumnoDTO.class);
+
+        alumnoDTO.setCarrera_nombre(alumno.getCarrera().getNombre());
+        alumnoDTO.setCarrera_codigo(alumno.getCarrera().getCodigo());
+        alumnoDTO.setCarrera_id(alumno.getCarrera().getId());
+        return alumnoDTO;
     }
 
-    public Optional<Alumno> getAlumnoById(Integer id){
+    public AlumnoDTO getAlumnoById(Integer id){
 
-        Optional<Alumno> result = _alumnoRepository.findById( id);
-        return result;
+        Alumno alumno = _alumnoRepository.getOne(id);
+
+        AlumnoDTO alumnoDTO = _modelMapper.map(alumno, AlumnoDTO.class);
+
+        alumnoDTO.setCarrera_nombre(alumno.getCarrera().getNombre());
+        alumnoDTO.setCarrera_codigo(alumno.getCarrera().getCodigo());
+        alumnoDTO.setCarrera_id(alumno.getCarrera().getId());
+
+        return alumnoDTO;
     }
 
-    public List<Alumno> getAllAlumnos(){
-        try {
-            return _alumnoRepository.findAll();
+    public List<AlumnoDTO> getAllAlumnos(){
 
-        }catch (Exception e){
+            List<Alumno> alumnos = _alumnoRepository.findAll();
+            List<AlumnoDTO> result = new ArrayList<>();
 
-            System.out.println(e);
+            for (Alumno entity: alumnos) {
+                AlumnoDTO alumnoDTO = _modelMapper.map(entity, AlumnoDTO.class);
 
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "error"
-            );
-        }
+                alumnoDTO.setCarrera_nombre(entity.getCarrera().getNombre());
+                alumnoDTO.setCarrera_codigo(entity.getCarrera().getCodigo());
+                alumnoDTO.setCarrera_id(entity.getCarrera().getId());
+                result.add(alumnoDTO);
+            }
+            return result;
     }
 
     public boolean deleteAlumno(int id){

@@ -1,12 +1,15 @@
 package com.example.JPAexample.services;
 
+import com.example.JPAexample.models.DTO.PersonaDTO;
 import com.example.JPAexample.models.Persona;
 import com.example.JPAexample.repositories.PersonaRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,77 +19,46 @@ public class PersonaService {
     @Autowired
     private PersonaRepository _personaRepository;
 
-    public Persona savePersona(Persona newPersona){
+    @Autowired
+    private ModelMapper _modelMapper;
 
-        Persona result;
-        try {
-            result = _personaRepository.saveAndFlush(newPersona);
-            return result;
-
-        } catch (Exception e){
-            System.out.println(e);
-
-            throw new ResponseStatusException(
-                    HttpStatus.UNPROCESSABLE_ENTITY, "formato no valido"
-            );
-        }
+    public PersonaDTO savePersona(Persona newPersona){
+        Persona entity = _personaRepository.saveAndFlush(newPersona);
+        return _modelMapper.map(entity, PersonaDTO.class);
     }
 
-    public Persona updatePersona(Persona updatedPersona){
+    public PersonaDTO updatePersona(int id, Persona updatedPersona){
 
-        Persona result;
+        Persona result = _personaRepository.getOne(id);
 
-        try {
-            result = _personaRepository.getOne(updatedPersona.getId());
+        result.setEdad(updatedPersona.getEdad());
+        result.setApellido(updatedPersona.getApellido());
+        result.setNombre(updatedPersona.getNombre());
 
-            result.setApellido(updatedPersona.getApellido());
-            result.setNombre(updatedPersona.getNombre());
-            result.setEdad(updatedPersona.getEdad());
-
-            return _personaRepository.saveAndFlush(result);
-
-        } catch (Exception e){
-            System.out.println(e);
-
-            throw new ResponseStatusException(
-                    HttpStatus.UNPROCESSABLE_ENTITY, "formato no valido"
-            );
-        }
+        result = _personaRepository.saveAndFlush(result);
+        return _modelMapper.map(result, PersonaDTO.class);
     }
 
-    public Optional getPersonaById(int id){
+    public PersonaDTO getPersonaById(int id){
 
-        Optional<Persona> result = _personaRepository.findById( id);
-        return result;
+        Persona result = _personaRepository.getOne(id);
+        return _modelMapper.map(result, PersonaDTO.class);
     }
 
-    public List<Persona> getAllPersonas(){
-        try {
-            return _personaRepository.findAll();
+    public List<PersonaDTO> getAllPersonas(){
+        List<Persona> personas = _personaRepository.findAll();
+        List<PersonaDTO> entities = new ArrayList<>();
 
-        }catch (Exception e){
-
-            System.out.println(e);
-
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "error"
-            );
+        for(Persona persona : personas){
+            entities.add(_modelMapper.map(persona, PersonaDTO.class));
         }
+
+        return entities;
     }
 
     public boolean deletePersona(int id){
-
-        try {
-            _personaRepository.deleteById(id);
-            return true;
-
-        }catch (Exception e){
-            System.out.println(e);
-
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "objeto no encontrado"
-            );
-        }
+        _personaRepository.deleteById(id);
+        return true;
     }
 
 }

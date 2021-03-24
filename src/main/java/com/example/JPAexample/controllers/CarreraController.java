@@ -1,12 +1,12 @@
 package com.example.JPAexample.controllers;
 
 import com.example.JPAexample.models.Carrera;
+import com.example.JPAexample.models.DTO.CarreraDTO;
 import com.example.JPAexample.services.CarreraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/carreras")
@@ -20,25 +20,23 @@ public class CarreraController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Carrera> getSingleCarrera(@PathVariable int id){
+    public CarreraDTO getSingleCarrera(@PathVariable int id){
         return _CarreraService.getCarreraById(id);
     }
 
     @GetMapping
-    public List<Carrera> getAllCarreras(){
+    public List<CarreraDTO> getAllCarreras(){
         return _CarreraService.getAllCarreras();
     }
 
     @PostMapping
-    public Carrera saveCarrera(@RequestBody Carrera newCarrera){
-        Carrera result = _CarreraService.saveCarrera((newCarrera));
-        return result;
+    public CarreraDTO saveCarrera(@RequestBody Carrera newCarrera){
+        return _CarreraService.saveCarrera(newCarrera);
     }
 
-    @PutMapping
-    public Carrera updateCarrera(@RequestBody Carrera updatedCarrera){
-        Carrera result = _CarreraService.updateCarrera((updatedCarrera));
-        return result;
+    @PutMapping("{id}")
+    public CarreraDTO updateCarrera(@PathVariable int id, @RequestBody Carrera updatedCarrera){
+        return _CarreraService.updateCarrera(id, updatedCarrera);
 
     }
 

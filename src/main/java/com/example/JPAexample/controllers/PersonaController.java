@@ -1,5 +1,6 @@
 package com.example.JPAexample.controllers;
 
+import com.example.JPAexample.models.DTO.PersonaDTO;
 import com.example.JPAexample.models.Persona;
 import com.example.JPAexample.services.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,25 +21,23 @@ public class PersonaController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Persona> getSinglePersona(@PathVariable int id){
+    public PersonaDTO getSinglePersona(@PathVariable int id){
         return _personaService.getPersonaById(id);
     }
 
     @GetMapping
-    public List<Persona> getAllPersonas(){
+    public List<PersonaDTO> getAllPersonas(){
         return _personaService.getAllPersonas();
     }
 
     @PostMapping
-    public Persona savePersona(@RequestBody Persona newPersona){
-        Persona result = _personaService.savePersona((newPersona));
-        return result;
+    public PersonaDTO savePersona(@RequestBody Persona newPersona){
+        return _personaService.savePersona(newPersona);
     }
 
-    @PutMapping
-    public Persona updatePersona(@RequestBody Persona updatedPersona){
-        Persona result = _personaService.updatePersona((updatedPersona));
-        return result;
+    @PutMapping("{id}")
+    public PersonaDTO updatePersona(@PathVariable int id, @RequestBody Persona updatedPersona){
+        return _personaService.updatePersona(id, updatedPersona);
     }
 
     @DeleteMapping("/{id}")

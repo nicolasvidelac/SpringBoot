@@ -1,89 +1,64 @@
 package com.example.JPAexample.services;
 
 import com.example.JPAexample.models.Carrera;
+import com.example.JPAexample.models.DTO.CarreraDTO;
 import com.example.JPAexample.repositories.CarreraRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CarreraService {
+
     @Autowired
     private CarreraRepository _carreraRepository;
 
-    public Carrera saveCarrera(Carrera newCarrera){
+    @Autowired
+    private ModelMapper _modelMapper;
 
-        Carrera result;
-        try {
-            result = _carreraRepository.saveAndFlush(newCarrera);
-            return result;
+    public CarreraDTO saveCarrera(Carrera newCarrera){
 
-        } catch (Exception e){
-            System.out.println(e);
+        Carrera entity = _carreraRepository.saveAndFlush(newCarrera);
+        return _modelMapper.map(entity, CarreraDTO.class);
 
-            throw new ResponseStatusException(
-                    HttpStatus.UNPROCESSABLE_ENTITY, "formato no valido"
-            );
-        }
     }
 
-    public Carrera updateCarrera(Carrera updateCarrera){
+    public CarreraDTO updateCarrera(int id, Carrera updateCarrera){
 
+        Carrera entity = _carreraRepository.getOne(id);
+        entity.setNombre(updateCarrera.getNombre());
+        entity.setCodigo(updateCarrera.getCodigo());
 
-        try {
-            Carrera entity = _carreraRepository.getOne(updateCarrera.getId());
-            entity.setNombre(updateCarrera.getNombre());
-            entity.setCodigo(updateCarrera.getCodigo());
+        entity = _carreraRepository.saveAndFlush(entity);
 
-            return _carreraRepository.saveAndFlush(entity);
-
-        } catch (Exception e){
-            System.out.println(e);
-
-            throw new ResponseStatusException(
-                    HttpStatus.UNPROCESSABLE_ENTITY, "formato no valido"
-            );
-        }
+        return _modelMapper.map(entity, CarreraDTO.class);
     }
 
 
-    public Optional getCarreraById(int id){
+    public CarreraDTO getCarreraById(int id){
 
-        Optional<Carrera> result = _carreraRepository.findById( id);
-        return result;
+        Carrera entity = _carreraRepository.getOne(id);
+        return _modelMapper.map(entity, CarreraDTO.class);
     }
 
-    public List<Carrera> getAllCarreras(){
-        try {
+    public List<CarreraDTO> getAllCarreras(){
 
-            return _carreraRepository.findAll();
+        List<Carrera> carreras = _carreraRepository.findAll();
+        List<CarreraDTO> entities = new ArrayList<>();
 
-        }catch (Exception e){
-
-            System.out.println(e);
-
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "error"
-            );
+        for (Carrera carrera: carreras) {
+            entities.add(_modelMapper.map(carrera, CarreraDTO.class));
         }
+
+        return entities;
+
     }
 
-    public boolean deleteCarrera(int id){
-
-        try {
-            _carreraRepository.deleteById(id);
-            return true;
-
-        }catch (Exception e){
-            System.out.println(e);
-
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "objeto no encontrado"
-            );
-        }
+    public boolean deleteCarrera(int id) {
+        _carreraRepository.deleteById(id);
+        return true;
     }
 }

@@ -2,18 +2,18 @@ package com.example.JPAexample.models;
 
 import lombok.*;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Entity(name = "Carrera")
-public class Carrera implements Comparable<Carrera> , Serializable {
+@Getter
+@Setter
+public class Carrera {
 
     @Id @GeneratedValue @Column(name = "id", updatable = false)
     private Integer id;
@@ -23,9 +23,4 @@ public class Carrera implements Comparable<Carrera> , Serializable {
 
     @Column(nullable = false, unique = true)
     private String codigo;
-
-    @Override
-    public int compareTo(Carrera o) {
-        return this.id > o.id ? 1 : this.id < o.id ? -1 : 0;
-    }
 }

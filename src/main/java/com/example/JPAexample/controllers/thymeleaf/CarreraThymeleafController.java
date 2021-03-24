@@ -1,6 +1,7 @@
 package com.example.JPAexample.controllers.thymeleaf;
 
 import com.example.JPAexample.models.Carrera;
+import com.example.JPAexample.models.DTO.CarreraDTO;
 import com.example.JPAexample.services.CarreraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class CarreraThymeleafController {
 
     @GetMapping("/sorted")
     public String sortCarreras(Model model){
-        TreeSet result = new TreeSet<Carrera>();
+        TreeSet result = new TreeSet<CarreraDTO>();
         result.addAll(_carreraService.getAllCarreras());
 
         model.addAttribute("message", "Esta es una lista de Carreras ordenada");
