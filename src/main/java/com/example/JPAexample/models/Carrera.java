@@ -3,27 +3,26 @@ package com.example.JPAexample.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Entity(name = "Carrera")
-public class Carrera implements Comparable<Carrera> {
+public class Carrera implements Comparable<Carrera> , Serializable {
 
     @Id @GeneratedValue @Column(name = "id", updatable = false)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String nombre;
 
     @Column(nullable = false, unique = true)
     private String codigo;
-
-    @OneToMany(mappedBy = "carrera", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Alumno> alumno;
 
     @Override
     public int compareTo(Carrera o) {

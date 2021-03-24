@@ -43,7 +43,7 @@ public class AlumnoThymeleafController {
     }
 
     @GetMapping(value = "/{id}",  produces = "application/json")
-    public String getAlumno(@PathVariable long id, Model model){
+    public String getAlumno(@PathVariable Integer id, Model model){
         model.addAttribute("alumnos", _alumnoService.getAlumnoById(id));
         return "sample_list";
     }

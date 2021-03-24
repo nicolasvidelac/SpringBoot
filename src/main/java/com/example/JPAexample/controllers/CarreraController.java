@@ -20,7 +20,7 @@ public class CarreraController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Carrera> getSingleCarrera(@PathVariable Long id){
+    public Optional<Carrera> getSingleCarrera(@PathVariable int id){
         return _CarreraService.getCarreraById(id);
     }
 
@@ -31,14 +31,19 @@ public class CarreraController {
 
     @PostMapping
     public Carrera saveCarrera(@RequestBody Carrera newCarrera){
-
         Carrera result = _CarreraService.saveCarrera((newCarrera));
+        return result;
+    }
+
+    @PutMapping
+    public Carrera updateCarrera(@RequestBody Carrera updatedCarrera){
+        Carrera result = _CarreraService.updateCarrera((updatedCarrera));
         return result;
 
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteCarrera(@PathVariable Long id){
+    public boolean deleteCarrera(@PathVariable int id){
         return _CarreraService.deleteCarrera(id);
     }
 }

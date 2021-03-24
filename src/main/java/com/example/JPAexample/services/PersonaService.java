@@ -32,7 +32,29 @@ public class PersonaService {
         }
     }
 
-    public Optional getPersonaById(Long id){
+    public Persona updatePersona(Persona updatedPersona){
+
+        Persona result;
+
+        try {
+            result = _personaRepository.getOne(updatedPersona.getId());
+
+            result.setApellido(updatedPersona.getApellido());
+            result.setNombre(updatedPersona.getNombre());
+            result.setEdad(updatedPersona.getEdad());
+
+            return _personaRepository.saveAndFlush(result);
+
+        } catch (Exception e){
+            System.out.println(e);
+
+            throw new ResponseStatusException(
+                    HttpStatus.UNPROCESSABLE_ENTITY, "formato no valido"
+            );
+        }
+    }
+
+    public Optional getPersonaById(int id){
 
         Optional<Persona> result = _personaRepository.findById( id);
         return result;
@@ -52,7 +74,7 @@ public class PersonaService {
         }
     }
 
-    public boolean deletePersona(Long id){
+    public boolean deletePersona(int id){
 
         try {
             _personaRepository.deleteById(id);

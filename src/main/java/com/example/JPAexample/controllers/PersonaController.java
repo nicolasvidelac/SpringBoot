@@ -20,7 +20,7 @@ public class PersonaController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Persona> getSinglePersona(@PathVariable Long id){
+    public Optional<Persona> getSinglePersona(@PathVariable int id){
         return _personaService.getPersonaById(id);
     }
 
@@ -31,14 +31,18 @@ public class PersonaController {
 
     @PostMapping
     public Persona savePersona(@RequestBody Persona newPersona){
-
         Persona result = _personaService.savePersona((newPersona));
         return result;
+    }
 
+    @PutMapping
+    public Persona updatePersona(@RequestBody Persona updatedPersona){
+        Persona result = _personaService.updatePersona((updatedPersona));
+        return result;
     }
 
     @DeleteMapping("/{id}")
-    public boolean deletePersona(@PathVariable Long id){
+    public boolean deletePersona(@PathVariable int id){
         return _personaService.deletePersona(id);
     }
 }

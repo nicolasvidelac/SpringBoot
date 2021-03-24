@@ -3,6 +3,7 @@ package com.example.JPAexample.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -11,10 +12,10 @@ import javax.persistence.*;
 @ToString
 @Entity(name = "Persona")
 @Inheritance( strategy = InheritanceType.JOINED)
-public class Persona implements Comparable<Persona>{
+public class Persona implements Comparable<Persona>, Serializable {
 
     @Id @GeneratedValue @Column(name = "id", updatable = false)
-    private Long id;
+    private Integer id;
 
     @Column( nullable = false)
     private String nombre;
