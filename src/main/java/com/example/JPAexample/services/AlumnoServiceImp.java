@@ -1,5 +1,7 @@
 package com.example.JPAexample.services;
 
+import com.example.JPAexample.exceptions.MissingInfoException;
+import com.example.JPAexample.exceptions.RecordNotFoundException;
 import com.example.JPAexample.models.Alumno;
 import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
@@ -29,10 +31,17 @@ public class AlumnoServiceImp implements AlumnoService {
 
         Alumno alumno = _modelMapper.map(newAlumno, Alumno.class);
 
-        Carrera carrera = _carreraRepository.getOne(newAlumno.getCarrera_id());
+        Carrera carrera = _carreraRepository.findById(newAlumno.getCarrera_id()).orElseThrow(() ->
+                new RecordNotFoundException( "Carrera con id '" + newAlumno.getCarrera_id() + "' no existe")
+        );
+
         alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo()));
 
-        alumno = _alumnoRepository.saveAndFlush(alumno);
+        try {
+            alumno = _alumnoRepository.saveAndFlush(alumno);
+        } catch (Exception e){
+            throw new MissingInfoException("Los parámetros ingresados no son válidos");
+        }
 
         AlumnoDTO alumnoDTO = _modelMapper.map(alumno, AlumnoDTO.class);
 
@@ -44,7 +53,9 @@ public class AlumnoServiceImp implements AlumnoService {
 
     public AlumnoDTO updateAlumno(int id, AlumnoDTO updatedAlumno){
 
-        Alumno alumno = _alumnoRepository.getOne(id);
+        Alumno alumno = _alumnoRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
+                "Alumno con id '" + id + "' no existe"
+        ));
 
         alumno.setNombre(updatedAlumno.getNombre());
         alumno.setApellido(updatedAlumno.getApellido());
@@ -52,12 +63,18 @@ public class AlumnoServiceImp implements AlumnoService {
         alumno.setEmail(updatedAlumno.getEmail());
         alumno.setLegajo(updatedAlumno.getLegajo());
 
-        if (updatedAlumno.getCarrera_id() != alumno.getCarrera().getId()){
-            Carrera carrera = _carreraRepository.getOne(updatedAlumno.getCarrera_id());
+        if (updatedAlumno.getCarrera_id() != alumno.getCarrera().getId()){ //Si modifico la carrera, ejecuto esto
+            Carrera carrera = _carreraRepository.findById(updatedAlumno.getCarrera_id()).orElseThrow(() ->
+                    new RecordNotFoundException( "Carrera con id '" + updatedAlumno.getCarrera_id() + "' no existe")
+            );
             alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo()));
         }
 
-        alumno = _alumnoRepository.saveAndFlush(alumno);
+        try {
+            alumno = _alumnoRepository.saveAndFlush(alumno);
+        } catch (Exception e){
+            throw new MissingInfoException("Los parámetros ingresados no son válidos");
+        }
 
         AlumnoDTO alumnoDTO = _modelMapper.map(alumno, AlumnoDTO.class);
 
@@ -69,7 +86,9 @@ public class AlumnoServiceImp implements AlumnoService {
 
     public AlumnoDTO getAlumnoById(Integer id){
 
-        Alumno alumno = _alumnoRepository.getOne(id);
+        Alumno alumno = _alumnoRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
+                "Alumno con id '" + id + "' no existe"
+        ));
 
         AlumnoDTO alumnoDTO = _modelMapper.map(alumno, AlumnoDTO.class);
 
@@ -97,7 +116,15 @@ public class AlumnoServiceImp implements AlumnoService {
     }
 
     public boolean deleteAlumno(int id) {
-        _alumnoRepository.deleteById(id);
-        return true;
+
+        try{
+            _alumnoRepository.deleteById(id);
+            return true;
+
+        } catch (Exception e){
+            throw new RecordNotFoundException(
+                    "Alumno con id '" + id + "' no existe"
+            );
+        }
     }
 }
