@@ -30,11 +30,15 @@ http://localhost:8080/alumnos/{id}
 Desde la api podemos utilizar get, post, put y delete. A continuacion se muestran ejemplos utilizando alumnos, pero tambien funciona de la misma manera para personas y carreras.
 
 #### GET
+todos los alumnos:
 ```
 http://localhost:8080/api/v1/alumnos
 ```
-
-### POST
+un solo alumno:
+```
+http://localhost:8080/api/v1/alumnos/{id}
+```
+#### POST
 ```
 http://localhost:8080/api/v1/alumnos
 ```
@@ -50,7 +54,7 @@ JSON BODY:
     }
 ```
 
-### PUT
+#### PUT
 ```
 http://localhost:8080/api/v1/alumnos/{id}
 ```
@@ -65,7 +69,7 @@ JSON BODY:
         "carrera_id": 1
     }
 ```
-### DELETE
+#### DELETE
 ```
 http://localhost:8080/api/v1/alumnos/{id}
 ```
