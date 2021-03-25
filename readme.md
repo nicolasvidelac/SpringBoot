@@ -23,7 +23,7 @@ http://localhost:8080/alumnos/sorted
 
 para ver un objeto en particular:
 ```
-http://localhost:8080/alumnos/{id}
+http://localhost:8080/alumnos?id={id}
 ```
 
 ### API
