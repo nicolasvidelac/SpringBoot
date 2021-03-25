@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Optional;
 import java.util.TreeSet;
 
 @Controller
@@ -24,8 +23,8 @@ public class AlumnoThymeleafController {
     }
 
     @GetMapping
-    public String getAlumnos(Model model, @RequestParam(required = false) Integer id){
-        if (id != null){
+    public String getAlumnos(Model model, @RequestParam(required = false) Integer id) {
+        if (id != null) {
             model.addAttribute("message", "Búsqueda de alumno");
             model.addAttribute("alumnos", _alumnoService.getAlumnoById(id));
         } else {
@@ -38,7 +37,7 @@ public class AlumnoThymeleafController {
     }
 
     @GetMapping("/sorted")
-    public String sortAlumnos(Model model){
+    public String sortAlumnos(Model model) {
         TreeSet result = new TreeSet<AlumnoDTO>();
         result.addAll(_alumnoService.getAllAlumnos());
 

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,8 +23,8 @@ public class PersonaThymeleafController {
     }
 
     @GetMapping
-    public String getPersonas(Model model, @RequestParam(required = false) Integer id){
-        if (id != null){
+    public String getPersonas(Model model, @RequestParam(required = false) Integer id) {
+        if (id != null) {
             model.addAttribute("message", "Búsqueda de persona");
             model.addAttribute("personas", _personaService.getPersonaById(id));
         } else {
@@ -36,7 +35,7 @@ public class PersonaThymeleafController {
     }
 
     @GetMapping("/sorted")
-    public String sortPersonas(Model model){
+    public String sortPersonas(Model model) {
         TreeSet result = new TreeSet<PersonaDTO>();
         result.addAll(_personaService.getAllPersonas());
 

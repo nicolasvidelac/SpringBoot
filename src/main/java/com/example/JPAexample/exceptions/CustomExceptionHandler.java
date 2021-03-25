@@ -12,11 +12,11 @@ import java.util.List;
 
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private String INCORRECT_REQUEST = "INCORRECT_REQUEST";
-    private String BAD_REQUEST = "BAD_REQUEST";
+    private final String INCORRECT_REQUEST = "INCORRECT_REQUEST";
+    private final String BAD_REQUEST = "BAD_REQUEST";
 
     @ExceptionHandler(RecordNotFoundException.class)
-    public final ResponseEntity<ErrorResponse> handleNotFoundException(RecordNotFoundException ex, WebRequest request){
+    public final ResponseEntity<ErrorResponse> handleNotFoundException(RecordNotFoundException ex, WebRequest request) {
         List<String> details = new ArrayList<>();
         details.add(ex.getLocalizedMessage());
         ErrorResponse err = new ErrorResponse(INCORRECT_REQUEST, details);
@@ -25,7 +25,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(MissingInfoException.class)
-    public final ResponseEntity<ErrorResponse> handleInvalidTraceException (MissingInfoException ex, WebRequest request){
+    public final ResponseEntity<ErrorResponse> handleInvalidTraceException(MissingInfoException ex, WebRequest request) {
         List<String> details = new ArrayList<>();
         details.add(ex.getLocalizedMessage());
         ErrorResponse err = new ErrorResponse(BAD_REQUEST, details);

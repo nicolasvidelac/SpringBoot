@@ -23,12 +23,12 @@ public class CarreraThymeleafController {
     }
 
     @GetMapping
-    public String getCarreras(Model model, @RequestParam(required = false) Integer id){
+    public String getCarreras(Model model, @RequestParam(required = false) Integer id) {
 
-        if (id != null){
+        if (id != null) {
             model.addAttribute("message", "Búsqueda de carrera");
             model.addAttribute("carreras", _carreraService.getCarreraById(id));
-        }else{
+        } else {
             model.addAttribute("message", "Esta es una lista de Carreras sin orden");
             model.addAttribute("carreras", _carreraService.getAllCarreras());
         }
@@ -38,7 +38,7 @@ public class CarreraThymeleafController {
     }
 
     @GetMapping("/sorted")
-    public String sortCarreras(Model model){
+    public String sortCarreras(Model model) {
         TreeSet result = new TreeSet<CarreraDTO>();
         result.addAll(_carreraService.getAllCarreras());
 

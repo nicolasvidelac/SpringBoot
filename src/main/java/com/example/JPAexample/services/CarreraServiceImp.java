@@ -22,14 +22,14 @@ public class CarreraServiceImp implements CarreraService {
     @Autowired
     private ModelMapper _modelMapper;
 
-    public CarreraDTO saveCarrera(CarreraDTO newCarrera){
+    public CarreraDTO saveCarrera(CarreraDTO newCarrera) {
         Carrera entity = _modelMapper.map(newCarrera, Carrera.class);
 
         entity.setId(null); //si es que viene con el id, funciona como un update
 
-        try{
+        try {
             entity = _carreraRepository.saveAndFlush(entity);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
         }
 
@@ -37,7 +37,7 @@ public class CarreraServiceImp implements CarreraService {
 
     }
 
-    public CarreraDTO updateCarrera(int id, CarreraDTO updateCarrera){
+    public CarreraDTO updateCarrera(int id, CarreraDTO updateCarrera) {
 
         Carrera entity = _carreraRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Carrera con id '" + id + "' no existe"
@@ -46,9 +46,9 @@ public class CarreraServiceImp implements CarreraService {
         entity.setNombre(updateCarrera.getNombre());
         entity.setCodigo(updateCarrera.getCodigo());
 
-        try{
+        try {
             entity = _carreraRepository.saveAndFlush(entity);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
         }
 
@@ -56,7 +56,7 @@ public class CarreraServiceImp implements CarreraService {
     }
 
 
-    public CarreraDTO getCarreraById(int id){
+    public CarreraDTO getCarreraById(int id) {
 
         Carrera entity = _carreraRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Carrera con id '" + id + "' no existe"
@@ -64,12 +64,12 @@ public class CarreraServiceImp implements CarreraService {
         return _modelMapper.map(entity, CarreraDTO.class);
     }
 
-    public List<CarreraDTO> getAllCarreras(){
+    public List<CarreraDTO> getAllCarreras() {
 
         List<Carrera> carreras = _carreraRepository.findAll();
         List<CarreraDTO> entities = new ArrayList<>();
 
-        for (Carrera carrera: carreras) {
+        for (Carrera carrera : carreras) {
             entities.add(_modelMapper.map(carrera, CarreraDTO.class));
         }
 
@@ -78,12 +78,12 @@ public class CarreraServiceImp implements CarreraService {
     }
 
     public boolean deleteCarrera(int id) {
-        try{
+        try {
             _carreraRepository.deleteById(id);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RecordNotFoundException(
-                "Carrera con id '" + id + "' no existe"
+                    "Carrera con id '" + id + "' no existe"
             );
         }
 

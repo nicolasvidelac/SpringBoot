@@ -22,7 +22,7 @@ public class PersonaServiceImp implements PersonaService {
     @Autowired
     private ModelMapper _modelMapper;
 
-    public PersonaDTO savePersona(PersonaDTO newPersona){
+    public PersonaDTO savePersona(PersonaDTO newPersona) {
 
         Persona entity = _modelMapper.map(newPersona, Persona.class);
 
@@ -30,14 +30,14 @@ public class PersonaServiceImp implements PersonaService {
 
         try {
             entity = _personaRepository.saveAndFlush(entity);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
         }
 
         return _modelMapper.map(entity, PersonaDTO.class);
     }
 
-    public PersonaDTO updatePersona(int id, PersonaDTO updatedPersona){
+    public PersonaDTO updatePersona(int id, PersonaDTO updatedPersona) {
 
         Persona entity = _personaRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Persona con id '" + id + "' no existe"
@@ -49,14 +49,14 @@ public class PersonaServiceImp implements PersonaService {
 
         try {
             entity = _personaRepository.saveAndFlush(entity);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
         }
 
         return _modelMapper.map(entity, PersonaDTO.class);
     }
 
-    public PersonaDTO getPersonaById(int id){
+    public PersonaDTO getPersonaById(int id) {
 
         Persona entity = _personaRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Persona con id '" + id + "' no existe"
@@ -65,23 +65,23 @@ public class PersonaServiceImp implements PersonaService {
         return _modelMapper.map(entity, PersonaDTO.class);
     }
 
-    public List<PersonaDTO> getAllPersonas(){
+    public List<PersonaDTO> getAllPersonas() {
         List<Persona> personas = _personaRepository.findAll();
         List<PersonaDTO> entities = new ArrayList<>();
 
-        for(Persona persona : personas){
+        for (Persona persona : personas) {
             entities.add(_modelMapper.map(persona, PersonaDTO.class));
         }
 
         return entities;
     }
 
-    public boolean deletePersona(int id){
+    public boolean deletePersona(int id) {
 
-        try{
+        try {
             _personaRepository.deleteById(id);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RecordNotFoundException(
                     "Persona con id '" + id + "' no existe"
             );

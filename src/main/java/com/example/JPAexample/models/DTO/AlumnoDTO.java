@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AlumnoDTO implements Comparable<AlumnoDTO>{
+public class AlumnoDTO implements Comparable<AlumnoDTO> {
 
     private Integer id;
     private String nombre;

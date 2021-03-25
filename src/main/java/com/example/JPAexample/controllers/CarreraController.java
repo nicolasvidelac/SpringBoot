@@ -1,6 +1,5 @@
 package com.example.JPAexample.controllers;
 
-import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.models.DTO.CarreraDTO;
 import com.example.JPAexample.services.interfaces.CarreraService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,28 +19,28 @@ public class CarreraController {
     }
 
     @GetMapping("/{id}")
-    public CarreraDTO getSingleCarrera(@PathVariable int id){
+    public CarreraDTO getSingleCarrera(@PathVariable int id) {
         return _carreraService.getCarreraById(id);
     }
 
     @GetMapping
-    public List<CarreraDTO> getAllCarreras(){
+    public List<CarreraDTO> getAllCarreras() {
         return _carreraService.getAllCarreras();
     }
 
     @PostMapping
-    public CarreraDTO saveCarrera(@RequestBody CarreraDTO newCarrera){
+    public CarreraDTO saveCarrera(@RequestBody CarreraDTO newCarrera) {
         return _carreraService.saveCarrera(newCarrera);
     }
 
     @PutMapping("{id}")
-    public CarreraDTO updateCarrera(@PathVariable int id, @RequestBody CarreraDTO updatedCarrera){
+    public CarreraDTO updateCarrera(@PathVariable int id, @RequestBody CarreraDTO updatedCarrera) {
         return _carreraService.updateCarrera(id, updatedCarrera);
 
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteCarrera(@PathVariable int id){
+    public boolean deleteCarrera(@PathVariable int id) {
         return _carreraService.deleteCarrera(id);
     }
 }

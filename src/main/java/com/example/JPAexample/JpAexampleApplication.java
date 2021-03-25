@@ -9,16 +9,16 @@ import org.springframework.context.annotation.Bean;
 public class JpAexampleApplication {
 
 
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
+    public static void main(String[] args) {
 
-	public static void main(String[] args) {
-
-		SpringApplication.run(JpAexampleApplication.class, args);
+        SpringApplication.run(JpAexampleApplication.class, args);
 
 
-	}
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
 }

@@ -15,7 +15,9 @@ import javax.persistence.Id;
 @Setter
 public class Carrera {
 
-    @Id @GeneratedValue @Column(name = "id", updatable = false)
+    @Id
+    @GeneratedValue
+    @Column(name = "id", updatable = false)
     private Integer id;
 
     @Column(nullable = false, unique = true)

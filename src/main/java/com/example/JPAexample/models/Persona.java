@@ -8,21 +8,23 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Entity(name = "Persona")
-@Inheritance( strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
 public class Persona {
 
-    @Id @GeneratedValue @Column(name = "id", updatable = false)
+    @Id
+    @GeneratedValue
+    @Column(name = "id", updatable = false)
     private Integer id;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private String nombre;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private String apellido;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private int edad;
 
 }

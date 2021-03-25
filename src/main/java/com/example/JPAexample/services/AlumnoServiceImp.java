@@ -27,19 +27,19 @@ public class AlumnoServiceImp implements AlumnoService {
     @Autowired
     private ModelMapper _modelMapper;
 
-    public AlumnoDTO saveAlumno(AlumnoDTO newAlumno){
+    public AlumnoDTO saveAlumno(AlumnoDTO newAlumno) {
 
         Alumno alumno = _modelMapper.map(newAlumno, Alumno.class);
 
         Carrera carrera = _carreraRepository.findById(newAlumno.getCarrera_id()).orElseThrow(() ->
-                new RecordNotFoundException( "Carrera con id '" + newAlumno.getCarrera_id() + "' no existe")
+                new RecordNotFoundException("Carrera con id '" + newAlumno.getCarrera_id() + "' no existe")
         );
 
         alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo()));
 
         try {
             alumno = _alumnoRepository.saveAndFlush(alumno);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
         }
 
@@ -51,7 +51,7 @@ public class AlumnoServiceImp implements AlumnoService {
         return alumnoDTO;
     }
 
-    public AlumnoDTO updateAlumno(int id, AlumnoDTO updatedAlumno){
+    public AlumnoDTO updateAlumno(int id, AlumnoDTO updatedAlumno) {
 
         Alumno alumno = _alumnoRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Alumno con id '" + id + "' no existe"
@@ -63,16 +63,16 @@ public class AlumnoServiceImp implements AlumnoService {
         alumno.setEmail(updatedAlumno.getEmail());
         alumno.setLegajo(updatedAlumno.getLegajo());
 
-        if (updatedAlumno.getCarrera_id() != alumno.getCarrera().getId()){ //Si modifico la carrera, ejecuto esto
+        if (updatedAlumno.getCarrera_id() != alumno.getCarrera().getId()) { //Si modifico la carrera, ejecuto esto
             Carrera carrera = _carreraRepository.findById(updatedAlumno.getCarrera_id()).orElseThrow(() ->
-                    new RecordNotFoundException( "Carrera con id '" + updatedAlumno.getCarrera_id() + "' no existe")
+                    new RecordNotFoundException("Carrera con id '" + updatedAlumno.getCarrera_id() + "' no existe")
             );
             alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo()));
         }
 
         try {
             alumno = _alumnoRepository.saveAndFlush(alumno);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
         }
 
@@ -84,7 +84,7 @@ public class AlumnoServiceImp implements AlumnoService {
         return alumnoDTO;
     }
 
-    public AlumnoDTO getAlumnoById(Integer id){
+    public AlumnoDTO getAlumnoById(Integer id) {
 
         Alumno alumno = _alumnoRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Alumno con id '" + id + "' no existe"
@@ -99,29 +99,29 @@ public class AlumnoServiceImp implements AlumnoService {
         return alumnoDTO;
     }
 
-    public List<AlumnoDTO> getAllAlumnos(){
+    public List<AlumnoDTO> getAllAlumnos() {
 
-            List<Alumno> alumnos = _alumnoRepository.findAll();
-            List<AlumnoDTO> result = new ArrayList<>();
+        List<Alumno> alumnos = _alumnoRepository.findAll();
+        List<AlumnoDTO> result = new ArrayList<>();
 
-            for (Alumno entity: alumnos) {
-                AlumnoDTO alumnoDTO = _modelMapper.map(entity, AlumnoDTO.class);
+        for (Alumno entity : alumnos) {
+            AlumnoDTO alumnoDTO = _modelMapper.map(entity, AlumnoDTO.class);
 
-                alumnoDTO.setCarrera_nombre(entity.getCarrera().getNombre());
-                alumnoDTO.setCarrera_codigo(entity.getCarrera().getCodigo());
-                alumnoDTO.setCarrera_id(entity.getCarrera().getId());
-                result.add(alumnoDTO);
-            }
-            return result;
+            alumnoDTO.setCarrera_nombre(entity.getCarrera().getNombre());
+            alumnoDTO.setCarrera_codigo(entity.getCarrera().getCodigo());
+            alumnoDTO.setCarrera_id(entity.getCarrera().getId());
+            result.add(alumnoDTO);
+        }
+        return result;
     }
 
     public boolean deleteAlumno(int id) {
 
-        try{
+        try {
             _alumnoRepository.deleteById(id);
             return true;
 
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RecordNotFoundException(
                     "Alumno con id '" + id + "' no existe"
             );
