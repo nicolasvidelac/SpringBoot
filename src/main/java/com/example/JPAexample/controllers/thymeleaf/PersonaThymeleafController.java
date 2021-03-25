@@ -43,6 +43,7 @@ public class PersonaThymeleafController {
 
     @GetMapping(value = "/{id}",  produces = "application/json")
     public String getPersona(@PathVariable int id, Model model){
+        model.addAttribute("message", "Búsqueda de persona");
         model.addAttribute("personas", _personaService.getPersonaById(id));
         return "sample_list";
     }
