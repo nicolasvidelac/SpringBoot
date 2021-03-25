@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.TreeSet;
 
@@ -23,10 +23,16 @@ public class CarreraThymeleafController {
     }
 
     @GetMapping
-    public String getAllCarreras(Model model){
+    public String getCarreras(Model model, @RequestParam(required = false) Integer id){
 
-        model.addAttribute("message", "Esta es una lista de Carreras sin orden");
-        model.addAttribute("carreras", _carreraService.getAllCarreras());
+        if (id != null){
+            model.addAttribute("message", "Búsqueda de carrera");
+            model.addAttribute("carreras", _carreraService.getCarreraById(id));
+        }else{
+            model.addAttribute("message", "Esta es una lista de Carreras sin orden");
+            model.addAttribute("carreras", _carreraService.getAllCarreras());
+        }
+
 
         return "sample_list";
     }
@@ -38,13 +44,6 @@ public class CarreraThymeleafController {
 
         model.addAttribute("message", "Esta es una lista de Carreras ordenada");
         model.addAttribute("carreras", result);
-        return "sample_list";
-    }
-
-    @GetMapping(value = "/{id}",  produces = "application/json")
-    public String getCarrera(@PathVariable int id, Model model){
-        model.addAttribute("message", "Búsqueda de carrera");
-        model.addAttribute("carreras", _carreraService.getCarreraById(id));
         return "sample_list";
     }
 }

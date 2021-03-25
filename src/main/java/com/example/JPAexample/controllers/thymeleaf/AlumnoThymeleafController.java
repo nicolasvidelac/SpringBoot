@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Optional;
 import java.util.TreeSet;
 
 @Controller
@@ -23,10 +24,15 @@ public class AlumnoThymeleafController {
     }
 
     @GetMapping
-    public String getAllAlumnos(Model model){
+    public String getAlumnos(Model model, @RequestParam(required = false) Integer id){
+        if (id != null){
+            model.addAttribute("message", "Búsqueda de alumno");
+            model.addAttribute("alumnos", _alumnoService.getAlumnoById(id));
+        } else {
+            model.addAttribute("message", "Esta es una lista de Alumnos sin orden");
+            model.addAttribute("alumnos", _alumnoService.getAllAlumnos());
+        }
 
-        model.addAttribute("message", "Esta es una lista de Alumnos sin orden");
-        model.addAttribute("alumnos", _alumnoService.getAllAlumnos());
 
         return "sample_list";
     }
@@ -41,11 +47,5 @@ public class AlumnoThymeleafController {
         return "sample_list";
     }
 
-    @GetMapping(value = "/{id}",  produces = "application/json")
-    public String getAlumno(@PathVariable Integer id, Model model){
-        model.addAttribute("message", "Búsqueda de alumno");
-        model.addAttribute("alumnos", _alumnoService.getAlumnoById(id));
-        return "sample_list";
-    }
 }
 
