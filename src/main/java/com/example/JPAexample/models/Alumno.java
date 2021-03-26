@@ -1,12 +1,19 @@
 package com.example.JPAexample.models;
 
+import lombok.*;
+
 import javax.persistence.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity(name= "Alumno")
-public class Alumno extends Persona{
+@Getter
+@Setter
+public class Alumno extends Persona {
 
     @Id @GeneratedValue @Column(name = "id", updatable = false)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String legajo;
@@ -18,41 +25,4 @@ public class Alumno extends Persona{
     @JoinColumn( name = "carrera_id", nullable = false )
     private Carrera carrera;
 
-    public Alumno(String nombre, String apellido, int edad, String legajo, String email, Carrera carrera) {
-        super(nombre, apellido, edad);
-        this.legajo = legajo;
-        this.email = email;
-        this.carrera = carrera;
-    }
-
-    public void setLegajo(String legajo) {
-        this.legajo = legajo;
-    }
-
-    public Carrera getCarrera() {
-        return carrera;
-    }
-
-    public void setCarrera(Carrera carrera) {
-        this.carrera = carrera;
-    }
-
-    public Alumno() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getLegajo() {
-        return legajo;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
