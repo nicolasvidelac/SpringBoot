@@ -1,13 +1,17 @@
 package com.example.JPAexample.services;
 
 import com.example.JPAexample.exceptions.MissingInfoException;
+import com.example.JPAexample.exceptions.NotAcceptableException;
 import com.example.JPAexample.exceptions.RecordNotFoundException;
 import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.models.DTO.CarreraDTO;
 import com.example.JPAexample.repositories.CarreraRepository;
 import com.example.JPAexample.services.interfaces.CarreraService;
+import org.hibernate.exception.ConstraintViolationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -81,11 +85,17 @@ public class CarreraServiceImp implements CarreraService {
         try {
             _carreraRepository.deleteById(id);
             return true;
-        } catch (Exception e) {
+
+        } catch (EmptyResultDataAccessException e) {
             throw new RecordNotFoundException(
                     "Carrera con id '" + id + "' no existe"
             );
+        } catch (DataIntegrityViolationException e){
+            throw new NotAcceptableException(
+                    "La Carrera no puede ser eliminada porque esta siendo utilizada por al menos un Alumno"
+            );
+        } catch (Exception e){
+            throw e;
         }
-
     }
 }

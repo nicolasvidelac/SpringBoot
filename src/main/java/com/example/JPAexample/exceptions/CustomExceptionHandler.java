@@ -14,6 +14,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final String INCORRECT_REQUEST = "INCORRECT_REQUEST";
     private final String BAD_REQUEST = "BAD_REQUEST";
+    private final String NOT_ACCEPTABLE = "NOT_ACCEPTABLE";
 
     @ExceptionHandler(RecordNotFoundException.class)
     public final ResponseEntity<ErrorResponse> handleNotFoundException(RecordNotFoundException ex, WebRequest request) {
@@ -30,6 +31,14 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         details.add(ex.getLocalizedMessage());
         ErrorResponse err = new ErrorResponse(BAD_REQUEST, details);
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotAcceptableException.class)
+    public final ResponseEntity<ErrorResponse> handleNotAllowedException(NotAcceptableException ex, WebRequest request) {
+        List<String> details = new ArrayList<>();
+        details.add(ex.getLocalizedMessage());
+        ErrorResponse err = new ErrorResponse(NOT_ACCEPTABLE, details);
+        return new ResponseEntity<>(err, HttpStatus.NOT_ACCEPTABLE);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.JPAexample.services;
 
 import com.example.JPAexample.exceptions.MissingInfoException;
+import com.example.JPAexample.exceptions.NotAcceptableException;
 import com.example.JPAexample.exceptions.RecordNotFoundException;
 import com.example.JPAexample.models.DTO.PersonaDTO;
 import com.example.JPAexample.models.Persona;
@@ -8,6 +9,8 @@ import com.example.JPAexample.repositories.PersonaRepository;
 import com.example.JPAexample.services.interfaces.PersonaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -81,10 +84,12 @@ public class PersonaServiceImp implements PersonaService {
         try {
             _personaRepository.deleteById(id);
             return true;
-        } catch (Exception e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new RecordNotFoundException(
                     "Persona con id '" + id + "' no existe"
             );
+        } catch (Exception e){
+            throw e;
         }
     }
 
