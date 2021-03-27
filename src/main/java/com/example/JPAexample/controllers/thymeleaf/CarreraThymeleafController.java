@@ -3,6 +3,7 @@ package com.example.JPAexample.controllers.thymeleaf;
 import com.example.JPAexample.models.DTO.CarreraDTO;
 import com.example.JPAexample.services.interfaces.CarreraService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,27 +24,20 @@ public class CarreraThymeleafController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('carrera:read')")
     public String getCarreras(Model model, @RequestParam(required = false) Integer id) {
 
         if (id != null) {
             model.addAttribute("message", "Búsqueda de carrera");
             model.addAttribute("carreras", _carreraService.getCarreraById(id));
         } else {
-            model.addAttribute("message", "Esta es una lista de Carreras sin orden");
-            model.addAttribute("carreras", _carreraService.getAllCarreras());
+            TreeSet result = new TreeSet<CarreraDTO>();
+            result.addAll(_carreraService.getAllCarreras());
+
+            model.addAttribute("message", "Esta es una lista de Carreras ordenada");
+            model.addAttribute("carreras", result);
         }
 
-
-        return "sample_list";
-    }
-
-    @GetMapping("/sorted")
-    public String sortCarreras(Model model) {
-        TreeSet result = new TreeSet<CarreraDTO>();
-        result.addAll(_carreraService.getAllCarreras());
-
-        model.addAttribute("message", "Esta es una lista de Carreras ordenada");
-        model.addAttribute("carreras", result);
         return "sample_list";
     }
 }

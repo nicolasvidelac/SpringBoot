@@ -7,7 +7,6 @@ import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.models.DTO.CarreraDTO;
 import com.example.JPAexample.repositories.CarreraRepository;
 import com.example.JPAexample.services.interfaces.CarreraService;
-import org.hibernate.exception.ConstraintViolationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -90,11 +89,11 @@ public class CarreraServiceImp implements CarreraService {
             throw new RecordNotFoundException(
                     "Carrera con id '" + id + "' no existe"
             );
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new NotAcceptableException(
                     "La Carrera no puede ser eliminada porque esta siendo utilizada por al menos un Alumno"
             );
-        } catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }
