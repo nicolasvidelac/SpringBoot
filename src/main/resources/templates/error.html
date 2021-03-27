@@ -38,22 +38,21 @@
     <div class="starter-template">
         <h1>Spring Boot Web Thymeleaf</h1>
         <h2>
-            <span th:text="${message}"></span>
+            <span ></span>
         </h2>
+        <div>
+            <td>Error: </td>
+            <td th:text="${error}"/>
+        </div>
+        <div>
+            <td>Status: </td>
+            <td th:text="${status}"/>
+        </div>
+        <div>
+            <td>Message: </td>
+            <td th:text="${message}"/>
+        </div>
     </div>
-
-    <ol>
-        <li th:each="task : ${alumnos}" th:text="${task.nombre}+ ' ' + ${task.apellido} + ' con id ' + ${task.id} + ' anotado en la carrera: '+ ${task.carrera_nombre}"></li>
-    </ol>
-
-    <ol>
-        <li th:each="task : ${carreras}" th:text="${task.nombre}+ ' con codigo ' + ${task.codigo}"></li>
-    </ol>
-
-    <ol>
-        <li th:each="task : ${personas}" th:text="${task.nombre}+ ' ' + ${task.apellido} +', edad: ' + ${task.edad}"></li>
-    </ol>
-
 
 
 </main>
