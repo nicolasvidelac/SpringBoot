@@ -1,7 +1,7 @@
 package com.example.JPAexample.controllers;
 
+import com.example.JPAexample.dtoService.interfaces.AlumnoDTOService;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
-import com.example.JPAexample.services.interfaces.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +11,10 @@ import java.util.List;
 @RequestMapping(path = "api/v1/alumnos")
 public class AlumnoController {
 
-    private final AlumnoService _alumnoService;
+    private final AlumnoDTOService _alumnoService;
 
     @Autowired
-    public AlumnoController(AlumnoService _alumnoService) {
+    public AlumnoController(AlumnoDTOService _alumnoService) {
         this._alumnoService = _alumnoService;
     }
 

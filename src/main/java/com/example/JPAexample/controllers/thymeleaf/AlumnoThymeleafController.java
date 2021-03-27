@@ -1,7 +1,7 @@
 package com.example.JPAexample.controllers.thymeleaf;
 
+import com.example.JPAexample.dtoService.interfaces.AlumnoDTOService;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
-import com.example.JPAexample.services.interfaces.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +15,10 @@ import java.util.TreeSet;
 @RequestMapping(path = "/alumnos")
 public class AlumnoThymeleafController {
 
-    private final AlumnoService _alumnoService;
+    private final AlumnoDTOService _alumnoService;
 
     @Autowired
-    public AlumnoThymeleafController(AlumnoService _alumnoService) {
+    public AlumnoThymeleafController(AlumnoDTOService _alumnoService) {
         this._alumnoService = _alumnoService;
     }
 
