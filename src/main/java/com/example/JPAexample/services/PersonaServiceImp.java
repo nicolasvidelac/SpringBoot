@@ -20,25 +20,20 @@ public class PersonaServiceImp implements PersonaService {
     @Autowired
     private PersonaRepository _personaRepository;
 
-    @Autowired
-    private ModelMapper _modelMapper;
+    public Persona savePersona(Persona newPersona) {
 
-    public PersonaDTO savePersona(PersonaDTO newPersona) {
-
-        Persona entity = _modelMapper.map(newPersona, Persona.class);
-
-        entity.setId(null); //si es que viene con el id, funciona como un update
+        newPersona.setId(null); //si es que viene con el id, funciona como un update
 
         try {
-            entity = _personaRepository.saveAndFlush(entity);
+            newPersona = _personaRepository.saveAndFlush(newPersona);
         } catch (Exception e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
         }
 
-        return _modelMapper.map(entity, PersonaDTO.class);
+        return newPersona;
     }
 
-    public PersonaDTO updatePersona(int id, PersonaDTO updatedPersona) {
+    public Persona updatePersona(int id, Persona updatedPersona) {
 
         Persona entity = _personaRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Persona con id '" + id + "' no existe"
@@ -54,27 +49,22 @@ public class PersonaServiceImp implements PersonaService {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
         }
 
-        return _modelMapper.map(entity, PersonaDTO.class);
+        return entity;
     }
 
-    public PersonaDTO getPersonaById(int id) {
+    public Persona getPersonaById(int id) {
 
         Persona entity = _personaRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Persona con id '" + id + "' no existe"
         ));
 
-        return _modelMapper.map(entity, PersonaDTO.class);
+        return entity;
     }
 
-    public List<PersonaDTO> getAllPersonas() {
+    public List<Persona> getAllPersonas() {
         List<Persona> personas = _personaRepository.findAll();
-        List<PersonaDTO> entities = new ArrayList<>();
 
-        for (Persona persona : personas) {
-            entities.add(_modelMapper.map(persona, PersonaDTO.class));
-        }
-
-        return entities;
+        return personas;
     }
 
     public boolean deletePersona(int id) {

@@ -1,5 +1,6 @@
-package com.example.JPAexample.dtoLayer;
+package com.example.JPAexample.dtoService;
 
+import com.example.JPAexample.dtoService.interfaces.AlumnoDTOService;
 import com.example.JPAexample.models.Alumno;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
 import com.example.JPAexample.services.interfaces.AlumnoService;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AlumnoDTOServiceImp implements AlumnoDTOService{
+public class AlumnoDTOServiceImp implements AlumnoDTOService {
 
     private final AlumnoService _alumnoService;
     private final ModelMapper _modelMapper;

@@ -1,13 +1,13 @@
-package com.example.JPAexample.dtoLayer;
+package com.example.JPAexample.dtoService.interfaces;
 
 import com.example.JPAexample.models.DTO.AlumnoDTO;
 
 import java.util.List;
 
 public interface AlumnoDTOService {
-    AlumnoDTO saveAlumno(AlumnoDTO newAlumno);
+    AlumnoDTO saveAlumno(AlumnoDTO alumnoDTO);
 
-    AlumnoDTO updateAlumno(int id, AlumnoDTO updatedAlumno);
+    AlumnoDTO updateAlumno(int id, AlumnoDTO alumnoDTO);
 
     AlumnoDTO getAlumnoById(Integer id);
 

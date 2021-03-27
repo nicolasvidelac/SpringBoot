@@ -1,5 +1,6 @@
 package com.example.JPAexample.controllers.thymeleaf;
 
+import com.example.JPAexample.dtoService.interfaces.CarreraDTOService;
 import com.example.JPAexample.models.DTO.CarreraDTO;
 import com.example.JPAexample.services.interfaces.CarreraService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,10 @@ import java.util.TreeSet;
 @RequestMapping(path = "/carreras")
 public class CarreraThymeleafController {
 
-    private final CarreraService _carreraService;
+    private final CarreraDTOService _carreraService;
 
     @Autowired
-    public CarreraThymeleafController(CarreraService _carreraService) {
+    public CarreraThymeleafController(CarreraDTOService _carreraService) {
         this._carreraService = _carreraService;
     }
 
