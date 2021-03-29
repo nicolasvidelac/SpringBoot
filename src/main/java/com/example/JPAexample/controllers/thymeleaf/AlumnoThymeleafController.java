@@ -25,18 +25,25 @@ public class AlumnoThymeleafController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('alumno:read')")
-    public String getAlumnos(Model model, @RequestParam(required = false) Integer id) {
-        if (id != null) {
-            model.addAttribute("message", "Búsqueda de alumno");
-            model.addAttribute("alumnos", _alumnoService.getAlumnoById(id));
+    public String getAlumnos(Model model, @RequestParam(required = false) String termino) {
+
+        if (termino != null){
+            try {
+                if (Integer.parseInt(termino) > 0){
+                    model.addAttribute("message", "Búsqueda de alumnos con '" + termino + "'");
+                    model.addAttribute("alumnos", _alumnoService.getAlumnoByIdOrEdad(Integer.parseInt(termino)));
+                }
+            } catch (NumberFormatException e){
+                model.addAttribute("message", "Búsqueda de alumnos con '" + termino + "'");
+                model.addAttribute("alumnos", _alumnoService.getAlumnosByAny(termino));
+            }
+
         } else {
             TreeSet result = new TreeSet<AlumnoDTO>();
             result.addAll(_alumnoService.getAllAlumnos());
-
             model.addAttribute("message", "Esta es una lista de Alumnos ordenada por carrera");
             model.addAttribute("alumnos", result);
         }
-
 
         return "sample_list";
     }

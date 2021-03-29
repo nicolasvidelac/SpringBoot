@@ -16,4 +16,6 @@ public interface CarreraService {
 
     boolean deleteCarrera(int id);
 
+    List<Carrera> getCarreraByAny(String termino);
+
 }

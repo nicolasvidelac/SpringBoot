@@ -46,7 +46,7 @@ public class CarreraDTOServiceImp implements CarreraDTOService {
     }
 
     @Override
-    public CarreraDTO getCarreraById(Integer id) {
+    public List<CarreraDTO> getCarreraByIdOrEdad(Integer id) {
 
         Carrera carrera = _carreraService.getCarreraById(id);
 
@@ -57,6 +57,20 @@ public class CarreraDTOServiceImp implements CarreraDTOService {
     public List<CarreraDTO> getAllCarreras() {
 
         List<Carrera> carreras = _carreraService.getAllCarreras();
+        List<CarreraDTO> entities = new ArrayList<>();
+
+
+        for (Carrera carrera : carreras) {
+            entities.add(_modelMapper.map(carrera, CarreraDTO.class));
+        }
+
+        return entities;
+    }
+
+    @Override
+    public List<CarreraDTO> getCarrerasByAny(String termino) {
+
+        List<Carrera> carreras = _carreraService.getCarreraByAny(termino);;
         List<CarreraDTO> entities = new ArrayList<>();
 
 

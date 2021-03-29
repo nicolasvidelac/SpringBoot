@@ -2,16 +2,13 @@ package com.example.JPAexample.services;
 
 import com.example.JPAexample.exceptions.MissingInfoException;
 import com.example.JPAexample.exceptions.RecordNotFoundException;
-import com.example.JPAexample.models.DTO.PersonaDTO;
 import com.example.JPAexample.models.Persona;
-import com.example.JPAexample.repositories.PersonaRepository;
+import com.example.JPAexample.repositories.interfaces.PersonaRepository;
 import com.example.JPAexample.services.interfaces.PersonaService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

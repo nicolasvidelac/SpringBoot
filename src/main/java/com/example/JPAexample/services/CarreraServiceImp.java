@@ -4,7 +4,7 @@ import com.example.JPAexample.exceptions.MissingInfoException;
 import com.example.JPAexample.exceptions.NotAcceptableException;
 import com.example.JPAexample.exceptions.RecordNotFoundException;
 import com.example.JPAexample.models.Carrera;
-import com.example.JPAexample.repositories.CarreraRepository;
+import com.example.JPAexample.repositories.interfaces.CarreraRepository;
 import com.example.JPAexample.services.interfaces.CarreraService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,5 +84,10 @@ public class CarreraServiceImp implements CarreraService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @Override
+    public List<Carrera> getCarreraByAny(String termino) {
+        return _carreraRepository.findByNombreOrCodigo(termino, termino);
     }
 }

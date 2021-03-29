@@ -60,23 +60,45 @@ public class AlumnoDTOServiceImp implements AlumnoDTOService {
     }
 
     @Override
-    public AlumnoDTO getAlumnoById(Integer id) {
+    public List<AlumnoDTO> getAlumnoByIdOrEdad(Integer numero) {
 
-        Alumno alumno = _alumnoService.getAlumnoById(id);
+        List<Alumno> alumnos = _alumnoService.getAlumnoByIdOrEdad(numero);
+        List<AlumnoDTO> result = new ArrayList<>();
 
-        AlumnoDTO alumnoDTO = _modelMapper.map(alumno, AlumnoDTO.class);
+        for (Alumno entity : alumnos) {
+            AlumnoDTO alumnoDTO = _modelMapper.map(entity, AlumnoDTO.class);
 
-        alumnoDTO.setCarrera_nombre(alumno.getCarrera().getNombre());
-        alumnoDTO.setCarrera_codigo(alumno.getCarrera().getCodigo());
-        alumnoDTO.setCarrera_id(alumno.getCarrera().getId());
+            alumnoDTO.setCarrera_nombre(entity.getCarrera().getNombre());
+            alumnoDTO.setCarrera_codigo(entity.getCarrera().getCodigo());
+            alumnoDTO.setCarrera_id(entity.getCarrera().getId());
+            result.add(alumnoDTO);
+        }
 
-        return alumnoDTO;
+        return result;
     }
 
     @Override
     public List<AlumnoDTO> getAllAlumnos() {
 
         List<Alumno> alumnos = _alumnoService.getAllAlumnos();
+        List<AlumnoDTO> result = new ArrayList<>();
+
+        for (Alumno entity : alumnos) {
+            AlumnoDTO alumnoDTO = _modelMapper.map(entity, AlumnoDTO.class);
+
+            alumnoDTO.setCarrera_nombre(entity.getCarrera().getNombre());
+            alumnoDTO.setCarrera_codigo(entity.getCarrera().getCodigo());
+            alumnoDTO.setCarrera_id(entity.getCarrera().getId());
+            result.add(alumnoDTO);
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<AlumnoDTO> getAlumnosByAny(String termino) {
+
+        List<Alumno> alumnos = _alumnoService.getAlumnoByAny(termino);
         List<AlumnoDTO> result = new ArrayList<>();
 
         for (Alumno entity : alumnos) {

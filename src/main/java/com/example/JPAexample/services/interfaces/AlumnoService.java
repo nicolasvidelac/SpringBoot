@@ -10,9 +10,11 @@ public interface AlumnoService {
 
     Alumno updateAlumno(int id, Alumno updatedAlumno);
 
-    Alumno getAlumnoById(Integer id);
+    List<Alumno> getAlumnoByIdOrEdad(Integer numero);
 
     List<Alumno> getAllAlumnos();
+
+    List<Alumno> getAlumnoByAny(String termino);
 
     boolean deleteAlumno(int id);
 }

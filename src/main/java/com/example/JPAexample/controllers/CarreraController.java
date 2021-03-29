@@ -22,8 +22,8 @@ public class CarreraController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('carrera:read')")
-    public CarreraDTO getSingleCarrera(@PathVariable int id) {
-        return _carreraService.getCarreraById(id);
+    public List<CarreraDTO> getSingleCarrera(@PathVariable int id) {
+        return _carreraService.getCarreraByIdOrEdad(id);
     }
 
     @GetMapping

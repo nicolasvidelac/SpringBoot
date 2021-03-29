@@ -4,8 +4,8 @@ import com.example.JPAexample.exceptions.MissingInfoException;
 import com.example.JPAexample.exceptions.RecordNotFoundException;
 import com.example.JPAexample.models.Alumno;
 import com.example.JPAexample.models.Carrera;
-import com.example.JPAexample.repositories.AlumnoRepository;
-import com.example.JPAexample.repositories.CarreraRepository;
+import com.example.JPAexample.repositories.interfaces.AlumnoRepository;
+import com.example.JPAexample.repositories.interfaces.CarreraRepository;
 import com.example.JPAexample.services.interfaces.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -64,12 +64,9 @@ public class AlumnoServiceImp implements AlumnoService {
         return alumno;
     }
 
-    public Alumno getAlumnoById(Integer id) {
+    public List<Alumno> getAlumnoByIdOrEdad(Integer numero) {
 
-        Alumno alumno = _alumnoRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
-                "Alumno con id '" + id + "' no existe"
-        ));
-
+        List<Alumno> alumno = _alumnoRepository.findByEdadOrId(numero, numero);
         return alumno;
     }
 
@@ -78,6 +75,11 @@ public class AlumnoServiceImp implements AlumnoService {
         List<Alumno> alumnos = _alumnoRepository.findAll();
 
         return alumnos;
+    }
+
+    @Override
+    public List<Alumno> getAlumnoByAny(String termino) {
+        return _alumnoRepository.findByLegajoOrEmailOrNombreOrApellido(termino, termino, termino, termino);
     }
 
     public boolean deleteAlumno(int id) {

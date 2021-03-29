@@ -9,9 +9,11 @@ public interface CarreraDTOService {
 
     CarreraDTO updateCarrera(int id, CarreraDTO carreraDTO);
 
-    CarreraDTO getCarreraById(Integer id);
+    List<CarreraDTO> getCarreraByIdOrEdad(Integer numero);
 
     List<CarreraDTO> getAllCarreras();
+
+    List<CarreraDTO> getCarrerasByAny(String termino);
 
     boolean deleteCarrera(int id);
 }

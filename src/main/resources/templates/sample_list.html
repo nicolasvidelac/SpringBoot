@@ -41,9 +41,16 @@
             <span th:text="${message}"></span>
         </h2>
     </div>
+    <div class="container" style="text-align:center">
+        <form class="form-search" method="get" action="?=" >
+            <label for="termino" class="sr-only">Buscar por cualquier coincidencia:   </label>
+            <input type="text" id="termino" name="termino" class="form-control" placeholder="Buscar" required="" autofocus="">
+            <button class="btn btn-lg btn-primary" type="submit">Buscar</button>
+        </form>
+    </div>
 
     <ol>
-        <li th:each="task : ${alumnos}" th:text="${task.nombre}+ ' ' + ${task.apellido} + ' con id ' + ${task.id} + ' anotado en la carrera: '+ ${task.carrera_nombre}"></li>
+        <li th:each="task : ${alumnos}" th:text="${task.nombre}+ ' ' + ${task.apellido} + ', edad ' + ${task.edad} + ', id ' + ${task.id} + ', anotado en la carrera: '+ ${task.carrera_nombre}"></li>
     </ol>
 
     <ol>

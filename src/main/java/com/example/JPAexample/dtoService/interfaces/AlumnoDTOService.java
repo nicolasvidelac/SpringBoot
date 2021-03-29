@@ -9,9 +9,11 @@ public interface AlumnoDTOService {
 
     AlumnoDTO updateAlumno(int id, AlumnoDTO alumnoDTO);
 
-    AlumnoDTO getAlumnoById(Integer id);
+    List<AlumnoDTO> getAlumnoByIdOrEdad(Integer numero);
 
     List<AlumnoDTO> getAllAlumnos();
+
+    List<AlumnoDTO> getAlumnosByAny(String termino);
 
     boolean deleteAlumno(int id);
 }
