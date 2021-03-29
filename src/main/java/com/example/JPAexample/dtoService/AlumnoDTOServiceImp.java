@@ -2,6 +2,7 @@ package com.example.JPAexample.dtoService;
 
 import com.example.JPAexample.dtoService.interfaces.AlumnoDTOService;
 import com.example.JPAexample.models.Alumno;
+import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
 import com.example.JPAexample.services.interfaces.AlumnoService;
 import org.modelmapper.ModelMapper;
@@ -28,6 +29,8 @@ public class AlumnoDTOServiceImp implements AlumnoDTOService {
 
         Alumno alumno = _modelMapper.map(alumnoDTO, Alumno.class);
 
+        alumno.setCarrera(new Carrera(alumnoDTO.getCarrera_id() , "", ""));
+
         alumno = _alumnoService.saveAlumno(alumno);
 
         alumnoDTO = _modelMapper.map(alumno, AlumnoDTO.class);
@@ -43,6 +46,7 @@ public class AlumnoDTOServiceImp implements AlumnoDTOService {
     public AlumnoDTO updateAlumno(int id, AlumnoDTO alumnoDTO) {
 
         Alumno alumno = _modelMapper.map(alumnoDTO, Alumno.class);
+        alumno.setCarrera(new Carrera(alumnoDTO.getCarrera_id() , "", ""));
 
         alumno = _alumnoService.updateAlumno(id, alumno);
 
