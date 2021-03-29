@@ -12,8 +12,6 @@ public class JpAexampleApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(JpAexampleApplication.class, args);
-
-
     }
 
     @Bean

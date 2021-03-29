@@ -1,6 +1,7 @@
 package com.example.JPAexample.repositories;
 
 import com.example.JPAexample.models.myUser;
+import com.example.JPAexample.repositories.interfaces.UserRepository;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

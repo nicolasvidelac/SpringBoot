@@ -1,17 +1,20 @@
 package com.example.JPAexample.services.interfaces;
 
+import com.example.JPAexample.models.Alumno;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
 
 import java.util.List;
 
 public interface AlumnoService {
-    AlumnoDTO saveAlumno(AlumnoDTO newAlumno);
+    Alumno saveAlumno(Alumno newAlumno);
 
-    AlumnoDTO updateAlumno(int id, AlumnoDTO updatedAlumno);
+    Alumno updateAlumno(int id, Alumno updatedAlumno);
 
-    AlumnoDTO getAlumnoById(Integer id);
+    List<Alumno> getAlumnoByIdOrEdad(Integer numero);
 
-    List<AlumnoDTO> getAllAlumnos();
+    List<Alumno> getAllAlumnos();
+
+    List<Alumno> getAlumnoByAny(String termino);
 
     boolean deleteAlumno(int id);
 }

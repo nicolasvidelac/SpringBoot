@@ -1,4 +1,4 @@
-package com.example.JPAexample.repositories;
+package com.example.JPAexample.repositories.interfaces;
 
 import com.example.JPAexample.models.Persona;
 import org.springframework.data.jpa.repository.JpaRepository;

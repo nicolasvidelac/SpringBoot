@@ -2,16 +2,13 @@ package com.example.JPAexample.services;
 
 import com.example.JPAexample.exceptions.MissingInfoException;
 import com.example.JPAexample.exceptions.RecordNotFoundException;
-import com.example.JPAexample.models.DTO.PersonaDTO;
 import com.example.JPAexample.models.Persona;
-import com.example.JPAexample.repositories.PersonaRepository;
+import com.example.JPAexample.repositories.interfaces.PersonaRepository;
 import com.example.JPAexample.services.interfaces.PersonaService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,25 +17,20 @@ public class PersonaServiceImp implements PersonaService {
     @Autowired
     private PersonaRepository _personaRepository;
 
-    @Autowired
-    private ModelMapper _modelMapper;
+    public Persona savePersona(Persona newPersona) {
 
-    public PersonaDTO savePersona(PersonaDTO newPersona) {
-
-        Persona entity = _modelMapper.map(newPersona, Persona.class);
-
-        entity.setId(null); //si es que viene con el id, funciona como un update
+        newPersona.setId(null); //si es que viene con el id, funciona como un update
 
         try {
-            entity = _personaRepository.saveAndFlush(entity);
+            newPersona = _personaRepository.saveAndFlush(newPersona);
         } catch (Exception e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
         }
 
-        return _modelMapper.map(entity, PersonaDTO.class);
+        return newPersona;
     }
 
-    public PersonaDTO updatePersona(int id, PersonaDTO updatedPersona) {
+    public Persona updatePersona(int id, Persona updatedPersona) {
 
         Persona entity = _personaRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Persona con id '" + id + "' no existe"
@@ -54,27 +46,22 @@ public class PersonaServiceImp implements PersonaService {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
         }
 
-        return _modelMapper.map(entity, PersonaDTO.class);
+        return entity;
     }
 
-    public PersonaDTO getPersonaById(int id) {
+    public Persona getPersonaById(int id) {
 
         Persona entity = _personaRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Persona con id '" + id + "' no existe"
         ));
 
-        return _modelMapper.map(entity, PersonaDTO.class);
+        return entity;
     }
 
-    public List<PersonaDTO> getAllPersonas() {
+    public List<Persona> getAllPersonas() {
         List<Persona> personas = _personaRepository.findAll();
-        List<PersonaDTO> entities = new ArrayList<>();
 
-        for (Persona persona : personas) {
-            entities.add(_modelMapper.map(persona, PersonaDTO.class));
-        }
-
-        return entities;
+        return personas;
     }
 
     public boolean deletePersona(int id) {

@@ -1,5 +1,6 @@
 package com.example.JPAexample.controllers;
 
+import com.example.JPAexample.dtoService.interfaces.PersonaDTOService;
 import com.example.JPAexample.models.DTO.PersonaDTO;
 import com.example.JPAexample.services.interfaces.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,10 @@ import java.util.List;
 @RequestMapping(path = "api/v1/personas")
 public class PersonaController {
 
-    private final PersonaService _personaService;
+    private final PersonaDTOService _personaService;
 
     @Autowired
-    public PersonaController(PersonaService _personaService) {
+    public PersonaController(PersonaDTOService _personaService) {
         this._personaService = _personaService;
     }
 

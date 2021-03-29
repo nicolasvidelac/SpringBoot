@@ -1,5 +1,6 @@
 package com.example.JPAexample.controllers.thymeleaf;
 
+import com.example.JPAexample.dtoService.interfaces.CarreraDTOService;
 import com.example.JPAexample.models.DTO.CarreraDTO;
 import com.example.JPAexample.services.interfaces.CarreraService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,25 +17,32 @@ import java.util.TreeSet;
 @RequestMapping(path = "/carreras")
 public class CarreraThymeleafController {
 
-    private final CarreraService _carreraService;
+    private final CarreraDTOService _carreraService;
 
     @Autowired
-    public CarreraThymeleafController(CarreraService _carreraService) {
+    public CarreraThymeleafController(CarreraDTOService _carreraService) {
         this._carreraService = _carreraService;
     }
 
     @GetMapping
     @PreAuthorize("hasAuthority('carrera:read')")
-    public String getCarreras(Model model, @RequestParam(required = false) Integer id) {
+    public String getCarreras(Model model, @RequestParam(required = false) String termino) {
 
-        if (id != null) {
-            model.addAttribute("message", "Búsqueda de carrera");
-            model.addAttribute("carreras", _carreraService.getCarreraById(id));
+        if (termino != null){
+            try {
+                if (Integer.parseInt(termino) > 0){
+                    model.addAttribute("message", "Búsqueda de carreras con '" + termino + "'");
+                    model.addAttribute("carreras", _carreraService.getCarreraByIdOrEdad(Integer.parseInt(termino)));
+                }
+            } catch (NumberFormatException e){
+                model.addAttribute("message", "Búsqueda de carreras con '" + termino + "'");
+                model.addAttribute("carreras", _carreraService.getCarrerasByAny(termino));
+            }
+
         } else {
             TreeSet result = new TreeSet<CarreraDTO>();
             result.addAll(_carreraService.getAllCarreras());
-
-            model.addAttribute("message", "Esta es una lista de Carreras ordenada");
+            model.addAttribute("message", "Esta es una lista de Carreras ordenada por carrera");
             model.addAttribute("carreras", result);
         }
 

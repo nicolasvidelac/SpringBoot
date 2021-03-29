@@ -1,5 +1,6 @@
 package com.example.JPAexample.controllers;
 
+import com.example.JPAexample.dtoService.interfaces.CarreraDTOService;
 import com.example.JPAexample.models.DTO.CarreraDTO;
 import com.example.JPAexample.services.interfaces.CarreraService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +13,17 @@ import java.util.List;
 @RequestMapping(path = "api/v1/carreras")
 public class CarreraController {
 
-    private final CarreraService _carreraService;
+    private final CarreraDTOService _carreraService;
 
     @Autowired
-    public CarreraController(CarreraService _carreraService) {
+    public CarreraController(CarreraDTOService _carreraService) {
         this._carreraService = _carreraService;
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('carrera:read')")
-    public CarreraDTO getSingleCarrera(@PathVariable int id) {
-        return _carreraService.getCarreraById(id);
+    public List<CarreraDTO> getSingleCarrera(@PathVariable int id) {
+        return _carreraService.getCarreraByIdOrEdad(id);
     }
 
     @GetMapping
