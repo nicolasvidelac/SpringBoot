@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Nicolas Videla Spring Boot</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+
+<body>
+<header>
+    <nav>
+        <ul>
+            <li>
+                <a href="/carreras">Carreras</a>
+            </li>
+            <li>
+                <a href="/personas">Personas</a>
+            </li>
+            <li>
+                <a href="/alumnos">Alumnos</a>
+            </li>
+            <li>
+                <a href="/logout">Cerrar Sesion</a>
+            </li>
+        </ul>
+
+    </nav>
+</header>
+
+
+<main role="main" class="container">
+
+    <div class="starter-template">
+        <h1>Spring Boot Web Thymeleaf</h1>
+        <h2>
+            <span th:text="${message}"></span>
+        </h2>
+    </div>
+    <div class="container" style="text-align:center">
+        <form class="form-search" method="get" action="?=" >
+            <label for="termino" class="sr-only">Buscar por cualquier coincidencia:   </label>
+            <input type="text" id="termino" name="termino" class="form-control" placeholder="Buscar" required="" autofocus="">
+            <button class="btn btn-lg btn-primary" type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <table style="width:90%; padding-top: 30px">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Edad</th>
+            <th>Email</th>
+            <th>Carrera</th>
+        </tr>
+        <th:block th:each="task : ${alumnos}" >
+            <tr style="text-align:center">
+                <td th:text="${task.nombre}"></td>
+                <td th:text="${task.apellido}"></td>
+                <td th:text="${task.edad}"></td>
+                <td th:text="${task.email}"></td>
+                <td th:text="${task.carrera_nombre}"></td>
+            </tr>
+        </th:block>
+    </table>
+</main>
+
+
+<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -44,6 +44,6 @@ public class PersonaThymeleafController {
             model.addAttribute("message", "Esta es una lista de Personas ordenada por edad");
             model.addAttribute("personas", result);
         }
-        return "sample_list";
+        return "list_personas";
     }
 }

@@ -45,7 +45,7 @@ public class CarreraThymeleafController {
             model.addAttribute("carreras", result);
         }
 
-        return "sample_list";
+        return "list_carreras";
     }
 }
 

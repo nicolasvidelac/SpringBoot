@@ -45,7 +45,7 @@ public class AlumnoThymeleafController {
             model.addAttribute("alumnos", result);
         }
 
-        return "sample_list";
+        return "list_alumnos";
     }
 
 }

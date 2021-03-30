@@ -49,22 +49,20 @@
         </form>
     </div>
 
-    <ol>
-        <li th:each="task : ${alumnos}" th:text="${task.nombre}+ ' ' + ${task.apellido} + ', edad ' + ${task.edad} + ', id ' + ${task.id} + ', anotado en la carrera: '+ ${task.carrera_nombre}"></li>
-    </ol>
-
-    <ol>
-        <li th:each="task : ${carreras}" th:text="${task.nombre}+ ' con codigo ' + ${task.codigo}"></li>
-    </ol>
-
-    <ol>
-        <li th:each="task : ${personas}" th:text="${task.nombre}+ ' ' + ${task.apellido} +', edad: ' + ${task.edad}"></li>
-    </ol>
-
-
-
+    <table style="padding-left: 30%; width:30%; padding-top: 30px">
+        <tr>
+            <th>Nombre</th>
+            <th>Codigo</th>
+        </tr>
+        <th:block th:each="task : ${carreras}" >
+            <tr style="text-align:center">
+                <td th:text="${task.nombre}"></td>
+                <td th:text="${task.codigo}"></td>
+            </tr>
+        </th:block>
+    </table>
 </main>
-<!-- /.container -->
+
 
 <script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
 </body>
