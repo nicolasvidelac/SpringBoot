@@ -10,7 +10,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Entity(name = "Carrera")
+@Entity
 @Getter
 @Setter
 public class Carrera {
@@ -25,4 +25,13 @@ public class Carrera {
 
     @Column(nullable = false, unique = true)
     private String codigo;
+
+    @Override
+    public boolean equals( Object object) {
+        if(object == null) {
+            return false;
+        } else return this.id.equals(((Carrera) object).id) &&
+                this.codigo.equals(((Carrera) object).codigo) &&
+                this.nombre.equals(((Carrera) object).nombre);
+    }
 }

@@ -1,6 +1,6 @@
 package com.example.JPAexample.controllers.thymeleaf;
 
-import com.example.JPAexample.dtoService.interfaces.CarreraDTOService;
+import com.example.JPAexample.dtoServices.interfaces.CarreraDTOService;
 import com.example.JPAexample.models.DTO.CarreraDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

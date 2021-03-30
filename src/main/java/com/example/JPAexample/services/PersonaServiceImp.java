@@ -10,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class PersonaServiceImp implements PersonaService {
@@ -49,9 +50,9 @@ public class PersonaServiceImp implements PersonaService {
         return entity;
     }
 
-    public List<Persona> getPersonaByIdOrEdad(int numero) {
+    public List<Persona> getPersonaByEdad(int numero) {
 
-        List<Persona> entity = _personaRepository.findByIdOrEdad(numero, numero);
+        List<Persona> entity = _personaRepository.findByEdad(numero);
 //                .orElseThrow(() -> new RecordNotFoundException(
 //                "Persona con id '" + id + "' no existe"
 //        ));
@@ -61,7 +62,7 @@ public class PersonaServiceImp implements PersonaService {
 
     public List<Persona> getPersonaByNombreOrApellido(String termino) {
 
-        List<Persona> entity = _personaRepository.findByNombreOrApellido(termino, termino);
+        List<Persona> entity = _personaRepository.findByWords(termino.toLowerCase(Locale.ROOT));
 //                .orElseThrow(() -> new RecordNotFoundException(
 //                "Persona con id '" + id + "' no existe"
 //        ));

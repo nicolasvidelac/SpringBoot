@@ -66,7 +66,7 @@ public class AlumnoServiceImp implements AlumnoService {
 
     public List<Alumno> getAlumnoByIdOrEdad(Integer numero) {
 
-        List<Alumno> alumno = _alumnoRepository.findByEdadOrId(numero, numero);
+        List<Alumno> alumno = _alumnoRepository.findByNumbers(numero);
         return alumno;
     }
 
@@ -79,7 +79,7 @@ public class AlumnoServiceImp implements AlumnoService {
 
     @Override
     public List<Alumno> getAlumnoByAny(String termino) {
-        return _alumnoRepository.findByLegajoOrEmailOrNombreOrApellido(termino, termino, termino, termino);
+        return _alumnoRepository.findByWords(termino.toLowerCase());
     }
 
     public boolean deleteAlumno(int id) {

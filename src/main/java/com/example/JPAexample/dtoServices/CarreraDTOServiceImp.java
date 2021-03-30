@@ -1,6 +1,6 @@
-package com.example.JPAexample.dtoService;
+package com.example.JPAexample.dtoServices;
 
-import com.example.JPAexample.dtoService.interfaces.CarreraDTOService;
+import com.example.JPAexample.dtoServices.interfaces.CarreraDTOService;
 import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.models.DTO.CarreraDTO;
 import com.example.JPAexample.services.interfaces.CarreraService;

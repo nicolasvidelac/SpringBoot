@@ -1,4 +1,4 @@
-package com.example.JPAexample.dtoService.interfaces;
+package com.example.JPAexample.dtoServices.interfaces;
 
 import com.example.JPAexample.models.DTO.AlumnoDTO;
 

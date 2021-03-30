@@ -86,6 +86,6 @@ public class CarreraServiceImp implements CarreraService {
 
     @Override
     public List<Carrera> getCarreraByAny(String termino) {
-        return _carreraRepository.findByNombreOrCodigo(termino, termino);
+        return _carreraRepository.findByAny(termino.toLowerCase());
     }
 }

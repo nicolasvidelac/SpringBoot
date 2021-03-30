@@ -1,6 +1,6 @@
-package com.example.JPAexample.dtoService;
+package com.example.JPAexample.dtoServices;
 
-import com.example.JPAexample.dtoService.interfaces.PersonaDTOService;
+import com.example.JPAexample.dtoServices.interfaces.PersonaDTOService;
 import com.example.JPAexample.models.DTO.PersonaDTO;
 import com.example.JPAexample.models.Persona;
 import com.example.JPAexample.services.interfaces.PersonaService;
@@ -47,7 +47,7 @@ public class PersonaDTOServiceImp implements PersonaDTOService {
     @Override
     public List<PersonaDTO> getPersonaByIdOrEdad(Integer numero) {
 
-        List<Persona> personas = _personaService.getPersonaByIdOrEdad(numero);
+        List<Persona> personas = _personaService.getPersonaByEdad(numero);
         List<PersonaDTO> entities = new ArrayList<>();
 
         for (Persona persona : personas) {

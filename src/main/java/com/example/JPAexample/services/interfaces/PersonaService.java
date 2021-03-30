@@ -9,7 +9,7 @@ public interface PersonaService {
 
     Persona updatePersona(int id, Persona updatedPersona);
 
-    List<Persona> getPersonaByIdOrEdad(int id);
+    List<Persona> getPersonaByEdad(int id);
 
     List<Persona> getPersonaByNombreOrApellido(String termino);
 

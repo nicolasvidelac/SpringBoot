@@ -1,6 +1,6 @@
 package com.example.JPAexample.controllers;
 
-import com.example.JPAexample.dtoService.interfaces.PersonaDTOService;
+import com.example.JPAexample.dtoServices.interfaces.PersonaDTOService;
 import com.example.JPAexample.models.DTO.PersonaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
