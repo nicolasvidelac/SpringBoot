@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.JPAexample.enums.UserRoleEnum.*;
+import static com.example.JPAexample.others.enums.UserRoleEnum.*;
 
 @Repository
 public class UserRepositoryImp implements UserRepository {

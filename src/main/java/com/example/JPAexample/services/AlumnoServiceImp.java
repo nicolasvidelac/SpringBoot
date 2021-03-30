@@ -1,9 +1,9 @@
 package com.example.JPAexample.services;
 
-import com.example.JPAexample.exceptions.MissingInfoException;
-import com.example.JPAexample.exceptions.RecordNotFoundException;
 import com.example.JPAexample.models.Alumno;
 import com.example.JPAexample.models.Carrera;
+import com.example.JPAexample.others.exceptions.MissingInfoException;
+import com.example.JPAexample.others.exceptions.RecordNotFoundException;
 import com.example.JPAexample.repositories.interfaces.AlumnoRepository;
 import com.example.JPAexample.repositories.interfaces.CarreraRepository;
 import com.example.JPAexample.services.interfaces.AlumnoService;

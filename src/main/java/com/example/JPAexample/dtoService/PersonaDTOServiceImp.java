@@ -45,11 +45,27 @@ public class PersonaDTOServiceImp implements PersonaDTOService {
     }
 
     @Override
-    public PersonaDTO getPersonaById(Integer id) {
+    public List<PersonaDTO> getPersonaByIdOrEdad(Integer numero) {
 
-        Persona entity = _personaService.getPersonaById(id);
+        List<Persona> personas = _personaService.getPersonaByIdOrEdad(numero);
+        List<PersonaDTO> entities = new ArrayList<>();
 
-        return _modelMapper.map(entity, PersonaDTO.class);
+        for (Persona persona : personas) {
+            entities.add(_modelMapper.map(persona, PersonaDTO.class));
+        }
+        return entities;
+    }
+
+    @Override
+    public List<PersonaDTO> getPersonaByNombreOrApellid(String termino) {
+
+        List<Persona> personas = _personaService.getPersonaByNombreOrApellido(termino);
+        List<PersonaDTO> entities = new ArrayList<>();
+
+        for (Persona persona : personas) {
+            entities.add(_modelMapper.map(persona, PersonaDTO.class));
+        }
+        return entities;
     }
 
     @Override

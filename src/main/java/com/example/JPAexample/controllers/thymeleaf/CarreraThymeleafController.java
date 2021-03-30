@@ -2,7 +2,6 @@ package com.example.JPAexample.controllers.thymeleaf;
 
 import com.example.JPAexample.dtoService.interfaces.CarreraDTOService;
 import com.example.JPAexample.models.DTO.CarreraDTO;
-import com.example.JPAexample.services.interfaces.CarreraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -32,7 +31,7 @@ public class CarreraThymeleafController {
             try {
                 if (Integer.parseInt(termino) > 0){
                     model.addAttribute("message", "Búsqueda de carreras con '" + termino + "'");
-                    model.addAttribute("carreras", _carreraService.getCarreraByIdOrEdad(Integer.parseInt(termino)));
+                    model.addAttribute("carreras", _carreraService.getCarreraById(Integer.parseInt(termino)));
                 }
             } catch (NumberFormatException e){
                 model.addAttribute("message", "Búsqueda de carreras con '" + termino + "'");

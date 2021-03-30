@@ -1,8 +1,8 @@
 package com.example.JPAexample.services;
 
-import com.example.JPAexample.exceptions.MissingInfoException;
-import com.example.JPAexample.exceptions.RecordNotFoundException;
 import com.example.JPAexample.models.Persona;
+import com.example.JPAexample.others.exceptions.MissingInfoException;
+import com.example.JPAexample.others.exceptions.RecordNotFoundException;
 import com.example.JPAexample.repositories.interfaces.PersonaRepository;
 import com.example.JPAexample.services.interfaces.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +49,22 @@ public class PersonaServiceImp implements PersonaService {
         return entity;
     }
 
-    public Persona getPersonaById(int id) {
+    public List<Persona> getPersonaByIdOrEdad(int numero) {
 
-        Persona entity = _personaRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
-                "Persona con id '" + id + "' no existe"
-        ));
+        List<Persona> entity = _personaRepository.findByIdOrEdad(numero, numero);
+//                .orElseThrow(() -> new RecordNotFoundException(
+//                "Persona con id '" + id + "' no existe"
+//        ));
+
+        return entity;
+    }
+
+    public List<Persona> getPersonaByNombreOrApellido(String termino) {
+
+        List<Persona> entity = _personaRepository.findByNombreOrApellido(termino, termino);
+//                .orElseThrow(() -> new RecordNotFoundException(
+//                "Persona con id '" + id + "' no existe"
+//        ));
 
         return entity;
     }

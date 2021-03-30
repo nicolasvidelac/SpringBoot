@@ -46,11 +46,13 @@ public class CarreraDTOServiceImp implements CarreraDTOService {
     }
 
     @Override
-    public List<CarreraDTO> getCarreraByIdOrEdad(Integer id) {
-
-        Carrera carrera = _carreraService.getCarreraById(id);
-
-        return _modelMapper.map(carrera, CarreraDTO.class);
+    public CarreraDTO getCarreraById(Integer id) {
+        try {
+            Carrera carrera = _carreraService.getCarreraById(id);
+            return _modelMapper.map(carrera, CarreraDTO.class);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

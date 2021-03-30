@@ -2,7 +2,6 @@ package com.example.JPAexample.controllers;
 
 import com.example.JPAexample.dtoService.interfaces.PersonaDTOService;
 import com.example.JPAexample.models.DTO.PersonaDTO;
-import com.example.JPAexample.services.interfaces.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +21,8 @@ public class PersonaController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('persona:read')")
-    public PersonaDTO getSinglePersona(@PathVariable int id) {
-        return _personaService.getPersonaById(id);
+    public List<PersonaDTO> getSinglePersona(@PathVariable int id) {
+        return _personaService.getPersonaByIdOrEdad(id);
     }
 
     @GetMapping

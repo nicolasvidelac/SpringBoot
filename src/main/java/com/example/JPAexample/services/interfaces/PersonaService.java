@@ -1,6 +1,5 @@
 package com.example.JPAexample.services.interfaces;
 
-import com.example.JPAexample.models.DTO.PersonaDTO;
 import com.example.JPAexample.models.Persona;
 
 import java.util.List;
@@ -10,7 +9,9 @@ public interface PersonaService {
 
     Persona updatePersona(int id, Persona updatedPersona);
 
-    Persona getPersonaById(int id);
+    List<Persona> getPersonaByIdOrEdad(int id);
+
+    List<Persona> getPersonaByNombreOrApellido(String termino);
 
     List<Persona> getAllPersonas();
 

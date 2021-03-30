@@ -2,7 +2,6 @@ package com.example.JPAexample.controllers;
 
 import com.example.JPAexample.dtoService.interfaces.CarreraDTOService;
 import com.example.JPAexample.models.DTO.CarreraDTO;
-import com.example.JPAexample.services.interfaces.CarreraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +21,8 @@ public class CarreraController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('carrera:read')")
-    public List<CarreraDTO> getSingleCarrera(@PathVariable int id) {
-        return _carreraService.getCarreraByIdOrEdad(id);
+    public CarreraDTO getSingleCarrera(@PathVariable int id) {
+        return _carreraService.getCarreraById(id);
     }
 
     @GetMapping

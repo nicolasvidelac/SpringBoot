@@ -1,4 +1,4 @@
-package com.example.JPAexample.security;
+package com.example.JPAexample.others.security;
 
 import com.example.JPAexample.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

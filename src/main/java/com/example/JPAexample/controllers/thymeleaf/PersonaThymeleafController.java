@@ -2,7 +2,6 @@ package com.example.JPAexample.controllers.thymeleaf;
 
 import com.example.JPAexample.dtoService.interfaces.PersonaDTOService;
 import com.example.JPAexample.models.DTO.PersonaDTO;
-import com.example.JPAexample.services.interfaces.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -26,14 +25,22 @@ public class PersonaThymeleafController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('persona:read')")
-    public String getPersonas(Model model, @RequestParam(required = false) Integer id) {
-        if (id != null) {
-            model.addAttribute("message", "Búsqueda de persona");
-            model.addAttribute("personas", _personaService.getPersonaById(id));
+    public String getPersonas(Model model, @RequestParam(required = false) String termino) {
+
+        if (termino != null) {
+            try {
+                if (Integer.parseInt(termino) > 0) {
+                    model.addAttribute("message", "Búsqueda de personas con '" + termino + "'");
+                    model.addAttribute("personas", _personaService.getPersonaByIdOrEdad((Integer.parseInt(termino))));
+                }
+            } catch (NumberFormatException e) {
+                model.addAttribute("message", "Búsqueda de personas con '" + termino + "'");
+                model.addAttribute("personas", _personaService.getPersonaByNombreOrApellid(termino));
+            }
+
         } else {
             TreeSet result = new TreeSet<PersonaDTO>();
             result.addAll(_personaService.getAllPersonas());
-
             model.addAttribute("message", "Esta es una lista de Personas ordenada por edad");
             model.addAttribute("personas", result);
         }

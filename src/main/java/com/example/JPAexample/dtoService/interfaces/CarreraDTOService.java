@@ -9,7 +9,7 @@ public interface CarreraDTOService {
 
     CarreraDTO updateCarrera(int id, CarreraDTO carreraDTO);
 
-    List<CarreraDTO> getCarreraByIdOrEdad(Integer numero);
+    CarreraDTO getCarreraById(Integer numero);
 
     List<CarreraDTO> getAllCarreras();
 

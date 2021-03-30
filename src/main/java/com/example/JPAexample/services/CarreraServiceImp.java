@@ -1,9 +1,9 @@
 package com.example.JPAexample.services;
 
-import com.example.JPAexample.exceptions.MissingInfoException;
-import com.example.JPAexample.exceptions.NotAcceptableException;
-import com.example.JPAexample.exceptions.RecordNotFoundException;
 import com.example.JPAexample.models.Carrera;
+import com.example.JPAexample.others.exceptions.MissingInfoException;
+import com.example.JPAexample.others.exceptions.NotAcceptableException;
+import com.example.JPAexample.others.exceptions.RecordNotFoundException;
 import com.example.JPAexample.repositories.interfaces.CarreraRepository;
 import com.example.JPAexample.services.interfaces.CarreraService;
 import org.modelmapper.ModelMapper;
@@ -56,9 +56,7 @@ public class CarreraServiceImp implements CarreraService {
 
     public Carrera getCarreraById(int id) {
 
-        Carrera entity = _carreraRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
-                "Carrera con id '" + id + "' no existe"
-        ));
+        Carrera entity = _carreraRepository.getOne(id);
         return entity;
     }
 
