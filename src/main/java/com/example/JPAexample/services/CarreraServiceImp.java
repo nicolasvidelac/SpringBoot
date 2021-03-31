@@ -20,6 +20,10 @@ public class CarreraServiceImp implements CarreraService {
     @Autowired
     private CarreraRepository _carreraRepository;
 
+    public CarreraServiceImp(CarreraRepository _carreraRepository) {
+        this._carreraRepository = _carreraRepository;
+    }
+
     @Autowired
     private ModelMapper _modelMapper;
 
@@ -27,12 +31,12 @@ public class CarreraServiceImp implements CarreraService {
 
         try {
             newCarrera = _carreraRepository.saveAndFlush(newCarrera);
-        } catch (Exception e) {
+        } catch (DataIntegrityViolationException e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
+        } catch (Exception e) {
+            throw new NotAcceptableException("No se pudo completar la solicitud");
         }
-
         return newCarrera;
-
     }
 
     public Carrera updateCarrera(int id, Carrera updateCarrera) {
@@ -52,7 +56,6 @@ public class CarreraServiceImp implements CarreraService {
 
         return entity;
     }
-
 
     public Carrera getCarreraById(int id) {
 
