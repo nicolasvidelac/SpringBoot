@@ -11,8 +11,7 @@ import java.util.List;
 @Repository
 public interface PersonaRepository extends JpaRepository<Persona, Integer> {
 
-    @Query("SELECT p from Persona p where lower(p.nombre) like :termino or lower(p.apellido) like :termino")
-    List<Persona> findByWords(@Param("termino") String termino);
-
-    List<Persona> findByEdad(Integer edad);
+    @Query("SELECT p from Persona p where lower(p.nombre) like :termino or lower(p.apellido) like :termino or " +
+            "cast(p.edad as text) like :termino")
+    List<Persona> findByAny(@Param("termino") String termino);
 }

@@ -60,21 +60,11 @@ public class AlumnoDTOServiceImp implements AlumnoDTOService {
     }
 
     @Override
-    public List<AlumnoDTO> getAlumnoByIdOrEdad(Integer numero) {
+    public AlumnoDTO getAlumnoById(int numero) {
 
-        List<Alumno> alumnos = _alumnoService.getAlumnoByIdOrEdad(numero);
-        List<AlumnoDTO> result = new ArrayList<>();
+        Alumno alumno = _alumnoService.getAlumnoById(numero);
 
-        for (Alumno entity : alumnos) {
-            AlumnoDTO alumnoDTO = _modelMapper.map(entity, AlumnoDTO.class);
-
-            alumnoDTO.setCarrera_nombre(entity.getCarrera().getNombre());
-            alumnoDTO.setCarrera_codigo(entity.getCarrera().getCodigo());
-            alumnoDTO.setCarrera_id(entity.getCarrera().getId());
-            result.add(alumnoDTO);
-        }
-
-        return result;
+        return _modelMapper.map(alumno, AlumnoDTO.class);
     }
 
     @Override

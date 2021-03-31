@@ -45,9 +45,9 @@ public class PersonaDTOServiceImp implements PersonaDTOService {
     }
 
     @Override
-    public List<PersonaDTO> getPersonaByIdOrEdad(Integer numero) {
+    public List<PersonaDTO> getPersonaByAny(String termino) {
 
-        List<Persona> personas = _personaService.getPersonaByEdad(numero);
+        List<Persona> personas = _personaService.getPersonaByAny(termino);
         List<PersonaDTO> entities = new ArrayList<>();
 
         for (Persona persona : personas) {
@@ -57,15 +57,9 @@ public class PersonaDTOServiceImp implements PersonaDTOService {
     }
 
     @Override
-    public List<PersonaDTO> getPersonaByNombreOrApellid(String termino) {
-
-        List<Persona> personas = _personaService.getPersonaByNombreOrApellido(termino);
-        List<PersonaDTO> entities = new ArrayList<>();
-
-        for (Persona persona : personas) {
-            entities.add(_modelMapper.map(persona, PersonaDTO.class));
-        }
-        return entities;
+    public PersonaDTO getPersonaById(int id) {
+        Persona result = _personaService.getById(id);
+        return _modelMapper.map(result, PersonaDTO.class);
     }
 
     @Override

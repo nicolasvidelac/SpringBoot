@@ -10,7 +10,7 @@ public interface AlumnoService {
 
     Alumno updateAlumno(int id, Alumno updatedAlumno);
 
-    List<Alumno> getAlumnoByIdOrEdad(Integer numero);
+    Alumno getAlumnoById(Integer id);
 
     List<Alumno> getAllAlumnos();
 

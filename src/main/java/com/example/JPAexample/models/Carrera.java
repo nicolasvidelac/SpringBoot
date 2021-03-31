@@ -30,7 +30,7 @@ public class Carrera {
     public boolean equals( Object object) {
         if(object == null) {
             return false;
-        } else return this.id.equals(((Carrera) object).id) &&
+        } else return
                 this.codigo.equals(((Carrera) object).codigo) &&
                 this.nombre.equals(((Carrera) object).nombre);
     }

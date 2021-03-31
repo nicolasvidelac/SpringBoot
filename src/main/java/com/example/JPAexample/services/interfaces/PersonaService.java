@@ -9,9 +9,9 @@ public interface PersonaService {
 
     Persona updatePersona(int id, Persona updatedPersona);
 
-    List<Persona> getPersonaByEdad(int id);
+    List<Persona> getPersonaByAny(String termino);
 
-    List<Persona> getPersonaByNombreOrApellido(String termino);
+    Persona getById(int id);
 
     List<Persona> getAllPersonas();
 

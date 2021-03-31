@@ -21,8 +21,8 @@ public class PersonaController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('persona:read')")
-    public List<PersonaDTO> getSinglePersona(@PathVariable int id) {
-        return _personaService.getPersonaByIdOrEdad(id);
+    public PersonaDTO getSinglePersona(@PathVariable int id) {
+        return _personaService.getPersonaById(id);
     }
 
     @GetMapping

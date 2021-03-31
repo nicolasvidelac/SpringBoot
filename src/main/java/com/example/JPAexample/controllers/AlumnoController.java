@@ -21,8 +21,8 @@ public class AlumnoController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('alumno:read')")
-    public List<AlumnoDTO> getSingleAlumno(@PathVariable Integer id) {
-        return _alumnoService.getAlumnoByIdOrEdad(id);
+    public AlumnoDTO getSingleAlumno(@PathVariable Integer id) {
+        return _alumnoService.getAlumnoById(id);
     }
 
     @GetMapping

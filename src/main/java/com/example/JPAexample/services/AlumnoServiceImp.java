@@ -22,8 +22,6 @@ public class AlumnoServiceImp implements AlumnoService {
     @Autowired
     private CarreraRepository _carreraRepository;
 
-
-
     public Alumno saveAlumno(Alumno newAlumno) {
 
         Carrera carrera = _carreraRepository.findById(newAlumno.getCarrera().getId()).orElseThrow(() ->
@@ -64,10 +62,12 @@ public class AlumnoServiceImp implements AlumnoService {
         return alumno;
     }
 
-    public List<Alumno> getAlumnoByIdOrEdad(Integer numero) {
+    @Override
+    public Alumno getAlumnoById(Integer id) {
+        return _alumnoRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
+                "Alumno con id '" + id + "' no existe"
+        ));
 
-        List<Alumno> alumno = _alumnoRepository.findByNumbers(numero);
-        return alumno;
     }
 
     public List<Alumno> getAllAlumnos() {

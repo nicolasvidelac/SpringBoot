@@ -50,24 +50,19 @@ public class PersonaServiceImp implements PersonaService {
         return entity;
     }
 
-    public List<Persona> getPersonaByEdad(int numero) {
+    public List<Persona> getPersonaByAny(String termino) {
 
-        List<Persona> entity = _personaRepository.findByEdad(numero);
-//                .orElseThrow(() -> new RecordNotFoundException(
-//                "Persona con id '" + id + "' no existe"
-//        ));
+        List<Persona> entity = _personaRepository.findByAny(termino.toLowerCase(Locale.ROOT));
+
 
         return entity;
     }
 
-    public List<Persona> getPersonaByNombreOrApellido(String termino) {
-
-        List<Persona> entity = _personaRepository.findByWords(termino.toLowerCase(Locale.ROOT));
-//                .orElseThrow(() -> new RecordNotFoundException(
-//                "Persona con id '" + id + "' no existe"
-//        ));
-
-        return entity;
+    @Override
+    public Persona getById(int id) {
+        return _personaRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
+                "Persona con id '" + id + "' no existe"
+        ));
     }
 
     public List<Persona> getAllPersonas() {

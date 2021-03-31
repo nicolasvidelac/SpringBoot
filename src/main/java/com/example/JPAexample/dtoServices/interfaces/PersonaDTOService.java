@@ -9,9 +9,9 @@ public interface PersonaDTOService {
 
     PersonaDTO updatePersona(int id, PersonaDTO personaDTO);
 
-    List<PersonaDTO> getPersonaByIdOrEdad(Integer numero);
+    List<PersonaDTO> getPersonaByAny(String termino);
 
-    List<PersonaDTO> getPersonaByNombreOrApellid(String termino);
+    PersonaDTO getPersonaById(int id);
 
     List<PersonaDTO> getAllPersonas();
 

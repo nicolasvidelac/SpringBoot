@@ -28,19 +28,10 @@ public class PersonaThymeleafController {
     public String getPersonas(Model model, @RequestParam(required = false) String termino) {
 
         if (termino != null) {
-            try {
-                if (Integer.parseInt(termino) > 0) {
-                    model.addAttribute("message", "Búsqueda de personas con '" + termino + "'");
-                    model.addAttribute("personas", _personaService.getPersonaByIdOrEdad((Integer.parseInt(termino))));
-                }
-            } catch (NumberFormatException e) {
                 model.addAttribute("message", "Búsqueda de personas con '" + termino + "'");
-                model.addAttribute("personas", _personaService.getPersonaByNombreOrApellid(termino));
-            }
-
+                model.addAttribute("personas", _personaService.getPersonaByAny(termino));
         } else {
-            TreeSet result = new TreeSet<PersonaDTO>();
-            result.addAll(_personaService.getAllPersonas());
+            TreeSet<PersonaDTO> result = new TreeSet<PersonaDTO>(_personaService.getAllPersonas());
             model.addAttribute("message", "Esta es una lista de Personas ordenada por edad");
             model.addAttribute("personas", result);
         }
