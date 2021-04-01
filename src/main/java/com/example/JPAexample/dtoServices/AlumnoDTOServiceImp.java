@@ -1,6 +1,6 @@
-package com.example.JPAexample.dtoService;
+package com.example.JPAexample.dtoServices;
 
-import com.example.JPAexample.dtoService.interfaces.AlumnoDTOService;
+import com.example.JPAexample.dtoServices.interfaces.AlumnoDTOService;
 import com.example.JPAexample.models.Alumno;
 import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
@@ -29,7 +29,7 @@ public class AlumnoDTOServiceImp implements AlumnoDTOService {
 
         Alumno alumno = _modelMapper.map(alumnoDTO, Alumno.class);
 
-        alumno.setCarrera(new Carrera(alumnoDTO.getCarrera_id() , "", ""));
+        alumno.setCarrera(new Carrera(alumnoDTO.getCarrera_id(), "", ""));
 
         alumno = _alumnoService.saveAlumno(alumno);
 
@@ -46,7 +46,7 @@ public class AlumnoDTOServiceImp implements AlumnoDTOService {
     public AlumnoDTO updateAlumno(int id, AlumnoDTO alumnoDTO) {
 
         Alumno alumno = _modelMapper.map(alumnoDTO, Alumno.class);
-        alumno.setCarrera(new Carrera(alumnoDTO.getCarrera_id() , "", ""));
+        alumno.setCarrera(new Carrera(alumnoDTO.getCarrera_id(), "", ""));
 
         alumno = _alumnoService.updateAlumno(id, alumno);
 
@@ -60,17 +60,11 @@ public class AlumnoDTOServiceImp implements AlumnoDTOService {
     }
 
     @Override
-    public AlumnoDTO getAlumnoById(Integer id) {
+    public AlumnoDTO getAlumnoById(int numero) {
 
-        Alumno alumno = _alumnoService.getAlumnoById(id);
+        Alumno alumno = _alumnoService.getAlumnoById(numero);
 
-        AlumnoDTO alumnoDTO = _modelMapper.map(alumno, AlumnoDTO.class);
-
-        alumnoDTO.setCarrera_nombre(alumno.getCarrera().getNombre());
-        alumnoDTO.setCarrera_codigo(alumno.getCarrera().getCodigo());
-        alumnoDTO.setCarrera_id(alumno.getCarrera().getId());
-
-        return alumnoDTO;
+        return _modelMapper.map(alumno, AlumnoDTO.class);
     }
 
     @Override
@@ -92,13 +86,26 @@ public class AlumnoDTOServiceImp implements AlumnoDTOService {
     }
 
     @Override
+    public List<AlumnoDTO> getAlumnosByAny(String termino) {
+
+        List<Alumno> alumnos = _alumnoService.getAlumnoByAny(termino);
+        List<AlumnoDTO> result = new ArrayList<>();
+
+        for (Alumno entity : alumnos) {
+            AlumnoDTO alumnoDTO = _modelMapper.map(entity, AlumnoDTO.class);
+
+            alumnoDTO.setCarrera_nombre(entity.getCarrera().getNombre());
+            alumnoDTO.setCarrera_codigo(entity.getCarrera().getCodigo());
+            alumnoDTO.setCarrera_id(entity.getCarrera().getId());
+            result.add(alumnoDTO);
+        }
+
+        return result;
+    }
+
+    @Override
     public boolean deleteAlumno(int id) {
 
-        if (_alumnoService.deleteAlumno(id)){
-            return true;
-        }else {
-            return false;
-
-        }
+        return _alumnoService.deleteAlumno(id);
     }
 }

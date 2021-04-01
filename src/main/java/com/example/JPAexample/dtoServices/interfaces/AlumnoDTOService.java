@@ -1,4 +1,4 @@
-package com.example.JPAexample.dtoService.interfaces;
+package com.example.JPAexample.dtoServices.interfaces;
 
 import com.example.JPAexample.models.DTO.AlumnoDTO;
 
@@ -9,9 +9,11 @@ public interface AlumnoDTOService {
 
     AlumnoDTO updateAlumno(int id, AlumnoDTO alumnoDTO);
 
-    AlumnoDTO getAlumnoById(Integer id);
-
     List<AlumnoDTO> getAllAlumnos();
+
+    List<AlumnoDTO> getAlumnosByAny(String termino);
+
+    AlumnoDTO getAlumnoById(int id);
 
     boolean deleteAlumno(int id);
 }

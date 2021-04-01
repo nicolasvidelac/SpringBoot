@@ -1,6 +1,6 @@
-package com.example.JPAexample.dtoService;
+package com.example.JPAexample.dtoServices;
 
-import com.example.JPAexample.dtoService.interfaces.PersonaDTOService;
+import com.example.JPAexample.dtoServices.interfaces.PersonaDTOService;
 import com.example.JPAexample.models.DTO.PersonaDTO;
 import com.example.JPAexample.models.Persona;
 import com.example.JPAexample.services.interfaces.PersonaService;
@@ -45,11 +45,21 @@ public class PersonaDTOServiceImp implements PersonaDTOService {
     }
 
     @Override
-    public PersonaDTO getPersonaById(Integer id) {
+    public List<PersonaDTO> getPersonaByAny(String termino) {
 
-        Persona entity = _personaService.getPersonaById(id);
+        List<Persona> personas = _personaService.getPersonaByAny(termino);
+        List<PersonaDTO> entities = new ArrayList<>();
 
-        return _modelMapper.map(entity, PersonaDTO.class);
+        for (Persona persona : personas) {
+            entities.add(_modelMapper.map(persona, PersonaDTO.class));
+        }
+        return entities;
+    }
+
+    @Override
+    public PersonaDTO getPersonaById(int id) {
+        Persona result = _personaService.getById(id);
+        return _modelMapper.map(result, PersonaDTO.class);
     }
 
     @Override
@@ -67,11 +77,7 @@ public class PersonaDTOServiceImp implements PersonaDTOService {
     @Override
     public boolean deletePersona(int id) {
 
-        if(_personaService.deletePersona(id)){
-            return true;
-        }else {
-            return false;
-        }
+        return _personaService.deletePersona(id);
 
     }
 }

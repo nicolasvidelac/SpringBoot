@@ -1,4 +1,4 @@
-package com.example.JPAexample.dtoService.interfaces;
+package com.example.JPAexample.dtoServices.interfaces;
 
 import com.example.JPAexample.models.DTO.PersonaDTO;
 
@@ -9,7 +9,9 @@ public interface PersonaDTOService {
 
     PersonaDTO updatePersona(int id, PersonaDTO personaDTO);
 
-    PersonaDTO getPersonaById(Integer id);
+    List<PersonaDTO> getPersonaByAny(String termino);
+
+    PersonaDTO getPersonaById(int id);
 
     List<PersonaDTO> getAllPersonas();
 

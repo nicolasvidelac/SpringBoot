@@ -1,10 +1,10 @@
 package com.example.JPAexample.services;
 
-import com.example.JPAexample.exceptions.MissingInfoException;
-import com.example.JPAexample.exceptions.NotAcceptableException;
-import com.example.JPAexample.exceptions.RecordNotFoundException;
 import com.example.JPAexample.models.Carrera;
-import com.example.JPAexample.repositories.CarreraRepository;
+import com.example.JPAexample.others.exceptions.MissingInfoException;
+import com.example.JPAexample.others.exceptions.NotAcceptableException;
+import com.example.JPAexample.others.exceptions.RecordNotFoundException;
+import com.example.JPAexample.repositories.interfaces.CarreraRepository;
 import com.example.JPAexample.services.interfaces.CarreraService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +18,24 @@ import java.util.List;
 public class CarreraServiceImp implements CarreraService {
 
     @Autowired
-    private CarreraRepository _carreraRepository;
-
+    private final CarreraRepository _carreraRepository;
     @Autowired
     private ModelMapper _modelMapper;
+
+    public CarreraServiceImp(CarreraRepository _carreraRepository) {
+        this._carreraRepository = _carreraRepository;
+    }
 
     public Carrera saveCarrera(Carrera newCarrera) {
 
         try {
             newCarrera = _carreraRepository.saveAndFlush(newCarrera);
-        } catch (Exception e) {
+        } catch (DataIntegrityViolationException e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
+        } catch (Exception e) {
+            throw new NotAcceptableException("No se pudo completar la solicitud");
         }
-
         return newCarrera;
-
     }
 
     public Carrera updateCarrera(int id, Carrera updateCarrera) {
@@ -53,13 +56,11 @@ public class CarreraServiceImp implements CarreraService {
         return entity;
     }
 
-
     public Carrera getCarreraById(int id) {
 
-        Carrera entity = _carreraRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
+        return _carreraRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Carrera con id '" + id + "' no existe"
         ));
-        return entity;
     }
 
     public List<Carrera> getAllCarreras() {
@@ -84,5 +85,10 @@ public class CarreraServiceImp implements CarreraService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @Override
+    public List<Carrera> getCarreraByAny(String termino) {
+        return _carreraRepository.findByAny(termino.toLowerCase());
     }
 }

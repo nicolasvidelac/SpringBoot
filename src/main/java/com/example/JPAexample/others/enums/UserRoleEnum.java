@@ -1,4 +1,4 @@
-package com.example.JPAexample.enums;
+package com.example.JPAexample.others.enums;
 
 import com.google.common.collect.Sets;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.example.JPAexample.enums.UserPermissionEnum.*;
+import static com.example.JPAexample.others.enums.UserPermissionEnum.*;
 
 @Getter
 public enum UserRoleEnum {

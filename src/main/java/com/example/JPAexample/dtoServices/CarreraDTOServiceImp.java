@@ -1,6 +1,6 @@
-package com.example.JPAexample.dtoService;
+package com.example.JPAexample.dtoServices;
 
-import com.example.JPAexample.dtoService.interfaces.CarreraDTOService;
+import com.example.JPAexample.dtoServices.interfaces.CarreraDTOService;
 import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.models.DTO.CarreraDTO;
 import com.example.JPAexample.services.interfaces.CarreraService;
@@ -49,7 +49,6 @@ public class CarreraDTOServiceImp implements CarreraDTOService {
     public CarreraDTO getCarreraById(Integer id) {
 
         Carrera carrera = _carreraService.getCarreraById(id);
-
         return _modelMapper.map(carrera, CarreraDTO.class);
     }
 
@@ -68,12 +67,22 @@ public class CarreraDTOServiceImp implements CarreraDTOService {
     }
 
     @Override
+    public List<CarreraDTO> getCarrerasByAny(String termino) {
+
+        List<Carrera> carreras = _carreraService.getCarreraByAny(termino);
+        List<CarreraDTO> entities = new ArrayList<>();
+
+
+        for (Carrera carrera : carreras) {
+            entities.add(_modelMapper.map(carrera, CarreraDTO.class));
+        }
+
+        return entities;
+    }
+
+    @Override
     public boolean deleteCarrera(int id) {
 
-        if (_carreraService.deleteCarrera(id)){
-            return true;
-        } else {
-            return false;
-        }
+        return _carreraService.deleteCarrera(id);
     }
 }

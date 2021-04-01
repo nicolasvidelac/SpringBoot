@@ -1,6 +1,6 @@
 package com.example.JPAexample.services;
 
-import com.example.JPAexample.repositories.UserRepository;
+import com.example.JPAexample.repositories.interfaces.UserRepository;
 import com.example.JPAexample.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

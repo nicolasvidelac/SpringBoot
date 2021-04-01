@@ -1,4 +1,4 @@
-package com.example.JPAexample.security;
+package com.example.JPAexample.others.security;
 
 import com.example.JPAexample.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*", "/api/v1/*").permitAll()
+                .antMatchers("/").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -65,6 +65,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setUserDetailsService(_userService);
         return provider;
     }
-
-
 }

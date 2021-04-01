@@ -1,6 +1,6 @@
 package com.example.JPAexample.controllers.thymeleaf;
 
-import com.example.JPAexample.dtoService.interfaces.AlumnoDTOService;
+import com.example.JPAexample.dtoServices.interfaces.AlumnoDTOService;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,20 +25,18 @@ public class AlumnoThymeleafController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('alumno:read')")
-    public String getAlumnos(Model model, @RequestParam(required = false) Integer id) {
-        if (id != null) {
-            model.addAttribute("message", "Búsqueda de alumno");
-            model.addAttribute("alumnos", _alumnoService.getAlumnoById(id));
-        } else {
-            TreeSet result = new TreeSet<AlumnoDTO>();
-            result.addAll(_alumnoService.getAllAlumnos());
+    public String getAlumnos(Model model, @RequestParam(required = false) String termino) {
 
+        if (termino != null) {
+            model.addAttribute("message", "Búsqueda de alumnos con '" + termino + "'");
+            model.addAttribute("alumnos", _alumnoService.getAlumnosByAny(termino));
+        } else {
+            TreeSet<AlumnoDTO> result = new TreeSet<AlumnoDTO>(_alumnoService.getAllAlumnos());
             model.addAttribute("message", "Esta es una lista de Alumnos ordenada por carrera");
             model.addAttribute("alumnos", result);
         }
 
-
-        return "sample_list";
+        return "list_alumnos";
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.JPAexample.dtoService.interfaces;
+package com.example.JPAexample.dtoServices.interfaces;
 
 import com.example.JPAexample.models.DTO.CarreraDTO;
 
@@ -9,9 +9,11 @@ public interface CarreraDTOService {
 
     CarreraDTO updateCarrera(int id, CarreraDTO carreraDTO);
 
-    CarreraDTO getCarreraById(Integer id);
+    CarreraDTO getCarreraById(Integer numero);
 
     List<CarreraDTO> getAllCarreras();
+
+    List<CarreraDTO> getCarrerasByAny(String termino);
 
     boolean deleteCarrera(int id);
 }

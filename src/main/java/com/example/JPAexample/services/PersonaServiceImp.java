@@ -1,18 +1,16 @@
 package com.example.JPAexample.services;
 
-import com.example.JPAexample.exceptions.MissingInfoException;
-import com.example.JPAexample.exceptions.RecordNotFoundException;
-import com.example.JPAexample.models.DTO.PersonaDTO;
 import com.example.JPAexample.models.Persona;
-import com.example.JPAexample.repositories.PersonaRepository;
+import com.example.JPAexample.others.exceptions.MissingInfoException;
+import com.example.JPAexample.others.exceptions.RecordNotFoundException;
+import com.example.JPAexample.repositories.interfaces.PersonaRepository;
 import com.example.JPAexample.services.interfaces.PersonaService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class PersonaServiceImp implements PersonaService {
@@ -52,13 +50,19 @@ public class PersonaServiceImp implements PersonaService {
         return entity;
     }
 
-    public Persona getPersonaById(int id) {
+    public List<Persona> getPersonaByAny(String termino) {
 
-        Persona entity = _personaRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
-                "Persona con id '" + id + "' no existe"
-        ));
+        List<Persona> entity = _personaRepository.findByAny(termino.toLowerCase(Locale.ROOT));
+
 
         return entity;
+    }
+
+    @Override
+    public Persona getById(int id) {
+        return _personaRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
+                "Persona con id '" + id + "' no existe"
+        ));
     }
 
     public List<Persona> getAllPersonas() {

@@ -1,7 +1,6 @@
 package com.example.JPAexample.services.interfaces;
 
 import com.example.JPAexample.models.Carrera;
-import com.example.JPAexample.models.DTO.CarreraDTO;
 
 import java.util.List;
 
@@ -15,5 +14,7 @@ public interface CarreraService {
     List<Carrera> getAllCarreras();
 
     boolean deleteCarrera(int id);
+
+    List<Carrera> getCarreraByAny(String termino);
 
 }

@@ -1,11 +1,11 @@
 package com.example.JPAexample.services;
 
-import com.example.JPAexample.exceptions.MissingInfoException;
-import com.example.JPAexample.exceptions.RecordNotFoundException;
 import com.example.JPAexample.models.Alumno;
 import com.example.JPAexample.models.Carrera;
-import com.example.JPAexample.repositories.AlumnoRepository;
-import com.example.JPAexample.repositories.CarreraRepository;
+import com.example.JPAexample.others.exceptions.MissingInfoException;
+import com.example.JPAexample.others.exceptions.RecordNotFoundException;
+import com.example.JPAexample.repositories.interfaces.AlumnoRepository;
+import com.example.JPAexample.repositories.interfaces.CarreraRepository;
 import com.example.JPAexample.services.interfaces.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,8 +21,6 @@ public class AlumnoServiceImp implements AlumnoService {
 
     @Autowired
     private CarreraRepository _carreraRepository;
-
-
 
     public Alumno saveAlumno(Alumno newAlumno) {
 
@@ -64,13 +62,12 @@ public class AlumnoServiceImp implements AlumnoService {
         return alumno;
     }
 
+    @Override
     public Alumno getAlumnoById(Integer id) {
-
-        Alumno alumno = _alumnoRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
+        return _alumnoRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Alumno con id '" + id + "' no existe"
         ));
 
-        return alumno;
     }
 
     public List<Alumno> getAllAlumnos() {
@@ -78,6 +75,11 @@ public class AlumnoServiceImp implements AlumnoService {
         List<Alumno> alumnos = _alumnoRepository.findAll();
 
         return alumnos;
+    }
+
+    @Override
+    public List<Alumno> getAlumnoByAny(String termino) {
+        return _alumnoRepository.findByWords(termino.toLowerCase());
     }
 
     public boolean deleteAlumno(int id) {
