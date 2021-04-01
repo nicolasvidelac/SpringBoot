@@ -36,15 +36,15 @@ public class Alumno extends Persona {
     }
 
     @Override
-    public boolean equals( Object object) {
-        if(object == null) {
+    public boolean equals(Object object) {
+        if (object == null) {
             return false;
         } else return
-            this.getNombre().equals(((Alumno) object).getNombre()) &&
-            this.getLegajo().equals(((Alumno) object).getLegajo()) &&
-            this.getApellido().equals(((Alumno) object).getApellido()) &&
-            this.getCarrera().equals(((Alumno) object).getCarrera()) &&
-            this.getEmail().equals(((Alumno) object).getEmail()) &&
-            this.getEdad() == ((Alumno) object).getEdad();
+                this.getNombre().equals(((Alumno) object).getNombre()) &&
+                        this.getLegajo().equals(((Alumno) object).getLegajo()) &&
+                        this.getApellido().equals(((Alumno) object).getApellido()) &&
+                        this.getCarrera().equals(((Alumno) object).getCarrera()) &&
+                        this.getEmail().equals(((Alumno) object).getEmail()) &&
+                        this.getEdad() == ((Alumno) object).getEdad();
     }
 }

@@ -12,21 +12,19 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
 public class CarreraServiceImp implements CarreraService {
 
     @Autowired
-    private CarreraRepository _carreraRepository;
+    private final CarreraRepository _carreraRepository;
+    @Autowired
+    private ModelMapper _modelMapper;
 
     public CarreraServiceImp(CarreraRepository _carreraRepository) {
         this._carreraRepository = _carreraRepository;
     }
-
-    @Autowired
-    private ModelMapper _modelMapper;
 
     public Carrera saveCarrera(Carrera newCarrera) {
 

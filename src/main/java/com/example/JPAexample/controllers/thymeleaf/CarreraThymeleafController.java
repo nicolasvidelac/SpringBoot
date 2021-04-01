@@ -27,7 +27,7 @@ public class CarreraThymeleafController {
     @PreAuthorize("hasAuthority('carrera:read')")
     public String getCarreras(Model model, @RequestParam(required = false) String termino) {
 
-        if (termino != null){
+        if (termino != null) {
             model.addAttribute("message", "Búsqueda de carreras con '" + termino + "'");
             model.addAttribute("carreras", _carreraService.getCarrerasByAny(termino));
         } else {

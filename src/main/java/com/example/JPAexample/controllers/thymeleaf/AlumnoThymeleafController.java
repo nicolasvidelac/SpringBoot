@@ -27,7 +27,7 @@ public class AlumnoThymeleafController {
     @PreAuthorize("hasAuthority('alumno:read')")
     public String getAlumnos(Model model, @RequestParam(required = false) String termino) {
 
-        if (termino != null){
+        if (termino != null) {
             model.addAttribute("message", "Búsqueda de alumnos con '" + termino + "'");
             model.addAttribute("alumnos", _alumnoService.getAlumnosByAny(termino));
         } else {

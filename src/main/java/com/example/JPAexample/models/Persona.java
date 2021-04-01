@@ -28,13 +28,13 @@ public class Persona {
     private int edad;
 
     @Override
-    public boolean equals( Object object) {
-        if(object == null) {
+    public boolean equals(Object object) {
+        if (object == null) {
             return false;
         } else return
                 this.getNombre().equals(((Persona) object).getNombre()) &&
-                this.getApellido().equals(((Persona) object).getApellido()) &&
-                this.getEdad() == ((Persona) object).getEdad();
+                        this.getApellido().equals(((Persona) object).getApellido()) &&
+                        this.getEdad() == ((Persona) object).getEdad();
     }
 
 }

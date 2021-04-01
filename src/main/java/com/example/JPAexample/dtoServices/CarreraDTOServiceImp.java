@@ -69,7 +69,7 @@ public class CarreraDTOServiceImp implements CarreraDTOService {
     @Override
     public List<CarreraDTO> getCarrerasByAny(String termino) {
 
-        List<Carrera> carreras = _carreraService.getCarreraByAny(termino);;
+        List<Carrera> carreras = _carreraService.getCarreraByAny(termino);
         List<CarreraDTO> entities = new ArrayList<>();
 
 
@@ -83,10 +83,6 @@ public class CarreraDTOServiceImp implements CarreraDTOService {
     @Override
     public boolean deleteCarrera(int id) {
 
-        if (_carreraService.deleteCarrera(id)){
-            return true;
-        } else {
-            return false;
-        }
+        return _carreraService.deleteCarrera(id);
     }
 }

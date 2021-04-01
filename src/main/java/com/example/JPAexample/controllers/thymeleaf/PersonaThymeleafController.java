@@ -28,8 +28,8 @@ public class PersonaThymeleafController {
     public String getPersonas(Model model, @RequestParam(required = false) String termino) {
 
         if (termino != null) {
-                model.addAttribute("message", "Búsqueda de personas con '" + termino + "'");
-                model.addAttribute("personas", _personaService.getPersonaByAny(termino));
+            model.addAttribute("message", "Búsqueda de personas con '" + termino + "'");
+            model.addAttribute("personas", _personaService.getPersonaByAny(termino));
         } else {
             TreeSet<PersonaDTO> result = new TreeSet<PersonaDTO>(_personaService.getAllPersonas());
             model.addAttribute("message", "Esta es una lista de Personas ordenada por edad");

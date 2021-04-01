@@ -2,7 +2,6 @@ package com.example.JPAexample.controllers;
 
 import com.example.JPAexample.dtoServices.interfaces.AlumnoDTOService;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
-import com.example.JPAexample.models.DTO.CarreraDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +23,7 @@ public class AlumnoController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('alumno:read')")
     public ResponseEntity<AlumnoDTO> getSingleAlumno(@PathVariable Integer id) {
-        if (id > 0){
+        if (id > 0) {
             AlumnoDTO result = _alumnoService.getAlumnoById(id);
             return ResponseEntity.ok(result);
         } else {
@@ -43,11 +42,11 @@ public class AlumnoController {
     public ResponseEntity<AlumnoDTO> saveAlumno(@RequestBody AlumnoDTO newAlumno) {
         if (
                 newAlumno.getCarrera_id() > 0 &&
-                newAlumno.getEdad() > 0 &&
-                !newAlumno.getApellido().isBlank() &&
-                !newAlumno.getNombre().isBlank() &&
-                !newAlumno.getEmail().isBlank() &&
-                !newAlumno.getLegajo().isBlank()
+                        newAlumno.getEdad() > 0 &&
+                        !newAlumno.getApellido().isBlank() &&
+                        !newAlumno.getNombre().isBlank() &&
+                        !newAlumno.getEmail().isBlank() &&
+                        !newAlumno.getLegajo().isBlank()
         ) {
             AlumnoDTO result = _alumnoService.saveAlumno(newAlumno);
             return ResponseEntity.ok(result);
@@ -61,25 +60,27 @@ public class AlumnoController {
     public ResponseEntity<AlumnoDTO> updateAlumno(@PathVariable int id, @RequestBody AlumnoDTO updateAlumno) {
         if (
                 id > 0 &&
-                updateAlumno.getCarrera_id() > 0 &&
-                updateAlumno.getEdad() > 0 &&
-                !updateAlumno.getApellido().isBlank() &&
-                !updateAlumno.getNombre().isBlank() &&
-                !updateAlumno.getEmail().isBlank() &&
-                !updateAlumno.getLegajo().isBlank()
+                        updateAlumno.getCarrera_id() > 0 &&
+                        updateAlumno.getEdad() > 0 &&
+                        !updateAlumno.getApellido().isBlank() &&
+                        !updateAlumno.getNombre().isBlank() &&
+                        !updateAlumno.getEmail().isBlank() &&
+                        !updateAlumno.getLegajo().isBlank()
         ) {
             AlumnoDTO result = _alumnoService.updateAlumno(id, updateAlumno);
             return ResponseEntity.ok(result);
         } else {
             return ResponseEntity.badRequest().build();
-        }    }
+        }
+    }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('alumno:write')")
     public ResponseEntity<Boolean> deleteAlumno(@PathVariable int id) {
-        if (id > 0){
+        if (id > 0) {
             return ResponseEntity.ok(_alumnoService.deleteAlumno(id));
         } else {
             return ResponseEntity.badRequest().build();
-        }    }
+        }
+    }
 }

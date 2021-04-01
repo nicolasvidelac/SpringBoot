@@ -1,7 +1,6 @@
 package com.example.JPAexample.services.interfaces;
 
 import com.example.JPAexample.models.Alumno;
-import com.example.JPAexample.models.DTO.AlumnoDTO;
 
 import java.util.List;
 

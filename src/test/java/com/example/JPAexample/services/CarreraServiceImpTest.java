@@ -1,48 +1,39 @@
 package com.example.JPAexample.services;
 
 import com.example.JPAexample.models.Carrera;
-import com.example.JPAexample.others.exceptions.NotAcceptableException;
 import com.example.JPAexample.repositories.interfaces.CarreraRepository;
-import com.example.JPAexample.services.CarreraServiceImp;
-import org.assertj.core.api.ThrowableAssert;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 
 @DataJpaTest
 class CarreraServiceImpTest {
-    
+
     @Mock
     CarreraRepository _carreraRepository;
     AutoCloseable autoCloseable;
     CarreraServiceImp _carreraService;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
         _carreraService = new CarreraServiceImp(_carreraRepository);
     }
 
     @AfterEach
-    void tearDown () throws Exception {
+    void tearDown() throws Exception {
         autoCloseable.close();
     }
 
@@ -96,7 +87,7 @@ class CarreraServiceImpTest {
 
         willThrow(EmptyResultDataAccessException.class).given(_carreraRepository).deleteById(numero);
 
-        assertThatThrownBy(() -> _carreraService.deleteCarrera(numero)).hasMessage( "Carrera con id '" +
+        assertThatThrownBy(() -> _carreraService.deleteCarrera(numero)).hasMessage("Carrera con id '" +
                 numero + "' no existe");
     }
 
@@ -106,7 +97,7 @@ class CarreraServiceImpTest {
 
         willThrow(DataIntegrityViolationException.class).given(_carreraRepository).deleteById(numero);
 
-        assertThatThrownBy(() -> _carreraService.deleteCarrera(numero)).hasMessage( "La Carrera no puede ser" +
+        assertThatThrownBy(() -> _carreraService.deleteCarrera(numero)).hasMessage("La Carrera no puede ser" +
                 " eliminada porque esta siendo utilizada por al menos un Alumno");
 
     }

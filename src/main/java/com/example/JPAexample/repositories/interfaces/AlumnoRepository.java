@@ -1,7 +1,6 @@
 package com.example.JPAexample.repositories.interfaces;
 
 import com.example.JPAexample.models.Alumno;
-import com.example.JPAexample.models.Carrera;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

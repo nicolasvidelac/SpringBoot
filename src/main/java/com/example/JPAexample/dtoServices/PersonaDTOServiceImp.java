@@ -77,11 +77,7 @@ public class PersonaDTOServiceImp implements PersonaDTOService {
     @Override
     public boolean deletePersona(int id) {
 
-        if(_personaService.deletePersona(id)){
-            return true;
-        }else {
-            return false;
-        }
+        return _personaService.deletePersona(id);
 
     }
 }

@@ -1,7 +1,6 @@
 package com.example.JPAexample.services.interfaces;
 
 import com.example.JPAexample.models.Carrera;
-import com.example.JPAexample.models.DTO.CarreraDTO;
 
 import java.util.List;
 

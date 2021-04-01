@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
     <title>Nicolas Videla Spring Boot</title>
 
@@ -33,23 +33,23 @@
 </header>
 
 
-<main role="main" class="container">
+<main class="container" role="main">
 
     <div class="starter-template">
         <h1>Spring Boot Web Thymeleaf</h1>
         <h2>
-            <span ></span>
+            <span></span>
         </h2>
         <div>
-            <td>Error: </td>
+            <td>Error:</td>
             <td th:text="${error}"/>
         </div>
         <div>
-            <td>Status: </td>
+            <td>Status:</td>
             <td th:text="${status}"/>
         </div>
         <div>
-            <td>Message: </td>
+            <td>Message:</td>
             <td th:text="${message}"/>
         </div>
     </div>
@@ -58,6 +58,6 @@
 </main>
 <!-- /.container -->
 
-<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+<script th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}" type="text/javascript"></script>
 </body>
 </html>

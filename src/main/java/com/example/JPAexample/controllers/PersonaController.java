@@ -41,10 +41,10 @@ public class PersonaController {
     public ResponseEntity<PersonaDTO> savePersona(@RequestBody PersonaDTO newPersona) {
         if (
                 !newPersona.getApellido().isBlank() &&
-                !newPersona.getNombre().isBlank() &&
-                newPersona.getEdad() > 0
+                        !newPersona.getNombre().isBlank() &&
+                        newPersona.getEdad() > 0
         ) {
-            return ResponseEntity.ok( _personaService.savePersona(newPersona));
+            return ResponseEntity.ok(_personaService.savePersona(newPersona));
         } else {
             return ResponseEntity.badRequest().build();
         }
@@ -55,8 +55,8 @@ public class PersonaController {
     public ResponseEntity<PersonaDTO> updatePersona(@PathVariable int id, @RequestBody PersonaDTO updatedPersona) {
         if (
                 !updatedPersona.getApellido().isBlank() &&
-                !updatedPersona.getNombre().isBlank() &&
-                updatedPersona.getEdad() > 0
+                        !updatedPersona.getNombre().isBlank() &&
+                        updatedPersona.getEdad() > 0
         ) {
             return ResponseEntity.ok(_personaService.updatePersona(id, updatedPersona));
         } else {
@@ -67,7 +67,7 @@ public class PersonaController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('persona:write')")
     public ResponseEntity<Boolean> deletePersona(@PathVariable int id) {
-        if (id > 0){
+        if (id > 0) {
             return ResponseEntity.ok(_personaService.deletePersona(id));
         } else {
             return ResponseEntity.badRequest().build();

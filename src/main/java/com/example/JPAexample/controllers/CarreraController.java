@@ -23,7 +23,7 @@ public class CarreraController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('carrera:read')")
     public ResponseEntity<CarreraDTO> getSingleCarrera(@PathVariable Integer id) {
-        if (id > 0 ){
+        if (id > 0) {
             CarreraDTO result = _carreraService.getCarreraById(id);
             return ResponseEntity.ok(result);
         } else {
@@ -41,7 +41,7 @@ public class CarreraController {
     @PostMapping
     @PreAuthorize("hasAuthority('carrera:write')")
     public ResponseEntity<CarreraDTO> saveCarrera(@RequestBody CarreraDTO newCarrera) {
-        if ( !newCarrera.getCodigo().isBlank() && !newCarrera.getNombre().isBlank()){
+        if (!newCarrera.getCodigo().isBlank() && !newCarrera.getNombre().isBlank()) {
             return ResponseEntity.ok(_carreraService.saveCarrera(newCarrera));
         } else {
             return ResponseEntity.badRequest().build();
@@ -51,7 +51,7 @@ public class CarreraController {
     @PutMapping("{id}")
     @PreAuthorize("hasAuthority('carrera:write')")
     public ResponseEntity<CarreraDTO> updateCarrera(@PathVariable Integer id, @RequestBody CarreraDTO updatedCarrera) {
-        if ( !updatedCarrera.getCodigo().isBlank() && !updatedCarrera.getNombre().isBlank() && id > 0){
+        if (!updatedCarrera.getCodigo().isBlank() && !updatedCarrera.getNombre().isBlank() && id > 0) {
             return ResponseEntity.ok(_carreraService.updateCarrera(id, updatedCarrera));
         } else {
             return ResponseEntity.badRequest().build();
@@ -61,7 +61,7 @@ public class CarreraController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('carrera:write')")
     public ResponseEntity<Boolean> deleteCarrera(@PathVariable int id) {
-        if (id > 0){
+        if (id > 0) {
             return ResponseEntity.ok(_carreraService.deleteCarrera(id));
         } else {
             return ResponseEntity.badRequest().build();

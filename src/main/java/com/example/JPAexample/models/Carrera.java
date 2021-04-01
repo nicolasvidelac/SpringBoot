@@ -27,11 +27,11 @@ public class Carrera {
     private String codigo;
 
     @Override
-    public boolean equals( Object object) {
-        if(object == null) {
+    public boolean equals(Object object) {
+        if (object == null) {
             return false;
         } else return
                 this.codigo.equals(((Carrera) object).codigo) &&
-                this.nombre.equals(((Carrera) object).nombre);
+                        this.nombre.equals(((Carrera) object).nombre);
     }
 }
