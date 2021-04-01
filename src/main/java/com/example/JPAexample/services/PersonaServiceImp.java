@@ -2,10 +2,12 @@ package com.example.JPAexample.services;
 
 import com.example.JPAexample.models.Persona;
 import com.example.JPAexample.others.exceptions.MissingInfoException;
+import com.example.JPAexample.others.exceptions.NotAcceptableException;
 import com.example.JPAexample.others.exceptions.RecordNotFoundException;
 import com.example.JPAexample.repositories.interfaces.PersonaRepository;
 import com.example.JPAexample.services.interfaces.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +26,10 @@ public class PersonaServiceImp implements PersonaService {
 
         try {
             newPersona = _personaRepository.saveAndFlush(newPersona);
-        } catch (Exception e) {
+        } catch (DataIntegrityViolationException e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
+        } catch (Exception e) {
+            throw new NotAcceptableException("No se pudo completar la solicitud");
         }
 
         return newPersona;
@@ -54,12 +58,11 @@ public class PersonaServiceImp implements PersonaService {
 
         List<Persona> entity = _personaRepository.findByAny(termino.toLowerCase(Locale.ROOT));
 
-
         return entity;
     }
 
     @Override
-    public Persona getById(int id) {
+    public Persona getPersonaById(int id) {
         return _personaRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Persona con id '" + id + "' no existe"
         ));
