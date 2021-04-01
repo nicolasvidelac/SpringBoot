@@ -2,7 +2,6 @@ package com.example.JPAexample.controllers;
 
 import com.example.JPAexample.dtoServices.interfaces.CarreraDTOService;
 import com.example.JPAexample.models.DTO.CarreraDTO;
-import net.bytebuddy.pool.TypePool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

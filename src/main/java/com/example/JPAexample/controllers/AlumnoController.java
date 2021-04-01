@@ -2,7 +2,9 @@ package com.example.JPAexample.controllers;
 
 import com.example.JPAexample.dtoServices.interfaces.AlumnoDTOService;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
+import com.example.JPAexample.models.DTO.CarreraDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,31 +23,63 @@ public class AlumnoController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('alumno:read')")
-    public AlumnoDTO getSingleAlumno(@PathVariable Integer id) {
-        return _alumnoService.getAlumnoById(id);
+    public ResponseEntity<AlumnoDTO> getSingleAlumno(@PathVariable Integer id) {
+        if (id > 0){
+            AlumnoDTO result = _alumnoService.getAlumnoById(id);
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping
     @PreAuthorize("hasAuthority('alumno:read')")
-    public List<AlumnoDTO> getAllAlumnos() {
-        return _alumnoService.getAllAlumnos();
+    public ResponseEntity<List<AlumnoDTO>> getAllAlumnos() {
+        return ResponseEntity.ok(_alumnoService.getAllAlumnos());
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('alumno:write')")
-    public AlumnoDTO saveAlumno(@RequestBody AlumnoDTO newAlumno) {
-        return _alumnoService.saveAlumno((newAlumno));
+    public ResponseEntity<AlumnoDTO> saveAlumno(@RequestBody AlumnoDTO newAlumno) {
+        if (
+                newAlumno.getCarrera_id() > 0 &&
+                newAlumno.getEdad() > 0 &&
+                !newAlumno.getApellido().isBlank() &&
+                !newAlumno.getNombre().isBlank() &&
+                !newAlumno.getEmail().isBlank() &&
+                !newAlumno.getLegajo().isBlank()
+        ) {
+            AlumnoDTO result = _alumnoService.saveAlumno(newAlumno);
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('alumno:write')")
-    public AlumnoDTO updateAlumno(@PathVariable int id, @RequestBody AlumnoDTO updateAlumno) {
-        return _alumnoService.updateAlumno(id, updateAlumno);
-    }
+    public ResponseEntity<AlumnoDTO> updateAlumno(@PathVariable int id, @RequestBody AlumnoDTO updateAlumno) {
+        if (
+                id > 0 &&
+                updateAlumno.getCarrera_id() > 0 &&
+                updateAlumno.getEdad() > 0 &&
+                !updateAlumno.getApellido().isBlank() &&
+                !updateAlumno.getNombre().isBlank() &&
+                !updateAlumno.getEmail().isBlank() &&
+                !updateAlumno.getLegajo().isBlank()
+        ) {
+            AlumnoDTO result = _alumnoService.updateAlumno(id, updateAlumno);
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }    }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('alumno:write')")
-    public boolean deleteAlumno(@PathVariable int id) {
-        return _alumnoService.deleteAlumno(id);
-    }
+    public ResponseEntity<Boolean> deleteAlumno(@PathVariable int id) {
+        if (id > 0){
+            return ResponseEntity.ok(_alumnoService.deleteAlumno(id));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }    }
 }
