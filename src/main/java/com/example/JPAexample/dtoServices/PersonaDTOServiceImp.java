@@ -58,7 +58,7 @@ public class PersonaDTOServiceImp implements PersonaDTOService {
 
     @Override
     public PersonaDTO getPersonaById(int id) {
-        Persona result = _personaService.getById(id);
+        Persona result = _personaService.getPersonaById(id);
         return _modelMapper.map(result, PersonaDTO.class);
     }
 

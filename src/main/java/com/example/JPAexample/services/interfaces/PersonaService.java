@@ -11,7 +11,7 @@ public interface PersonaService {
 
     List<Persona> getPersonaByAny(String termino);
 
-    Persona getById(int id);
+    Persona getPersonaById(int id);
 
     List<Persona> getAllPersonas();
 

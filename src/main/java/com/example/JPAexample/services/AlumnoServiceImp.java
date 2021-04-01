@@ -3,11 +3,13 @@ package com.example.JPAexample.services;
 import com.example.JPAexample.models.Alumno;
 import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.others.exceptions.MissingInfoException;
+import com.example.JPAexample.others.exceptions.NotAcceptableException;
 import com.example.JPAexample.others.exceptions.RecordNotFoundException;
 import com.example.JPAexample.repositories.interfaces.AlumnoRepository;
 import com.example.JPAexample.repositories.interfaces.CarreraRepository;
 import com.example.JPAexample.services.interfaces.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +35,10 @@ public class AlumnoServiceImp implements AlumnoService {
 
         try {
             alumno = _alumnoRepository.saveAndFlush(alumno);
-        } catch (Exception e) {
+        } catch (DataIntegrityViolationException e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
+        } catch (Exception e) {
+            throw new NotAcceptableException("No se pudo completar la solicitud");
         }
 
         return alumno;
@@ -46,7 +50,8 @@ public class AlumnoServiceImp implements AlumnoService {
                 "Alumno con id '" + id + "' no existe"
         ));
 
-        if (updatedAlumno.getCarrera().getId() != alumno.getCarrera().getId()) { //Si modifico la carrera, ejecuto esto
+        if (!updatedAlumno.getCarrera().getId().equals(alumno.getCarrera().getId())) {
+            // Si modifico la carrera, ejecuto esto
             Carrera carrera = _carreraRepository.findById(updatedAlumno.getCarrera().getId()).orElseThrow(() ->
                     new RecordNotFoundException("Carrera con id '" + updatedAlumno.getCarrera().getId() + "' no existe")
             );
