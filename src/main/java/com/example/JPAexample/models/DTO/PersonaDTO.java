@@ -1,10 +1,14 @@
 package com.example.JPAexample.models.DTO;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PersonaDTO implements Comparable<PersonaDTO> {
     private Integer id;
     private String nombre;

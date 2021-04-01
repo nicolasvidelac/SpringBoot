@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -59,8 +60,9 @@ public class CarreraServiceImp implements CarreraService {
 
     public Carrera getCarreraById(int id) {
 
-        Carrera entity = _carreraRepository.getOne(id);
-        return entity;
+        return _carreraRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
+                "Carrera con id '" + id + "' no existe"
+        ));
     }
 
     public List<Carrera> getAllCarreras() {
