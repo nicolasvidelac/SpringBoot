@@ -15,7 +15,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -23,20 +22,16 @@ public class CarreraServiceImp implements CarreraService {
 
     @Autowired
     private final CarreraRepository _carreraRepository;
-
+    @Autowired
+    private final UniversidadRepository _universidadRepository;
     @Autowired
     private ModelMapper _modelMapper;
-
     @Autowired
     @Qualifier("getUTN")
     private Universidad _getUTN;
-
     @Autowired
     @Qualifier("getUBA")
     private Universidad _getUBA;
-
-    @Autowired
-    private final UniversidadRepository _universidadRepository;
 
     public CarreraServiceImp(CarreraRepository _carreraRepository, UniversidadRepository _universidadRepository) {
         this._universidadRepository = _universidadRepository;

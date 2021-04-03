@@ -2,12 +2,9 @@ package com.example.JPAexample.integrationTest;
 
 
 import com.example.JPAexample.JpAexampleApplication;
-import com.example.JPAexample.controllers.CarreraController;
 import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.models.Universidad;
 import com.example.JPAexample.repositories.interfaces.CarreraRepository;
-import net.minidev.json.parser.JSONParser;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -38,25 +35,25 @@ public class CarreraIntegrationTest {
     private CarreraRepository _carreraRepository;
 
     @Before
-    public void setup(){
+    public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
     @AfterEach
-    public void tearUp () {
+    public void tearUp() {
         _carreraRepository.deleteAll();
         _carreraRepository.flush();
     }
 
     @Test
-    @WithMockUser(authorities =  "carrera:read")
-    public void testGetAllCarrerasPositivo() throws Exception{
+    @WithMockUser(authorities = "carrera:read")
+    public void testGetAllCarrerasPositivo() throws Exception {
         this.mockMvc.perform(get("/api/v1/carreras")).andExpect(status().isOk());
     }
 
     @Test
-    @WithMockUser(authorities =  "carrera:read")
-    public void testSaveCarreraPositivo() throws Exception{
+    @WithMockUser(authorities = "carrera:read")
+    public void testSaveCarreraPositivo() throws Exception {
         Universidad uni1 = new Universidad(1, "nombre", "calle", 12);
         Carrera cr1 = new Carrera(1, "nombre", "codigo", uni1);
         _carreraRepository.saveAndFlush(cr1);
@@ -67,24 +64,24 @@ public class CarreraIntegrationTest {
     }
 
     @Test
-    @WithMockUser(authorities =  "carrera:read")
-    public void testSaveCarreraNegativo() throws Exception{
+    @WithMockUser(authorities = "carrera:read")
+    public void testSaveCarreraNegativo() throws Exception {
         //Guardo el mismo objeto que ya esta guardado
         Carrera cr1 = new Carrera(1, "nombre", "codigo", null);
         _carreraRepository.saveAndFlush(cr1);
-        this.mockMvc.perform(post("/api/v1/carreras/",cr1))
+        this.mockMvc.perform(post("/api/v1/carreras/", cr1))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    @WithMockUser(authorities =  "carrera:read")
-    public void testGetSingleCarreraNegativo() throws Exception{
+    @WithMockUser(authorities = "carrera:read")
+    public void testGetSingleCarreraNegativo() throws Exception {
         this.mockMvc.perform(get("/api/v1/carreras/323")).andExpect(status().isNotFound());
     }
 
     @Test
-    @WithMockUser(authorities =  "carrera:read")
-    public void testDeleteCarreraPositivo() throws Exception{
+    @WithMockUser(authorities = "carrera:read")
+    public void testDeleteCarreraPositivo() throws Exception {
         Universidad uni1 = new Universidad(1, "nombre", "calle", 12);
         Carrera cr1 = new Carrera(1, "nombre", "codigo", uni1);
         cr1 = _carreraRepository.saveAndFlush(cr1);
@@ -92,17 +89,14 @@ public class CarreraIntegrationTest {
     }
 
     @Test
-    @WithMockUser(authorities =  "carrera:read")
-    public void testDeleteCarreraNegativo() throws Exception{
+    @WithMockUser(authorities = "carrera:read")
+    public void testDeleteCarreraNegativo() throws Exception {
         Universidad uni1 = new Universidad(1, "nombre", "calle", 12);
         Carrera cr1 = new Carrera(1, "nombre", "codigo", uni1);
         cr1 = _carreraRepository.saveAndFlush(cr1);
         //pruebo con el id + 1 para no poner el id correcto
-        this.mockMvc.perform(get(String.format("/api/v1/carreras/%s", cr1.getId()+1))).andExpect(status().isNotFound());
+        this.mockMvc.perform(get(String.format("/api/v1/carreras/%s", cr1.getId() + 1))).andExpect(status().isNotFound());
     }
-
-
-
 
 
 }
