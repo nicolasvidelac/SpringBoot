@@ -50,15 +50,17 @@
         </form>
     </div>
 
-    <table style="padding-left: 30%; width:30%; padding-top: 30px">
+    <table style="padding-left: 10%; width:100%; padding-top: 30px">
         <tr>
             <th>Nombre</th>
             <th>Codigo</th>
+            <th>Universidad</th>
         </tr>
         <th:block th:each="task : ${carreras}">
             <tr style="text-align:center">
                 <td th:text="${task.nombre}"></td>
                 <td th:text="${task.codigo}"></td>
+                <td th:text="${task.universidad.nombre}"></td>
             </tr>
         </th:block>
     </table>
