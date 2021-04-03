@@ -2,6 +2,7 @@ package com.example.JPAexample.services;
 
 import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.repositories.interfaces.CarreraRepository;
+import com.example.JPAexample.repositories.interfaces.UniversidadRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,13 +24,15 @@ class CarreraServiceImpTest {
 
     @Mock
     CarreraRepository _carreraRepository;
+    @Mock
+    UniversidadRepository _universidadRepository;
     AutoCloseable autoCloseable;
     CarreraServiceImp _carreraService;
 
     @BeforeEach
     void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        _carreraService = new CarreraServiceImp(_carreraRepository);
+        _carreraService = new CarreraServiceImp(_carreraRepository, _universidadRepository);
     }
 
     @AfterEach
@@ -45,7 +48,7 @@ class CarreraServiceImpTest {
 
     @Test
     void saveCarreraPositivo() {
-        Carrera cr1 = new Carrera(1, "nombre", "codigo");
+        Carrera cr1 = new Carrera(1, "nombre", "codigo", null);
         _carreraService.saveCarrera(cr1);
 
         ArgumentCaptor<Carrera> carreraArgumentCaptor = ArgumentCaptor.forClass(Carrera.class);

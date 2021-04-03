@@ -2,6 +2,7 @@ package com.example.JPAexample.services;
 
 import com.example.JPAexample.models.Alumno;
 import com.example.JPAexample.models.Carrera;
+import com.example.JPAexample.models.Universidad;
 import com.example.JPAexample.others.exceptions.MissingInfoException;
 import com.example.JPAexample.others.exceptions.NotAcceptableException;
 import com.example.JPAexample.others.exceptions.RecordNotFoundException;
@@ -9,6 +10,7 @@ import com.example.JPAexample.repositories.interfaces.AlumnoRepository;
 import com.example.JPAexample.repositories.interfaces.CarreraRepository;
 import com.example.JPAexample.services.interfaces.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,11 @@ public class AlumnoServiceImp implements AlumnoService {
     @Autowired
     private CarreraRepository _carreraRepository;
 
+    @Autowired
+    @Qualifier("getUTN")
+    private Universidad _getUniversidad;
+
+
     public Alumno saveAlumno(Alumno newAlumno) {
 
         Carrera carrera = _carreraRepository.findById(newAlumno.getCarrera().getId()).orElseThrow(() ->
@@ -31,7 +38,7 @@ public class AlumnoServiceImp implements AlumnoService {
         );
 
         Alumno alumno = newAlumno;
-        alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo()));
+        alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo(), _getUniversidad));
 
         try {
             alumno = _alumnoRepository.saveAndFlush(alumno);
@@ -55,7 +62,7 @@ public class AlumnoServiceImp implements AlumnoService {
             Carrera carrera = _carreraRepository.findById(updatedAlumno.getCarrera().getId()).orElseThrow(() ->
                     new RecordNotFoundException("Carrera con id '" + updatedAlumno.getCarrera().getId() + "' no existe")
             );
-            alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo()));
+            alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo(), _getUniversidad));
         }
 
         try {
@@ -100,5 +107,8 @@ public class AlumnoServiceImp implements AlumnoService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    private class ApplicationContext {
     }
 }

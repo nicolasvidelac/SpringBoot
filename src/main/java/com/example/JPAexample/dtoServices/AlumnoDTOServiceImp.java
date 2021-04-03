@@ -29,7 +29,7 @@ public class AlumnoDTOServiceImp implements AlumnoDTOService {
 
         Alumno alumno = _modelMapper.map(alumnoDTO, Alumno.class);
 
-        alumno.setCarrera(new Carrera(alumnoDTO.getCarrera_id(), "", ""));
+        alumno.setCarrera(new Carrera(alumnoDTO.getCarrera_id(), "", "", null));
 
         alumno = _alumnoService.saveAlumno(alumno);
 
@@ -46,7 +46,7 @@ public class AlumnoDTOServiceImp implements AlumnoDTOService {
     public AlumnoDTO updateAlumno(int id, AlumnoDTO alumnoDTO) {
 
         Alumno alumno = _modelMapper.map(alumnoDTO, Alumno.class);
-        alumno.setCarrera(new Carrera(alumnoDTO.getCarrera_id(), "", ""));
+        alumno.setCarrera(new Carrera(alumnoDTO.getCarrera_id(), "", "", null));
 
         alumno = _alumnoService.updateAlumno(id, alumno);
 

@@ -1,7 +1,9 @@
 package com.example.JPAexample.repositories;
 
 import com.example.JPAexample.models.Carrera;
+import com.example.JPAexample.models.Universidad;
 import com.example.JPAexample.repositories.interfaces.CarreraRepository;
+import com.example.JPAexample.repositories.interfaces.UniversidadRepository;
 import com.github.database.rider.core.api.dataset.DataSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,14 +18,21 @@ import static org.junit.Assert.assertEquals;
 @DataJpaTest
 class CarreraRepositoryTest {
 
-    Carrera cr1 = new Carrera(1, "ingenieria", "car001");
-    Carrera cr2 = new Carrera(2, "abogacia", "car002");
-    Carrera cr3 = new Carrera(3, "medicina", "car003");
+    Universidad uni1 = new Universidad(1, "Universidad Tecnologica Nacional", "San Martin", 69);
+
+    Carrera cr1 = new Carrera(1, "ingenieria", "car001", uni1);
+    Carrera cr2 = new Carrera(2, "abogacia", "car002", uni1);
+    Carrera cr3 = new Carrera(3, "medicina", "car003", uni1);
+
     @Autowired
     private CarreraRepository _carreraRepository;
 
+    @Autowired
+    private UniversidadRepository _universidadRepository;
+
     @BeforeEach
     void filldb() {
+        uni1 = _universidadRepository.save(uni1);
         cr1 = _carreraRepository.save(cr1);
         cr2 = _carreraRepository.save(cr2);
         cr3 = _carreraRepository.save(cr3);
@@ -37,17 +46,17 @@ class CarreraRepositoryTest {
     }
 
     @Test
-    void findByCodigoPositivo() {
-        String codigo = "car002";
-        List<Carrera> result = _carreraRepository.findByAny(codigo);
-        assertEquals(result.get(0), cr2);
-    }
-
-    @Test
     void findByNombreNegativo() {
         String nombre = "dsds";
         List<Carrera> result = _carreraRepository.findByAny(nombre);
         assertThat(result).isEmpty();
+    }
+
+    @Test
+    void findByCodigoPositivo() {
+        String codigo = "car002";
+        List<Carrera> result = _carreraRepository.findByAny(codigo);
+        assertEquals(result.get(0), cr2);
     }
 
     @Test
@@ -60,7 +69,7 @@ class CarreraRepositoryTest {
 
     @Test
     void saveCarreraPositivo() {
-        Carrera cr4 = new Carrera(4, "contabilidad", "car004");
+        Carrera cr4 = new Carrera(4, "contabilidad", "car004", uni1);
         Carrera result = _carreraRepository.save(cr4);
         assertEquals(result, cr4);
     }

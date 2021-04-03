@@ -1,22 +1,24 @@
 package com.example.JPAexample;
 
+import com.example.JPAexample.models.Universidad;
+import com.example.JPAexample.repositories.interfaces.UniversidadRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Arrays;
+
 @SpringBootApplication
 public class JpAexampleApplication {
-
 
     public static void main(String[] args) {
 
         SpringApplication.run(JpAexampleApplication.class, args);
-    }
 
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
     }
 
 }

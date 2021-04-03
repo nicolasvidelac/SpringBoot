@@ -1,17 +1,21 @@
 package com.example.JPAexample.services;
 
 import com.example.JPAexample.models.Carrera;
+import com.example.JPAexample.models.Universidad;
 import com.example.JPAexample.others.exceptions.MissingInfoException;
 import com.example.JPAexample.others.exceptions.NotAcceptableException;
 import com.example.JPAexample.others.exceptions.RecordNotFoundException;
 import com.example.JPAexample.repositories.interfaces.CarreraRepository;
+import com.example.JPAexample.repositories.interfaces.UniversidadRepository;
 import com.example.JPAexample.services.interfaces.CarreraService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -19,16 +23,30 @@ public class CarreraServiceImp implements CarreraService {
 
     @Autowired
     private final CarreraRepository _carreraRepository;
+
     @Autowired
     private ModelMapper _modelMapper;
 
-    public CarreraServiceImp(CarreraRepository _carreraRepository) {
+    @Autowired
+    @Qualifier("getUTN")
+    private Universidad _getUTN;
+
+    @Autowired
+    @Qualifier("getUBA")
+    private Universidad _getUBA;
+
+    @Autowired
+    private final UniversidadRepository _universidadRepository;
+
+    public CarreraServiceImp(CarreraRepository _carreraRepository, UniversidadRepository _universidadRepository) {
+        this._universidadRepository = _universidadRepository;
         this._carreraRepository = _carreraRepository;
+
     }
 
     public Carrera saveCarrera(Carrera newCarrera) {
-
         try {
+            newCarrera.setUniversidad(_getUTN);
             newCarrera = _carreraRepository.saveAndFlush(newCarrera);
         } catch (DataIntegrityViolationException e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");

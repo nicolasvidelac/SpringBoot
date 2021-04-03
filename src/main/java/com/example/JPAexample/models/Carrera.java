@@ -2,10 +2,7 @@ package com.example.JPAexample.models;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,12 +23,17 @@ public class Carrera {
     @Column(nullable = false, unique = true)
     private String codigo;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "universidad_id")
+    private Universidad universidad;
+
     @Override
     public boolean equals(Object object) {
         if (object == null) {
             return false;
         } else return
                 this.codigo.equals(((Carrera) object).codigo) &&
-                        this.nombre.equals(((Carrera) object).nombre);
+                        this.nombre.equals(((Carrera) object).nombre) &&
+                        this.universidad.equals(((Carrera) object).universidad);
     }
 }

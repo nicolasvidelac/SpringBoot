@@ -46,7 +46,7 @@ class CarreraControllerTest {
 
     @Test
     void saveCarreraPositivo() {
-        CarreraDTO cr1 = new CarreraDTO(1, "nombre", "codigo");
+        CarreraDTO cr1 = new CarreraDTO(1, "nombre", "codigo", null);
 
         when(_CarreraDTOService.saveCarrera(cr1)).thenReturn(cr1);
 
@@ -59,7 +59,7 @@ class CarreraControllerTest {
 
     @Test
     void saveCarreraNegativoWithBlankNombre() {
-        CarreraDTO cr1 = new CarreraDTO(1, "", "dddd");
+        CarreraDTO cr1 = new CarreraDTO(1, "", "dddd", null);
 
         ResponseEntity<CarreraDTO> responseEntity = _carreraController.saveCarrera(cr1);
 
@@ -71,7 +71,7 @@ class CarreraControllerTest {
 
     @Test
     void saveCarreraNegativoWithWhiteSpaceCodigo() {
-        CarreraDTO cr1 = new CarreraDTO(1, "ddd", "    ");
+        CarreraDTO cr1 = new CarreraDTO(1, "ddd", "    ", null);
 
         ResponseEntity<CarreraDTO> responseEntity = _carreraController.saveCarrera(cr1);
 
@@ -82,7 +82,7 @@ class CarreraControllerTest {
 
     @Test
     void updateCarreraPositivo() {
-        CarreraDTO cr1 = new CarreraDTO(1, "nombre", "codigo");
+        CarreraDTO cr1 = new CarreraDTO(1, "nombre", "codigo", null);
 
         when(_CarreraDTOService.updateCarrera(cr1.getId(), cr1)).thenReturn(cr1);
 
@@ -95,7 +95,7 @@ class CarreraControllerTest {
 
     @Test
     void updateCarreraNegativoWithBlankCodigo() {
-        CarreraDTO cr1 = new CarreraDTO(1, "ddddd", "");
+        CarreraDTO cr1 = new CarreraDTO(1, "ddddd", "", null);
 
         ResponseEntity<CarreraDTO> responseEntity = _carreraController.updateCarrera(cr1.getId(), cr1);
 
@@ -107,7 +107,7 @@ class CarreraControllerTest {
 
     @Test
     void updateCarreraNegativoWithWhiteSpaceNombre() {
-        CarreraDTO cr1 = new CarreraDTO(1, "     ", "dddd");
+        CarreraDTO cr1 = new CarreraDTO(1, "     ", "dddd", null);
 
         ResponseEntity<CarreraDTO> responseEntity = _carreraController.updateCarrera(cr1.getId(), cr1);
 

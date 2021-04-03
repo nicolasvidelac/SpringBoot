@@ -3,6 +3,8 @@ package com.example.JPAexample.dtoServices;
 import com.example.JPAexample.dtoServices.interfaces.CarreraDTOService;
 import com.example.JPAexample.models.Carrera;
 import com.example.JPAexample.models.DTO.CarreraDTO;
+import com.example.JPAexample.models.DTO.UniversidadDTO;
+import com.example.JPAexample.models.Universidad;
 import com.example.JPAexample.services.interfaces.CarreraService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,30 +28,38 @@ public class CarreraDTOServiceImp implements CarreraDTOService {
     @Override
     public CarreraDTO saveCarrera(CarreraDTO carreraDTO) {
 
+        Carrera carrera = _modelMapper.map(carreraDTO, Carrera.class);
 
-        Carrera entity = _modelMapper.map(carreraDTO, Carrera.class);
+        carrera.setId(null); //si es que viene con el id, funciona como un update
 
-        entity.setId(null); //si es que viene con el id, funciona como un update
-
-        entity = _carreraService.saveCarrera(entity);
-
-        return _modelMapper.map(entity, CarreraDTO.class);
+        carrera = _carreraService.saveCarrera(carrera);
+        carreraDTO = _modelMapper.map(carrera, CarreraDTO.class);
+        carreraDTO.setUniversidad(_modelMapper.map(carrera.getUniversidad(), UniversidadDTO.class));
+        return carreraDTO;
     }
 
     @Override
     public CarreraDTO updateCarrera(int id, CarreraDTO carreraDTO) {
 
         Carrera carrera = _modelMapper.map(carreraDTO, Carrera.class);
+        Universidad universidad = _modelMapper.map(carreraDTO.getUniversidad(), Universidad.class);
+
         carrera = _carreraService.updateCarrera(id, carrera);
 
-        return _modelMapper.map(carrera, CarreraDTO.class);
+        carreraDTO = _modelMapper.map(carrera, CarreraDTO.class);
+        carreraDTO.setUniversidad(_modelMapper.map(carrera.getUniversidad(), UniversidadDTO.class));
+
+        return carreraDTO;
     }
 
     @Override
     public CarreraDTO getCarreraById(Integer id) {
 
         Carrera carrera = _carreraService.getCarreraById(id);
-        return _modelMapper.map(carrera, CarreraDTO.class);
+
+        CarreraDTO result = _modelMapper.map(carrera, CarreraDTO.class);
+        result.setUniversidad(_modelMapper.map(carrera.getUniversidad(), UniversidadDTO.class));
+        return result;
     }
 
     @Override
@@ -60,7 +70,9 @@ public class CarreraDTOServiceImp implements CarreraDTOService {
 
 
         for (Carrera carrera : carreras) {
-            entities.add(_modelMapper.map(carrera, CarreraDTO.class));
+            CarreraDTO carreraDTO = _modelMapper.map(carrera, CarreraDTO.class);
+            carreraDTO.setUniversidad(_modelMapper.map(carrera.getUniversidad(), UniversidadDTO.class));
+            entities.add(carreraDTO);
         }
 
         return entities;
@@ -72,9 +84,10 @@ public class CarreraDTOServiceImp implements CarreraDTOService {
         List<Carrera> carreras = _carreraService.getCarreraByAny(termino);
         List<CarreraDTO> entities = new ArrayList<>();
 
-
         for (Carrera carrera : carreras) {
-            entities.add(_modelMapper.map(carrera, CarreraDTO.class));
+            CarreraDTO carreraDTO = _modelMapper.map(carrera, CarreraDTO.class);
+            carreraDTO.setUniversidad(_modelMapper.map(carrera.getUniversidad(), UniversidadDTO.class));
+            entities.add(carreraDTO);
         }
 
         return entities;
