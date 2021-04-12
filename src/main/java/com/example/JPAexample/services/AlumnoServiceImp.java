@@ -1,18 +1,20 @@
 package com.example.JPAexample.services;
 
-import com.example.JPAexample.exceptions.MissingInfoException;
-import com.example.JPAexample.exceptions.RecordNotFoundException;
 import com.example.JPAexample.models.Alumno;
 import com.example.JPAexample.models.Carrera;
-import com.example.JPAexample.models.DTO.AlumnoDTO;
-import com.example.JPAexample.repositories.AlumnoRepository;
-import com.example.JPAexample.repositories.CarreraRepository;
+import com.example.JPAexample.models.Universidad;
+import com.example.JPAexample.others.exceptions.MissingInfoException;
+import com.example.JPAexample.others.exceptions.NotAcceptableException;
+import com.example.JPAexample.others.exceptions.RecordNotFoundException;
+import com.example.JPAexample.repositories.interfaces.AlumnoRepository;
+import com.example.JPAexample.repositories.interfaces.CarreraRepository;
 import com.example.JPAexample.services.interfaces.AlumnoService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,106 +27,88 @@ public class AlumnoServiceImp implements AlumnoService {
     private CarreraRepository _carreraRepository;
 
     @Autowired
-    private ModelMapper _modelMapper;
+    @Qualifier("getUTN")
+    private Universidad _getUniversidad;
 
-    public AlumnoDTO saveAlumno(AlumnoDTO newAlumno){
 
-        Alumno alumno = _modelMapper.map(newAlumno, Alumno.class);
+    public Alumno saveAlumno(Alumno newAlumno) {
 
-        Carrera carrera = _carreraRepository.findById(newAlumno.getCarrera_id()).orElseThrow(() ->
-                new RecordNotFoundException( "Carrera con id '" + newAlumno.getCarrera_id() + "' no existe")
+        Carrera carrera = _carreraRepository.findById(newAlumno.getCarrera().getId()).orElseThrow(() ->
+                new RecordNotFoundException("Carrera con id '" + newAlumno.getCarrera().getId() + "' no existe")
         );
 
-        alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo()));
+        Alumno alumno = newAlumno;
+        alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo(), _getUniversidad));
 
         try {
             alumno = _alumnoRepository.saveAndFlush(alumno);
-        } catch (Exception e){
+        } catch (DataIntegrityViolationException e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
+        } catch (Exception e) {
+            throw new NotAcceptableException("No se pudo completar la solicitud");
         }
 
-        AlumnoDTO alumnoDTO = _modelMapper.map(alumno, AlumnoDTO.class);
-
-        alumnoDTO.setCarrera_nombre(alumno.getCarrera().getNombre());
-        alumnoDTO.setCarrera_codigo(alumno.getCarrera().getCodigo());
-        alumnoDTO.setCarrera_id(alumno.getCarrera().getId());
-        return alumnoDTO;
+        return alumno;
     }
 
-    public AlumnoDTO updateAlumno(int id, AlumnoDTO updatedAlumno){
+    public Alumno updateAlumno(int id, Alumno updatedAlumno) {
 
         Alumno alumno = _alumnoRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Alumno con id '" + id + "' no existe"
         ));
 
-        alumno.setNombre(updatedAlumno.getNombre());
-        alumno.setApellido(updatedAlumno.getApellido());
-        alumno.setEdad(updatedAlumno.getEdad());
-        alumno.setEmail(updatedAlumno.getEmail());
-        alumno.setLegajo(updatedAlumno.getLegajo());
-
-        if (updatedAlumno.getCarrera_id() != alumno.getCarrera().getId()){ //Si modifico la carrera, ejecuto esto
-            Carrera carrera = _carreraRepository.findById(updatedAlumno.getCarrera_id()).orElseThrow(() ->
-                    new RecordNotFoundException( "Carrera con id '" + updatedAlumno.getCarrera_id() + "' no existe")
+        if (!updatedAlumno.getCarrera().getId().equals(alumno.getCarrera().getId())) {
+            // Si modifico la carrera, ejecuto esto
+            Carrera carrera = _carreraRepository.findById(updatedAlumno.getCarrera().getId()).orElseThrow(() ->
+                    new RecordNotFoundException("Carrera con id '" + updatedAlumno.getCarrera().getId() + "' no existe")
             );
-            alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo()));
+            alumno.setCarrera(new Carrera(carrera.getId(), carrera.getNombre(), carrera.getCodigo(), _getUniversidad));
         }
 
         try {
             alumno = _alumnoRepository.saveAndFlush(alumno);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new MissingInfoException("Los parámetros ingresados no son válidos");
         }
 
-        AlumnoDTO alumnoDTO = _modelMapper.map(alumno, AlumnoDTO.class);
-
-        alumnoDTO.setCarrera_nombre(alumno.getCarrera().getNombre());
-        alumnoDTO.setCarrera_codigo(alumno.getCarrera().getCodigo());
-        alumnoDTO.setCarrera_id(alumno.getCarrera().getId());
-        return alumnoDTO;
+        return alumno;
     }
 
-    public AlumnoDTO getAlumnoById(Integer id){
-
-        Alumno alumno = _alumnoRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
+    @Override
+    public Alumno getAlumnoById(Integer id) {
+        return _alumnoRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 "Alumno con id '" + id + "' no existe"
         ));
 
-        AlumnoDTO alumnoDTO = _modelMapper.map(alumno, AlumnoDTO.class);
-
-        alumnoDTO.setCarrera_nombre(alumno.getCarrera().getNombre());
-        alumnoDTO.setCarrera_codigo(alumno.getCarrera().getCodigo());
-        alumnoDTO.setCarrera_id(alumno.getCarrera().getId());
-
-        return alumnoDTO;
     }
 
-    public List<AlumnoDTO> getAllAlumnos(){
+    public List<Alumno> getAllAlumnos() {
 
-            List<Alumno> alumnos = _alumnoRepository.findAll();
-            List<AlumnoDTO> result = new ArrayList<>();
+        List<Alumno> alumnos = _alumnoRepository.findAll();
 
-            for (Alumno entity: alumnos) {
-                AlumnoDTO alumnoDTO = _modelMapper.map(entity, AlumnoDTO.class);
+        return alumnos;
+    }
 
-                alumnoDTO.setCarrera_nombre(entity.getCarrera().getNombre());
-                alumnoDTO.setCarrera_codigo(entity.getCarrera().getCodigo());
-                alumnoDTO.setCarrera_id(entity.getCarrera().getId());
-                result.add(alumnoDTO);
-            }
-            return result;
+    @Override
+    public List<Alumno> getAlumnoByAny(String termino) {
+        return _alumnoRepository.findByWords(termino.toLowerCase());
     }
 
     public boolean deleteAlumno(int id) {
 
-        try{
+        try {
             _alumnoRepository.deleteById(id);
             return true;
 
-        } catch (Exception e){
+        } catch (EmptyResultDataAccessException e) {
             throw new RecordNotFoundException(
                     "Alumno con id '" + id + "' no existe"
             );
+        } catch (Exception e) {
+            throw e;
         }
+    }
+
+    private class ApplicationContext {
     }
 }

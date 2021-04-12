@@ -1,50 +1,42 @@
 package com.example.JPAexample.controllers.thymeleaf;
 
+import com.example.JPAexample.dtoServices.interfaces.AlumnoDTOService;
 import com.example.JPAexample.models.DTO.AlumnoDTO;
-import com.example.JPAexample.services.interfaces.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Optional;
 import java.util.TreeSet;
 
 @Controller
 @RequestMapping(path = "/alumnos")
 public class AlumnoThymeleafController {
 
-    private final AlumnoService _alumnoService;
+    private final AlumnoDTOService _alumnoService;
 
     @Autowired
-    public AlumnoThymeleafController(AlumnoService _alumnoService) {
+    public AlumnoThymeleafController(AlumnoDTOService _alumnoService) {
         this._alumnoService = _alumnoService;
     }
 
     @GetMapping
-    public String getAlumnos(Model model, @RequestParam(required = false) Integer id){
-        if (id != null){
-            model.addAttribute("message", "Búsqueda de alumno");
-            model.addAttribute("alumnos", _alumnoService.getAlumnoById(id));
+    @PreAuthorize("hasAuthority('alumno:read')")
+    public String getAlumnos(Model model, @RequestParam(required = false) String termino) {
+
+        if (termino != null) {
+            model.addAttribute("message", "Búsqueda de alumnos con '" + termino + "'");
+            model.addAttribute("alumnos", _alumnoService.getAlumnosByAny(termino));
         } else {
-            model.addAttribute("message", "Esta es una lista de Alumnos sin orden");
-            model.addAttribute("alumnos", _alumnoService.getAllAlumnos());
+            TreeSet<AlumnoDTO> result = new TreeSet<AlumnoDTO>(_alumnoService.getAllAlumnos());
+            model.addAttribute("message", "Esta es una lista de Alumnos ordenada por carrera");
+            model.addAttribute("alumnos", result);
         }
 
-
-        return "sample_list";
-    }
-
-    @GetMapping("/sorted")
-    public String sortAlumnos(Model model){
-        TreeSet result = new TreeSet<AlumnoDTO>();
-        result.addAll(_alumnoService.getAllAlumnos());
-
-        model.addAttribute("message", "Esta es una lista de Alumnos ordenada por carrera");
-        model.addAttribute("alumnos", result);
-        return "sample_list";
+        return "list_alumnos";
     }
 
 }

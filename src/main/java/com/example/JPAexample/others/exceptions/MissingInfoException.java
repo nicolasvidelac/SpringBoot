@@ -1,10 +1,10 @@
-package com.example.JPAexample.exceptions;
+package com.example.JPAexample.others.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class MissingInfoException extends RuntimeException{
+public class MissingInfoException extends RuntimeException {
 
     private static final long serialVersionUID = 1l;
 

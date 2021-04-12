@@ -1,9 +1,10 @@
 package com.example.JPAexample.controllers;
 
+import com.example.JPAexample.dtoServices.interfaces.PersonaDTOService;
 import com.example.JPAexample.models.DTO.PersonaDTO;
-import com.example.JPAexample.models.Persona;
-import com.example.JPAexample.services.interfaces.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,35 +13,64 @@ import java.util.List;
 @RequestMapping(path = "api/v1/personas")
 public class PersonaController {
 
-    private final PersonaService _personaService;
+    private final PersonaDTOService _personaService;
 
     @Autowired
-    public PersonaController(PersonaService _personaService) {
+    public PersonaController(PersonaDTOService _personaService) {
         this._personaService = _personaService;
     }
 
     @GetMapping("/{id}")
-    public PersonaDTO getSinglePersona(@PathVariable int id){
-        return _personaService.getPersonaById(id);
+    @PreAuthorize("hasAuthority('persona:read')")
+    public ResponseEntity<PersonaDTO> getSinglePersona(@PathVariable int id) {
+        if (id > 0) {
+            return ResponseEntity.ok(_personaService.getPersonaById(id));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping
-    public List<PersonaDTO> getAllPersonas(){
-        return _personaService.getAllPersonas();
+    @PreAuthorize("hasAuthority('persona:read')")
+    public ResponseEntity<List<PersonaDTO>> getAllPersonas() {
+        return ResponseEntity.ok(_personaService.getAllPersonas());
     }
 
     @PostMapping
-    public PersonaDTO savePersona(@RequestBody PersonaDTO newPersona){
-        return _personaService.savePersona(newPersona);
+    @PreAuthorize("hasAuthority('persona:write')")
+    public ResponseEntity<PersonaDTO> savePersona(@RequestBody PersonaDTO newPersona) {
+        if (
+                !newPersona.getApellido().isBlank() &&
+                        !newPersona.getNombre().isBlank() &&
+                        newPersona.getEdad() > 0
+        ) {
+            return ResponseEntity.ok(_personaService.savePersona(newPersona));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("{id}")
-    public PersonaDTO updatePersona(@PathVariable int id, @RequestBody PersonaDTO updatedPersona){
-        return _personaService.updatePersona(id, updatedPersona);
+    @PreAuthorize("hasAuthority('persona:write')")
+    public ResponseEntity<PersonaDTO> updatePersona(@PathVariable int id, @RequestBody PersonaDTO updatedPersona) {
+        if (
+                !updatedPersona.getApellido().isBlank() &&
+                        !updatedPersona.getNombre().isBlank() &&
+                        updatedPersona.getEdad() > 0
+        ) {
+            return ResponseEntity.ok(_personaService.updatePersona(id, updatedPersona));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public boolean deletePersona(@PathVariable int id){
-        return _personaService.deletePersona(id);
+    @PreAuthorize("hasAuthority('persona:write')")
+    public ResponseEntity<Boolean> deletePersona(@PathVariable int id) {
+        if (id > 0) {
+            return ResponseEntity.ok(_personaService.deletePersona(id));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

@@ -1,14 +1,20 @@
 package com.example.JPAexample.services.interfaces;
 
-import com.example.JPAexample.models.DTO.CarreraDTO;
+import com.example.JPAexample.models.Carrera;
 
 import java.util.List;
 
 public interface CarreraService {
-    CarreraDTO saveCarrera(CarreraDTO newCarrera);
-    CarreraDTO updateCarrera(int id, CarreraDTO updateCarrera);
-    CarreraDTO getCarreraById(int id);
-    List<CarreraDTO> getAllCarreras();
+    Carrera saveCarrera(Carrera newCarrera);
+
+    Carrera updateCarrera(int id, Carrera updateCarrera);
+
+    Carrera getCarreraById(int id);
+
+    List<Carrera> getAllCarreras();
+
     boolean deleteCarrera(int id);
+
+    List<Carrera> getCarreraByAny(String termino);
 
 }

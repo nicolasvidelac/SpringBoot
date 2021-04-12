@@ -1,11 +1,15 @@
 package com.example.JPAexample.models.DTO;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AlumnoDTO implements Comparable<AlumnoDTO>{
+@AllArgsConstructor
+@NoArgsConstructor
+public class AlumnoDTO implements Comparable<AlumnoDTO> {
 
     private Integer id;
     private String nombre;
